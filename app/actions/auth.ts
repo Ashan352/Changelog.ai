@@ -18,7 +18,7 @@ export async function signUp(formData: FormData) {
   // Validate inputs
   const result = signupSchema.safeParse({ email, password, name })
   if (!result.success) {
-    return { error: result.error.errors[0].message }
+    return { error: result.error.issues[0].message }
   }
 
   try {
