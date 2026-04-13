@@ -1,0 +1,5 @@
+<svg width="110" height="24" viewBox="0 0 110 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12 4L12 20M12 4L16 8M12 4L8 8M12 20L16 16M12 20L8 16" stroke="#E8FF47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="24" y="17" fill="white" style="font-family: serif; font-style: italic; font-weight: 500; font-size: 16px;">Changelog</text>
+  <text x="88" y="17" fill="#666" style="font-family: monospace; font-size: 14px;">.ai</text>
+</svg>
