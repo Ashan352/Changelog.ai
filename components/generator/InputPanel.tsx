@@ -1,7 +1,6 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { GitCommit, Zap, Loader2, Info } from 'lucide-react'
-import { Card } from '@/components/ui/card'
 import { Kbd } from '@/components/ui/kbd'
 
 interface InputPanelProps {
@@ -9,34 +8,60 @@ interface InputPanelProps {
   isLoading: boolean;
 }
 
+// 12 particles at evenly-spaced angles with slight random spread
+const PARTICLES = Array.from({ length: 12 }, (_, i) => {
+  const angle = (i / 12) * 2 * Math.PI + (Math.random() - 0.5) * 0.4
+  const dist = 60 + Math.random() * 30
+  return {
+    tx: Math.cos(angle) * dist,
+    ty: Math.sin(angle) * dist,
+    delay: Math.random() * 80,
+  }
+})
+
 export function InputPanel({ onGenerate, isLoading }: InputPanelProps) {
   const [commits, setCommits] = useState('')
   const [version, setVersion] = useState('')
   const [repoName, setRepoName] = useState('')
+  const [springing, setSpringing] = useState(false)
+  const [showParticles, setShowParticles] = useState(false)
+  const btnRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
         if (!isLoading && commits.trim()) {
-          onGenerate(commits, version, repoName)
+          triggerAndGenerate()
         }
       }
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [commits, version, repoName, isLoading, onGenerate])
+  }, [commits, version, repoName, isLoading])
 
   const charCount = commits.length
   const maxChars = 50000
   const percentage = (charCount / maxChars) * 100
 
   const handleLoadExample = () => {
-    setCommits(`feat(auth): add GitHub OAuth login
-fix: resolve crash on empty input
-chore: update dependencies
-refactor(api): improve response time by 40%`)
+    setCommits(`feat(auth): add GitHub OAuth login\nfix: resolve crash on empty input\nchore: update dependencies\nrefactor(api): improve response time by 40%`)
     setVersion('1.2.0')
     setRepoName('changelog-ai')
+  }
+
+  const triggerAndGenerate = () => {
+    // Spring animation
+    setSpringing(true)
+    setTimeout(() => setSpringing(false), 500)
+    // Particle burst
+    setShowParticles(true)
+    setTimeout(() => setShowParticles(false), 520)
+    // Actual generation
+    onGenerate(commits, version, repoName)
+  }
+
+  const handleClick = () => {
+    if (!isLoading && commits.trim()) triggerAndGenerate()
   }
 
   return (
@@ -62,7 +87,7 @@ refactor(api): improve response time by 40%`)
             onChange={(e) => setCommits(e.target.value)}
             disabled={isLoading}
             placeholder="Paste your git log or commit messages here..."
-            className="w-full flex-1 bg-bg-surface border border-border rounded-xl p-4 font-mono text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-border-strong transition-all resize-none"
+            className="input-focus-glow w-full flex-1 bg-bg-surface border border-border rounded-xl p-4 font-mono text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-border-strong transition-all resize-none"
           />
           <div className={`absolute bottom-3 right-3 font-mono text-[10px] ${percentage > 95 ? 'text-danger' : percentage > 80 ? 'text-danger/70' : 'text-text-muted'}`}>
             {charCount.toLocaleString()} / {maxChars.toLocaleString()}
@@ -78,7 +103,7 @@ refactor(api): improve response time by 40%`)
               onChange={(e) => setVersion(e.target.value)}
               disabled={isLoading}
               placeholder="e.g. 1.2.0"
-              className="w-full bg-bg-surface border border-border rounded-lg px-4 h-10 font-mono text-sm text-text-primary focus:outline-none focus:border-border-strong transition-all"
+              className="input-focus-glow w-full bg-bg-surface border border-border rounded-lg px-4 h-10 font-mono text-sm text-text-primary focus:outline-none focus:border-border-strong transition-all"
             />
           </div>
           <div className="space-y-2">
@@ -89,33 +114,57 @@ refactor(api): improve response time by 40%`)
               onChange={(e) => setRepoName(e.target.value)}
               disabled={isLoading}
               placeholder="e.g. my-app"
-              className="w-full bg-bg-surface border border-border rounded-lg px-4 h-10 font-mono text-sm text-text-primary focus:outline-none focus:border-border-strong transition-all"
+              className="input-focus-glow w-full bg-bg-surface border border-border rounded-lg px-4 h-10 font-mono text-sm text-text-primary focus:outline-none focus:border-border-strong transition-all"
             />
           </div>
         </div>
       </div>
 
-      <button
-        onClick={() => onGenerate(commits, version, repoName)}
-        disabled={isLoading || !commits.trim()}
-        className="w-full flex items-center justify-center gap-2 rounded-lg bg-accent h-12 font-mono font-bold text-bg hover:bg-accent/90 transition-all active:scale-[0.98] disabled:opacity-50 disabled:active:scale-100 shadow-[0_0_24px_rgba(232,255,71,0.15)] hover:shadow-[0_0_32px_rgba(232,255,71,0.25)] relative group"
-      >
-        {isLoading ? (
-          <>
-            <Loader2 className="h-5 w-5 animate-spin" />
-            Generating...
-          </>
-        ) : (
-          <>
-            <Zap className="h-5 w-5" />
-            <span className="flex-1 text-center">Generate changelog</span>
-            <div className="hidden sm:flex items-center gap-1 opacity-60 group-hover:opacity-100 transition-opacity pr-2">
-              <Kbd className="bg-bg/20 border-bg/30 text-bg text-[10px] min-w-[20px] h-5 flex items-center justify-center">⌘</Kbd>
-              <Kbd className="bg-bg/20 border-bg/30 text-bg text-[10px] h-5 flex items-center justify-center px-1">Enter</Kbd>
-            </div>
-          </>
+      {/* Generate button with spring + particle burst */}
+      <div className="relative">
+        {/* Particle burst */}
+        {showParticles && (
+          <div className="particle-container">
+            {PARTICLES.map((p, i) => (
+              <div
+                key={i}
+                className="absolute left-1/2 top-1/2 w-1 h-1 rounded-sm bg-accent"
+                style={{
+                  '--tx': `${p.tx}px`,
+                  '--ty': `${p.ty}px`,
+                  animation: `particleFly 500ms ease-out forwards`,
+                  animationDelay: `${p.delay}ms`,
+                  marginLeft: '-2px',
+                  marginTop: '-2px',
+                } as React.CSSProperties}
+              />
+            ))}
+          </div>
         )}
-      </button>
+
+        <button
+          ref={btnRef}
+          onClick={handleClick}
+          disabled={isLoading || !commits.trim()}
+          className={`w-full flex items-center justify-center gap-2 rounded-lg bg-accent h-12 font-mono font-bold text-bg hover:bg-accent/90 transition-colors active:scale-[0.97] disabled:opacity-50 disabled:active:scale-100 shadow-[0_0_24px_rgba(232,255,71,0.15)] hover:shadow-[0_0_32px_rgba(232,255,71,0.25)] relative group ${springing ? 'btn-spring' : ''}`}
+        >
+          {isLoading ? (
+            <>
+              <Loader2 className="h-5 w-5 animate-spin" />
+              Generating...
+            </>
+          ) : (
+            <>
+              <Zap className="h-5 w-5" />
+              <span className="flex-1 text-center">Generate changelog</span>
+              <div className="hidden sm:flex items-center gap-1 opacity-60 group-hover:opacity-100 transition-opacity pr-2">
+                <Kbd className="bg-bg/20 border-bg/30 text-bg text-[10px] min-w-[20px] h-5 flex items-center justify-center">⌘</Kbd>
+                <Kbd className="bg-bg/20 border-bg/30 text-bg text-[10px] h-5 flex items-center justify-center px-1">Enter</Kbd>
+              </div>
+            </>
+          )}
+        </button>
+      </div>
 
       <div className="flex items-start gap-2 p-3 rounded-lg bg-accent-dim border border-accent/10">
         <Info className="h-4 w-4 text-accent mt-0.5" />
@@ -126,3 +175,5 @@ refactor(api): improve response time by 40%`)
     </div>
   )
 }
+
+

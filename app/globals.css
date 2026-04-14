@@ -57,6 +57,59 @@
     100% { transform: translateY(100vh); }
   }
 
+  /* ─── Ambient diagonal grid motion ─── */
+  @keyframes gridDrift {
+    0%   { background-position: 0 0; }
+    100% { background-position: 60px 60px; }
+  }
+
+  /* ─── Upgrade button shimmer sweep ─── */
+  @keyframes shimmerSweep {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+
+  /* ─── Sidebar active left-border slide ─── */
+  @keyframes borderSlideDown {
+    from { clip-path: inset(0 0 100% 0); }
+    to   { clip-path: inset(0 0 0% 0); }
+  }
+
+  /* ─── CTA pulse ring ─── */
+  @keyframes ctaPulse {
+    0%   { box-shadow: 0 0 0 0px rgba(204,255,0,0.4); }
+    70%  { box-shadow: 0 0 0 10px rgba(204,255,0,0); }
+    100% { box-shadow: 0 0 0 0px rgba(204,255,0,0); }
+  }
+
+  /* ─── SVG checkmark draw-stroke ─── */
+  @keyframes drawCheck {
+    from { stroke-dashoffset: 30; }
+    to   { stroke-dashoffset: 0; }
+  }
+
+  /* ─── Typing cursor blink + fade ─── */
+  @keyframes cursorFade {
+    0%, 60%  { opacity: 1; }
+    80%      { opacity: 0.4; }
+    100%     { opacity: 0; }
+  }
+
+  /* ─── Particle burst ─── */
+  @keyframes particleFly {
+    0%   { transform: translate(0,0) scale(1); opacity: 1; }
+    100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+  }
+
+  /* ─── Generate button spring ─── */
+  @keyframes btnSpring {
+    0%   { transform: scale(1); }
+    20%  { transform: scale(0.97); }
+    60%  { transform: scale(1.03); }
+    80%  { transform: scale(0.99); }
+    100% { transform: scale(1); }
+  }
+
   /* shadcn mappings */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -215,4 +268,74 @@
   tr:hover td {
     @apply bg-bg-hover/40 text-text-primary;
   }
+}
+
+/* ═══════════════════════════════════════════
+   IMMERSIVE ANIMATION UTILITIES
+═══════════════════════════════════════════ */
+
+/* Drifting ambient grid background */
+.ambient-grid {
+  background-image:
+    linear-gradient(rgba(204,255,0,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(204,255,0,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridDrift 200s linear infinite;
+}
+
+/* Shimmer sweep on upgrade button (triggers every 8s via animation-delay iteration) */
+.shimmer-btn {
+  background: linear-gradient(
+    120deg,
+    transparent 25%,
+    rgba(255,255,255,0.18) 50%,
+    transparent 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmerSweep 8s linear infinite;
+}
+
+/* Sidebar nav active indicator — 2px green left bar sliding top→bottom */
+.nav-active-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #ccff00;
+  border-radius: 0 2px 2px 0;
+  animation: borderSlideDown 150ms ease-out forwards;
+}
+
+/* CTA button pulse ring — fires once 1.5s after mount via animation-delay */
+.cta-pulse {
+  animation: ctaPulse 1s ease-out forwards;
+  animation-delay: 1.5s;
+}
+
+/* Form input focus glow */
+.input-focus-glow:focus {
+  border-color: #ccff00 !important;
+  box-shadow: 0 0 0 2px rgba(204,255,0,0.25) !important;
+  outline: none !important;
+}
+
+/* SVG draw-stroke checkmark */
+.draw-check {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  animation: drawCheck 300ms ease-out forwards;
+}
+
+/* Particle burst container */
+.particle-container {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+
+/* Generate button spring click */
+.btn-spring {
+  animation: btnSpring 500ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }

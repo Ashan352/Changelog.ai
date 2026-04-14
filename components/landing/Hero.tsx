@@ -1,25 +1,42 @@
 'use client'
 import { motion } from 'framer-motion'
-import { PlayCircle, ChevronDown, GitBranch, ArrowRight } from 'lucide-react'
+import { ChevronDown, GitBranch, ArrowRight } from 'lucide-react'
 import { FadeUp } from '@/components/motion/FadeUp'
-import { RevealText } from '@/components/motion/RevealText'
 import { Magnetic } from '@/components/motion/Magnetic'
 import { ShinyText } from '@/components/ui/ShinyText'
 import { BlurText } from '@/components/motion/BlurText'
 import Aurora from '@/components/ui/Aurora'
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { getLiveStats } from '@/app/actions/stats'
 
 export function Hero({ isLoggedIn }: { isLoggedIn?: boolean }) {
   const [userCount, setUserCount] = useState<number | null>(null)
+  const [mouse, setMouse] = useState({ x: 50, y: 50 }) // percentage
+  const heroRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     getLiveStats().then(data => setUserCount(data.userCount))
   }, [])
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = heroRef.current?.getBoundingClientRect()
+    if (!rect) return
+    setMouse({
+      x: ((e.clientX - rect.left) / rect.width) * 100,
+      y: ((e.clientY - rect.top) / rect.height) * 100,
+    })
+  }
+
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center pt-28 pb-16 px-4 sm:px-6 overflow-hidden">
+    <section
+      ref={heroRef}
+      onMouseMove={handleMouseMove}
+      className="relative min-h-screen flex flex-col items-center justify-center pt-28 pb-16 px-4 sm:px-6 overflow-hidden"
+    >
+      {/* Ambient drifting circuit grid */}
+      <div className="ambient-grid absolute inset-0 z-0 pointer-events-none" />
+
       {/* Aurora Ambient Background */}
       <div className="absolute inset-0 z-0 opacity-50 pointer-events-none flex items-center justify-center">
         <Aurora 
@@ -30,7 +47,15 @@ export function Hero({ isLoggedIn }: { isLoggedIn?: boolean }) {
         />
       </div>
 
-      {/* Background grid */}
+      {/* Cursor-tracked spotlight */}
+      <div
+        className="absolute inset-0 z-0 pointer-events-none transition-all duration-75"
+        style={{
+          background: `radial-gradient(600px circle at ${mouse.x}% ${mouse.y}%, rgba(26,51,0,0.12), transparent 60%)`,
+        }}
+      />
+
+      {/* Background grid overlay */}
       <div 
         className="absolute inset-0 pointer-events-none z-0" 
         style={{
@@ -77,7 +102,10 @@ export function Hero({ isLoggedIn }: { isLoggedIn?: boolean }) {
         <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 mb-12 sm:mb-16 w-full sm:w-auto px-4 sm:px-0">
           <FadeUp delay={0.55}>
             <Magnetic>
-              <Link href={isLoggedIn ? "/dashboard" : "/login?signup=true"} className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 sm:px-10 h-12 sm:h-14 rounded-full bg-accent text-bg font-mono font-bold text-sm sm:text-base hover:bg-accent/90 transition-all hover:scale-[1.02] shadow-[0_0_32px_rgba(232,255,71,0.25)] active:scale-[0.98]">
+              <Link
+                href={isLoggedIn ? "/dashboard" : "/login?signup=true"}
+                className="cta-pulse w-full sm:w-auto flex items-center justify-center gap-2 px-8 sm:px-10 h-12 sm:h-14 rounded-full bg-accent text-bg font-mono font-bold text-sm sm:text-base hover:bg-accent/90 transition-all hover:scale-[1.02] shadow-[0_0_32px_rgba(232,255,71,0.25)] active:scale-[0.98]"
+              >
                 <span>{isLoggedIn ? "Go to Dashboard" : "Start shipping efficiently"}</span>
                 <ArrowRight className="h-4 w-4 shrink-0" />
               </Link>
@@ -113,3 +141,4 @@ export function Hero({ isLoggedIn }: { isLoggedIn?: boolean }) {
     </section>
   )
 }
+

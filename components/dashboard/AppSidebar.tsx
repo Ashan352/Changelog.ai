@@ -29,20 +29,26 @@ export function AppSidebar({ plan, generations, maxGenerations, userName, userIm
         <SidebarGroup>
         <div className="font-mono text-[12px] text-text-muted uppercase tracking-widest mb-4 px-2">Menu</div>
           <SidebarMenu>
-            {navItems.map((item) => (
-              <SidebarMenuItem key={item.label}>
-                <SidebarMenuButton 
-                  isActive={pathname === item.href}
-                  className={`font-mono text-sm transition-all hover:bg-bg-hover hover:text-text-primary active:scale-[0.98] ${pathname === item.href ? 'text-accent border border-accent/20 bg-accent/5' : ''}`}
-                  render={
-                    <Link href={item.href} className="flex items-center gap-3 w-full">
-                      <item.icon className="h-4 w-4 shrink-0" />
-                      <span>{item.label}</span>
-                    </Link>
-                  }
-                />
-              </SidebarMenuItem>
-            ))}
+            {navItems.map((item) => {
+              const isActive = pathname === item.href
+              return (
+                <SidebarMenuItem key={item.label}>
+                  <SidebarMenuButton 
+                    isActive={isActive}
+                    className={`relative overflow-hidden font-mono text-sm transition-all hover:bg-bg-hover hover:text-text-primary active:scale-[0.98] group ${isActive ? 'text-accent border border-accent/20 bg-accent/5' : ''}`}
+                    render={
+                      <Link href={item.href} className="flex items-center gap-3 w-full">
+                        {/* Sliding green left-border indicator */}
+                        {isActive && <span className="nav-active-indicator" />}
+                        <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-accent opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
+                        <item.icon className="h-4 w-4 shrink-0" />
+                        <span>{item.label}</span>
+                      </Link>
+                    }
+                  />
+                </SidebarMenuItem>
+              )
+            })}
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
@@ -69,7 +75,8 @@ export function AppSidebar({ plan, generations, maxGenerations, userName, userIm
                 </div>
              </div>
              
-             <div className="p-4 pt-0">
+             <div className="p-4 pt-0 relative overflow-hidden rounded-xl">
+                <div className="shimmer-btn absolute inset-0 rounded-xl pointer-events-none" />
                 <UpgradeButton />
              </div>
           </div>
