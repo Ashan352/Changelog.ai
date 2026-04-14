@@ -35,7 +35,7 @@
   --animate-cursor-blink: blink 1.1s step-end infinite;
   --animate-scan-line: scanLine 3s linear infinite;
   --animate-shine: shine 5s linear infinite;
- 
+
   @keyframes shine {
     0% { background-position: 100% 50%; }
     100% { background-position: -100% 50%; }
@@ -115,19 +115,6 @@
     0%   { background-position: -200% 0; }
     100% { background-position: 200% 0; }
   }
-
-  /* ─── Marquee ─── */
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(calc(-100% - var(--gap))); }
-  }
-  @keyframes marquee-vertical {
-    from { transform: translateY(0); }
-    to { transform: translateY(calc(-100% - var(--gap))); }
-  }
-
-  --animate-marquee: marquee var(--duration) linear infinite;
-  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
 
   /* shadcn mappings */
   --color-background: var(--background);
@@ -271,11 +258,11 @@
     background: rgba(18, 18, 21, 0.4);
     backdrop-filter: blur(8px);
   }
-  
+
   th {
     @apply bg-bg-surface/80 p-4 text-left border-b border-border uppercase tracking-widest text-[11px] text-accent;
   }
-  
+
   td {
     @apply p-4 border-b border-border/50 text-text-secondary transition-colors;
   }
@@ -369,4 +356,25 @@
   );
   background-size: 200% 100%;
   animation: skeletonShimmer 1.5s infinite linear;
+}
+
+@theme inline {
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+  @keyframes marquee {
+  from {
+    transform: translateX(0);
+    }
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+  @keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+    }
+  to {
+    transform: translateY(calc(-100% - var(--gap)));
+    }
+  }
 }
