@@ -43,3 +43,9 @@ Changelog.ai relies on `next-auth` to securely handle user sessions.
 * Ensure your `OPENROUTER_API_KEY` is credited to route traffic to Claude 3.5 Sonnet for Pro users.
 
 Once these `.env` variables are correctly assigned, boot your dev server using `npm run dev` and your application is fully production-ready.
+
+## 4. Security & Optimization (Vercel Edge)
+To ensure the platform remains secure and stays within Vercel's Free-tier limits:
+* **Edge Middleware**: We use Edge-based rate limiting to protect API endpoints from excessive serverless invocations.
+* **Optimized Auth**: Authentication is split into a lean `auth.config.ts` for Edge compatibility, ensuring the middleware bundle remains under 1MB.
+* **Strict Validation**: All user inputs are validated via `Zod` schemas.
