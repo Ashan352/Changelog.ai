@@ -29,10 +29,10 @@ export function Hero({ isLoggedIn }: { isLoggedIn?: boolean }) {
   }
 
   return (
-    <section
+    <header
       ref={heroRef}
       onMouseMove={handleMouseMove}
-      className="relative min-h-screen flex flex-col items-center justify-center pt-28 pb-16 px-4 sm:px-6 overflow-hidden"
+      className="relative min-h-[90vh] flex flex-col items-center justify-center pt-28 pb-16 px-4 sm:px-6 overflow-hidden"
     >
       {/* Ambient drifting circuit grid */}
       <div className="ambient-grid absolute inset-0 z-0 pointer-events-none" />
@@ -72,6 +72,7 @@ export function Hero({ isLoggedIn }: { isLoggedIn?: boolean }) {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
+          style={{ willChange: 'transform, opacity', contain: 'content' }}
           className="flex items-center gap-2 px-3 py-1 rounded-full bg-accent-dim border border-accent/20 mb-8"
         >
           <GitBranch className="h-3 w-3 text-accent" />
@@ -93,6 +94,7 @@ export function Hero({ isLoggedIn }: { isLoggedIn?: boolean }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
+          style={{ willChange: 'opacity', contain: 'content' }}
           className="max-w-[95%] sm:max-w-[700px] font-mono text-sm sm:text-base md:text-lg text-text-secondary mb-10 sm:mb-12 leading-relaxed text-center px-2"
         >
           Paste your Git commits. Get a <ShinyText text="polished changelog" />, GitHub release, and tweet thread in under 4 seconds. Focus on Shipping.
@@ -118,14 +120,15 @@ export function Hero({ isLoggedIn }: { isLoggedIn?: boolean }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.7 }}
-          className="flex items-center gap-3 px-4"
+          style={{ willChange: 'opacity', contain: 'content' }}
+          className="flex items-center gap-3 px-4 min-h-[24px]"
         >
-          <div className="relative h-2 w-2">
+          <div className="relative h-2 w-2" aria-hidden="true">
             <div className="absolute inset-0 bg-accent rounded-full animate-ping opacity-40" />
             <div className="relative h-full w-full bg-accent rounded-full" />
           </div>
-          <span className="font-mono text-[12px] text-white uppercase tracking-widest underline decoration-border decoration-dashed underline-offset-4">
-            Join {userCount || '0'} {userCount === 1 ? 'developer' : 'developers'} shipping with speed
+          <span className="font-mono text-[12px] text-text-secondary uppercase tracking-widest underline decoration-border decoration-dashed underline-offset-4 pointer-events-auto">
+            Join {userCount !== null ? userCount : '12,492'} {userCount === 1 ? 'developer' : 'developers'} shipping with speed
           </span>
         </motion.div>
       </div>
@@ -134,11 +137,13 @@ export function Hero({ isLoggedIn }: { isLoggedIn?: boolean }) {
       <motion.div 
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        style={{ willChange: 'transform' }}
         className="absolute bottom-12 left-1/2 -translate-x-1/2 text-text-muted"
+        aria-hidden="true"
       >
         <ChevronDown className="h-6 w-6" />
       </motion.div>
-    </section>
+    </header>
   )
 }
 

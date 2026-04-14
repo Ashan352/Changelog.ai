@@ -111,9 +111,9 @@ export function ProductShowcase() {
       <div className="flex flex-col items-center text-center mb-16">
         <FadeUp>
           <h2 className="text-2xl sm:text-4xl md:text-5xl font-serif italic text-text-primary mb-4 px-2">From messy logs to marketing copy</h2>
-          <div className="font-mono text-xs sm:text-sm text-text-secondary max-w-[600px] px-2">
+          <p className="font-mono text-xs sm:text-sm text-text-muted max-w-[600px] px-2 mx-auto">
             Turn raw git history into polished <ShinyText text="release notes" /> in under 2 seconds. No prompt engineering required.
-          </div>
+          </p>
         </FadeUp>
       </div>
 
@@ -127,18 +127,22 @@ export function ProductShowcase() {
                 Your commits
               </label>
               <div className="relative group">
-                <div className="absolute -inset-0.5 bg-accent/5 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-500" />
-                <div className="relative bg-bg-surface border border-border rounded-xl p-4 sm:p-6 min-h-[140px] sm:min-h-[180px] font-mono text-xs sm:text-sm leading-relaxed text-text-primary">
+                <div className="absolute -inset-0.5 bg-accent/5 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-500" aria-hidden="true" />
+                <div 
+                  className="relative bg-bg-surface border border-border rounded-xl p-4 sm:p-6 min-h-[140px] sm:min-h-[180px] font-mono text-xs sm:text-sm leading-relaxed text-text-primary overflow-hidden"
+                  aria-live="polite"
+                  aria-atomic="true"
+                >
                   {!showOutput ? (
                     <TypeWriter key={exampleIdx} text={current.commits} speed={28} />
                   ) : (
-                    <span className="text-white whitespace-pre-wrap">{current.commits}</span>
+                    <span className="text-text-primary whitespace-pre-wrap">{current.commits}</span>
                   )}
                 </div>
               </div>
               <div className="flex items-center gap-2 font-mono text-[10px] text-text-muted">
                 <span>Version (optional)</span>
-                <span className="px-1.5 py-0.5 rounded border border-border bg-bg-elevated/50">1.3.0</span>
+                <span className="px-1.5 py-0.5 rounded border border-border bg-bg-elevated/50 font-bold">1.3.0</span>
               </div>
             </div>
 
@@ -197,12 +201,12 @@ export function ProductShowcase() {
                     >
                       <div className="flex items-center justify-between mb-3 border-b border-border pb-2">
                         <div className="flex items-center gap-2">
-                          <item.icon className="h-3.5 w-3.5 text-text-secondary" />
-                          <span className="font-mono text-[10px] text-text-primary uppercase tracking-widest">{item.title}</span>
+                          <item.icon className="h-3.5 w-3.5 text-text-muted" aria-hidden="true" />
+                          <span className="font-mono text-[10px] text-text-primary uppercase tracking-widest font-bold">{item.title}</span>
                         </div>
                         <CopyButton text={item.content} />
                       </div>
-                      <div className="font-mono text-[11px] text-white whitespace-pre-wrap leading-relaxed">
+                      <div className="font-mono text-[11px] text-text-secondary whitespace-pre-wrap leading-relaxed">
                         {item.content}
                       </div>
                     </motion.div>

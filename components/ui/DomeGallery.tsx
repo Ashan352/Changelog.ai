@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useCallback } from 'react';
 import { useGesture } from '@use-gesture/react';
 import { X } from 'lucide-react';
+import Image from 'next/image';
 
 const DEFAULT_IMAGES = [
   {
@@ -834,11 +835,13 @@ export default function DomeGallery({
                       backfaceVisibility: 'hidden'
                     }}
                   >
-                    <img
+                    <Image
                       src={it.src}
-                      draggable={false}
                       alt={it.alt}
-                      className="w-full h-full object-cover pointer-events-none"
+                      fill
+                      sizes="(max-width: 768px) 150px, 250px"
+                      className="object-cover pointer-events-none"
+                      draggable={false}
                       style={{
                         backfaceVisibility: 'hidden',
                         filter: `var(--image-filter, ${grayscale ? 'grayscale(1)' : 'none'})`

@@ -21,36 +21,44 @@ export function FAQ() {
       <div className="flex flex-col items-center text-center mb-16">
         <FadeUp>
           <h2 className="text-2xl sm:text-3xl font-serif italic text-text-primary mb-4">Questions about shipment?</h2>
-          <div className="font-mono text-xs text-white">Everything you need to know about automating your release workflow.</div>
+          <p className="font-mono text-xs text-text-muted">Everything you need to know about automating your release workflow.</p>
         </FadeUp>
       </div>
       
-      <div className="space-y-4">
+      <div className="space-y-4" role="list">
         {faqs.map((faq, i) => (
           <FadeUp key={i} delay={i * 0.05}>
-            <div className="border border-border rounded-xl bg-bg-surface overflow-hidden transition-all hover:border-border-hover">
+            <div 
+              className="border border-border rounded-xl bg-bg-surface overflow-hidden transition-all hover:border-border-hover"
+              role="listitem"
+            >
               <button
+                aria-expanded={openIdx === i}
+                aria-controls={`faq-answer-${i}`}
                 onClick={() => setOpenIdx(openIdx === i ? null : i)}
                 className="w-full flex items-center justify-between p-5 text-left transition-colors"
               >
-                <span className="font-mono text-xs text-text-primary">{faq.q}</span>
+                <span className="font-mono text-xs text-text-primary font-bold">{faq.q}</span>
                 <motion.div
                   animate={{ rotate: openIdx === i ? 45 : 0 }}
                   className="text-text-muted"
+                  aria-hidden="true"
                 >
                   <Plus className="h-4 w-4" />
                 </motion.div>
               </button>
               
-              <AnimatePresence>
+              <AnimatePresence initial={false}>
                 {openIdx === i && (
                   <motion.div
+                    id={`faq-answer-${i}`}
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                    role="region"
                   >
-                    <div className="px-5 pb-5 font-mono text-xs text-white leading-relaxed border-t border-border/5 pt-3">
+                    <div className="px-5 pb-5 font-mono text-xs text-text-muted leading-relaxed border-t border-border/5 pt-3">
                       {faq.a}
                     </div>
                   </motion.div>

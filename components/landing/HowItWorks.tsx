@@ -48,13 +48,12 @@ export function HowItWorks() {
           </FadeUp>
         </div>
 
-        <div className="relative grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-
+        <ol className="relative grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 list-none p-0" aria-label="Steps to automate your changelogs">
           {steps.map((step: any, i: any) => (
-            <div key={i} className="relative group">
+            <li key={i} className="relative group">
               {/* MOBILE ANIMATED ARROWS */}
               {i < steps.length - 1 && (
-                <div className="absolute top-12 left-0 w-full h-[calc(100%-1rem)] md:hidden z-0 pointer-events-none">
+                <div className="absolute top-12 left-0 w-full h-[calc(100%-1rem)] md:hidden z-0 pointer-events-none" aria-hidden="true">
                   <svg 
                     className="w-full h-full overflow-visible text-border"
                     viewBox="0 0 100 100"
@@ -89,26 +88,26 @@ export function HowItWorks() {
 
               <div className="mb-8 flex flex-col items-center md:items-start shrink-0">
                 <div className="relative z-20 h-12 w-12 rounded-xl bg-bg-surface border border-border flex items-center justify-center text-accent shadow-[0_8px_24px_rgba(155,177,94,0.15)] group-hover:shadow-[0_12px_32px_rgba(155,177,94,0.25)] group-hover:-translate-y-1 transition-all duration-300">
-                   <step.icon className="h-5 w-5" />
+                   <step.icon className="h-5 w-5" aria-hidden="true" />
                 </div>
               </div>
               
               <FadeUp delay={i * 0.1}>
                 <div className="space-y-4 text-center md:text-left relative z-10 bg-bg/60 backdrop-blur-sm md:bg-transparent rounded-2xl py-2 px-1">
-                  <span className="font-mono text-[10px] text-accent uppercase tracking-widest leading-none px-2 py-1 bg-accent/5 border border-accent/10 rounded-md inline-block">Step {step.id}</span>
+                  <span className="font-mono text-[10px] text-accent font-bold uppercase tracking-widest leading-none px-2 py-1 bg-accent/5 border border-accent/10 rounded-md inline-block">Step {step.id}</span>
                   <h3 className="text-xl font-serif italic text-text-primary">{step.title}</h3>
-                  <p className="font-mono text-xs text-text-secondary leading-relaxed max-w-[280px] mx-auto md:mx-0">{step.desc}</p>
+                  <p className="font-mono text-xs text-text-muted leading-relaxed max-w-[280px] mx-auto md:mx-0">{step.desc}</p>
                 </div>
 
-                <div className="mt-6 sm:mt-8 p-4 sm:p-6 rounded-xl bg-bg-surface border border-border group-hover:border-border-hover transition-colors shadow-sm relative z-10">
+                <div className="mt-6 sm:mt-8 p-4 sm:p-6 rounded-xl bg-bg-surface border border-border group-hover:border-border-hover transition-colors shadow-sm relative z-10 overflow-hidden">
                   <div className="font-mono text-[11px] text-text-muted whitespace-pre-wrap leading-loose">
                     {step.content}
                   </div>
                 </div>
               </FadeUp>
-            </div>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   )

@@ -63,6 +63,7 @@ export function Navbar({ session }: { session: any }) {
   return (
     <header 
       className="fixed top-0 left-0 right-0 z-[100] bg-transparent border-b border-transparent py-5"
+      role="banner"
     >
       <div className="max-w-[1400px] w-full mx-auto px-6 flex items-center justify-between relative">
         {/* Left: Logo */}
@@ -71,21 +72,29 @@ export function Navbar({ session }: { session: any }) {
         </div>
 
         {/* Center: Navigation */}
-        <nav className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-1 bg-bg-surface/40 rounded-full border border-border/40 p-1">
+        <nav 
+          className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-1 bg-bg-surface/40 rounded-full border border-border/40 p-1"
+          aria-label="Main navigation"
+        >
           {navItems.map((item: any) => (
             <div 
               key={item.label}
               className="relative"
               onMouseEnter={() => setActiveDropdown(item.label)}
               onMouseLeave={() => setActiveDropdown(null)}
+              onFocus={() => setActiveDropdown(item.label)}
+              onBlur={() => setActiveDropdown(null)}
             >
               {item.items ? (
                 <div className="relative">
-                  <button className={`flex items-center gap-1.5 px-5 py-2 rounded-full text-[11px] font-mono uppercase tracking-widest transition-all ${
+                  <button 
+                    aria-expanded={activeDropdown === item.label}
+                    aria-haspopup="true"
+                    className={`flex items-center gap-1.5 px-5 py-2 rounded-full text-[11px] font-mono uppercase tracking-widest transition-all ${
                     activeDropdown === item.label ? "text-accent" : "text-text-secondary hover:text-text-primary"
                   }`}>
                     {item.label}
-                    <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === item.label ? "rotate-180" : ""}`} />
+                    <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === item.label ? "rotate-180" : ""}`} aria-hidden="true" />
                   </button>
                   
                   <AnimatePresence>

@@ -51,16 +51,24 @@ export function Pricing() {
         </FadeUp>
 
         {/* Toggle */}
-        <div className="flex items-center gap-4 bg-bg-surface border border-border p-1 rounded-full mb-8 sm:mb-12 mt-6">
+        <div 
+          className="flex items-center gap-4 bg-bg-surface border border-border p-1 rounded-full mb-8 sm:mb-12 mt-6"
+          role="radiogroup"
+          aria-label="Billing frequency"
+        >
           <button
+            role="radio"
+            aria-checked={!isAnnual}
             onClick={() => setIsAnnual(false)}
-            className={`px-6 py-2.5 rounded-full font-mono text-sm transition-colors ${!isAnnual ? 'bg-bg text-text-primary border border-border' : 'text-text-muted hover:text-text-secondary'}`}
+            className={`px-6 py-2.5 rounded-full font-mono text-sm transition-colors ${!isAnnual ? 'bg-bg text-text-primary border border-border font-bold' : 'text-text-muted hover:text-text-secondary'}`}
           >
             Monthly
           </button>
           <button
+            role="radio"
+            aria-checked={isAnnual}
             onClick={() => setIsAnnual(true)}
-            className={`px-6 py-2.5 rounded-full font-mono text-sm transition-colors relative ${isAnnual ? 'bg-bg text-text-primary border border-border' : 'text-text-muted hover:text-text-secondary'}`}
+            className={`px-6 py-2.5 rounded-full font-mono text-sm transition-colors relative ${isAnnual ? 'bg-bg text-text-primary border border-border font-bold' : 'text-text-muted hover:text-text-secondary'}`}
           >
             Yearly
             {isAnnual && (
@@ -72,7 +80,7 @@ export function Pricing() {
                 >
                   -25%
                 </motion.span>
-                <span className="absolute top-0 right-2 w-1.5 h-1.5 bg-accent rounded-full blur-[2px] animate-pulse" />
+                <span className="absolute top-0 right-2 w-1.5 h-1.5 bg-accent rounded-full blur-[2px] animate-pulse" aria-hidden="true" />
               </>
             )}
           </button>
@@ -140,22 +148,23 @@ export function Pricing() {
 
                 {/* Ticket Body */}
                 <div className="flex-1 p-8 pt-4 flex flex-col items-center text-center">
-                  <ul className="flex-1 space-y-4 mb-10 w-full max-w-[240px]">
+                  <ul className="flex-1 space-y-4 mb-10 w-full max-w-[240px] list-none p-0" aria-label={`Features included in the ${plan.name} plan`}>
                     {plan.features.map((feature, idx) => (
                       <li key={idx} className="flex items-center gap-3 justify-center">
-                        <Check className={`h-4 w-4 shrink-0 ${plan.featured ? 'text-accent' : 'text-white'}`} />
-                        <span className="font-mono text-sm text-white leading-tight">{feature}</span>
+                        <Check className={`h-4 w-4 shrink-0 ${plan.featured ? 'text-accent' : 'text-text-muted'}`} aria-hidden="true" />
+                        <span className="font-mono text-sm text-text-muted leading-tight">{feature}</span>
                       </li>
                     ))}
                   </ul>
 
                   <Link 
                     href={`/login?callbackUrl=/dashboard/pricing&signup=true`}
+                    aria-label={plan.featured ? "Get Premium Access" : `Start the ${plan.name} plan`}
                     className={`group w-full flex items-center justify-center gap-2 h-14 rounded-full font-mono font-bold text-sm transition-all active:scale-[0.98] ${
                     plan.featured ? 'bg-accent text-bg hover:brightness-110 shadow-[0_4px_24px_rgba(232,255,71,0.2)]' : 'bg-bg border border-border text-text-primary hover:bg-bg-hover'
                   }`}>
                     {plan.featured ? "Get Premium Access" : plan.cta}
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
                   </Link>
                 </div>
               </div>

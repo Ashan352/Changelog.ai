@@ -6,11 +6,13 @@ import { ThemeProvider } from "next-themes";
 const inter = Inter({
   variable: "--font-geist-sans",
   subsets: ["latin"] as const,
+  display: "swap",
 });
 
 const robotoMono = Roboto_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"] as const,
+  display: "swap",
 });
 
 export const metadata: Metadata = {
