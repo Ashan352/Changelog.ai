@@ -132,7 +132,7 @@ export function ProductShowcase() {
                   {!showOutput ? (
                     <TypeWriter key={exampleIdx} text={current.commits} speed={28} />
                   ) : (
-                    <span className="text-text-muted whitespace-pre-wrap">{current.commits}</span>
+                    <span className="text-white whitespace-pre-wrap">{current.commits}</span>
                   )}
                 </div>
               </div>
@@ -202,7 +202,7 @@ export function ProductShowcase() {
                         </div>
                         <CopyButton text={item.content} />
                       </div>
-                      <div className="font-mono text-[11px] text-text-secondary whitespace-pre-wrap leading-relaxed">
+                      <div className="font-mono text-[11px] text-white whitespace-pre-wrap leading-relaxed">
                         {item.content}
                       </div>
                     </motion.div>

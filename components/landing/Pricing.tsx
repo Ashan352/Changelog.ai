@@ -140,8 +140,8 @@ export function Pricing() {
                   <ul className="flex-1 space-y-4 mb-10 w-full max-w-[240px]">
                     {plan.features.map((feature, idx) => (
                       <li key={idx} className="flex items-center gap-3 justify-center">
-                        <Check className={`h-4 w-4 shrink-0 ${plan.featured ? 'text-accent' : 'text-text-muted'}`} />
-                        <span className="font-mono text-sm text-text-secondary leading-tight">{feature}</span>
+                        <Check className={`h-4 w-4 shrink-0 ${plan.featured ? 'text-accent' : 'text-white'}`} />
+                        <span className="font-mono text-sm text-white leading-tight">{feature}</span>
                       </li>
                     ))}
                   </ul>

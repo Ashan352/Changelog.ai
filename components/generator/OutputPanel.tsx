@@ -188,7 +188,7 @@ export function OutputPanel({ data, isLoading, hasStarted, rawResult }: { data: 
                     <Skeleton className="h-64 w-full bg-white/5" />
                   </div>
                ) : (
-                 <pre className="whitespace-pre-wrap font-sans text-base sm:text-lg text-text-secondary leading-relaxed antialiased">
+                 <pre className="whitespace-pre-wrap font-sans text-base sm:text-lg text-white leading-relaxed antialiased">
                    {getContent() || (isLoading && "Crafting artifact...")}
                  </pre>
                )}

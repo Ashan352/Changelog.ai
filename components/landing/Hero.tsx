@@ -96,8 +96,8 @@ export function Hero({ isLoggedIn }: { isLoggedIn?: boolean }) {
             <div className="absolute inset-0 bg-accent rounded-full animate-ping opacity-40" />
             <div className="relative h-full w-full bg-accent rounded-full" />
           </div>
-          <span className="font-mono text-[12px] text-text-muted uppercase tracking-widest underline decoration-border decoration-dashed underline-offset-4">
-            Join {userCount || '...'} developers shipping with speed
+          <span className="font-mono text-[12px] text-white uppercase tracking-widest underline decoration-border decoration-dashed underline-offset-4">
+            Join {userCount || '0'} {userCount === 1 ? 'developer' : 'developers'} shipping with speed
           </span>
         </motion.div>
       </div>

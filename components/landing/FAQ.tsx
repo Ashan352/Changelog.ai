@@ -21,7 +21,7 @@ export function FAQ() {
       <div className="flex flex-col items-center text-center mb-16">
         <FadeUp>
           <h2 className="text-2xl sm:text-3xl font-serif italic text-text-primary mb-4">Questions about shipment?</h2>
-          <div className="font-mono text-xs text-text-secondary">Everything you need to know about automating your release workflow.</div>
+          <div className="font-mono text-xs text-white">Everything you need to know about automating your release workflow.</div>
         </FadeUp>
       </div>
       
@@ -50,7 +50,7 @@ export function FAQ() {
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                   >
-                    <div className="px-5 pb-5 font-mono text-xs text-text-secondary leading-relaxed border-t border-border/5 pt-3">
+                    <div className="px-5 pb-5 font-mono text-xs text-white leading-relaxed border-t border-border/5 pt-3">
                       {faq.a}
                     </div>
                   </motion.div>

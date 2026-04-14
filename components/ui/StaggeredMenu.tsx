@@ -5,7 +5,7 @@ import { gsap } from 'gsap';
 
 export const StaggeredMenu = ({
   position = 'right',
-  colors = ['#B19EEF', '#5227FF'],
+  colors = ['#e8ff47', '#3a4a0a'],
   items = [] as any[],
   socialItems = [] as any[],
   displaySocials = true,
@@ -17,7 +17,7 @@ export const StaggeredMenu = ({
   openMenuButtonColor = '#fff',
   changeMenuColorOnOpen = true,
   isFixed = false,
-  accentColor = '#5227FF',
+  accentColor = '#e8ff47',
   closeOnClickAway = true,
   onMenuOpen = () => {},
   onMenuClose = () => {}
