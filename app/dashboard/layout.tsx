@@ -42,7 +42,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
              </div>
           </header>
           <div className="flex-1 overflow-auto bg-bg p-4 md:p-6 lg:p-8">
-             <div className="sm:hidden">
+             <div className="sm:hidden mb-6">
                 <Breadcrumbs />
              </div>
              {children}
