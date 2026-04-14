@@ -69,18 +69,14 @@ export function Navbar({ session }: { session: any }) {
           : "bg-transparent border-transparent py-5"
       }`}
     >
-      <div className="max-w-[1400px] mx-auto px-6 flex items-center">
-        {/* Left: Logo & Motto */}
-        <div className="flex items-center gap-6">
+      <div className="max-w-[1400px] w-full mx-auto px-6 flex items-center relative">
+        {/* Left: Logo */}
+        <div className="flex items-center">
           <Logo hideTagline={true} />
-          <div className="hidden lg:block h-4 w-[1px] bg-border/40" />
-          <span className="hidden lg:block font-mono text-[11px] uppercase tracking-[0.3em] text-text-muted whitespace-nowrap">
-            Stop writing changelogs
-          </span>
         </div>
 
         {/* Center: Navigation */}
-        <nav className="hidden md:flex items-center gap-1 mx-auto bg-bg-surface/40 rounded-full border border-border/40 p-1">
+        <nav className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-1 bg-bg-surface/40 rounded-full border border-border/40 p-1">
           {navItems.map((item) => (
             <div 
               key={item.label}
