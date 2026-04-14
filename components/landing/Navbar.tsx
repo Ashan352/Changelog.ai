@@ -34,9 +34,8 @@ export function Navbar({ session }: { session: any }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+      setScrolled(window.scrollY > 20)
 
-      // Intersection Observer logic for scroll spy
       const sections = navItems
         .filter(item => item.href.startsWith("#"))
         .map(item => item.href.substring(1))
@@ -50,24 +49,38 @@ export function Navbar({ session }: { session: any }) {
       }
     }
 
+    const handleResize = () => {
+      if (window.innerWidth < 768) setActiveDropdown(null)
+    }
+
     window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+    window.addEventListener("resize", handleResize)
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      window.removeEventListener("resize", handleResize)
+    }
   }, [])
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 px-4 sm:px-6 py-4 md:flex justify-center pointer-events-none ${
-        scrolled ? "md:py-3" : "md:py-6"
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 border-b ${
+        scrolled 
+          ? "bg-bg/80 backdrop-blur-md border-border py-3" 
+          : "bg-transparent border-transparent py-5"
       }`}
     >
-      <div className="max-w-7xl w-full flex items-center justify-between pointer-events-auto relative">
-        <Logo />
+      <div className="max-w-[1400px] mx-auto px-6 flex items-center">
+        {/* Left: Logo & Motto */}
+        <div className="flex items-center gap-6">
+          <Logo hideTagline={true} />
+          <div className="hidden lg:block h-4 w-[1px] bg-border/40" />
+          <span className="hidden lg:block font-mono text-[11px] uppercase tracking-[0.3em] text-text-muted whitespace-nowrap">
+            Stop writing changelogs
+          </span>
+        </div>
 
-        <nav className={`absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all duration-500 ${
-          scrolled 
-            ? "border-border bg-bg-surface/80 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.4)]" 
-            : "border-transparent bg-transparent"
-        }`}>
+        {/* Center: Navigation */}
+        <nav className="hidden md:flex items-center gap-1 mx-auto bg-bg-surface/40 rounded-full border border-border/40 p-1">
           {navItems.map((item) => (
             <div 
               key={item.label}
@@ -76,80 +89,70 @@ export function Navbar({ session }: { session: any }) {
               onMouseLeave={() => setActiveDropdown(null)}
             >
               {item.items ? (
-                <button className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-[11px] font-mono uppercase tracking-widest transition-all duration-300 ${
-                  activeDropdown === item.label ? "text-accent" : "text-text-secondary hover:text-text-primary"
-                }`}>
-                  {item.label}
-                  <ChevronDown className={`h-3 w-3 transition-transform duration-300 ${activeDropdown === item.label ? "rotate-180" : ""}`} />
-                </button>
+                <div className="relative">
+                  <button className={`flex items-center gap-1.5 px-5 py-2 rounded-full text-[11px] font-mono uppercase tracking-widest transition-all ${
+                    activeDropdown === item.label ? "text-accent" : "text-text-secondary hover:text-text-primary"
+                  }`}>
+                    {item.label}
+                    <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === item.label ? "rotate-180" : ""}`} />
+                  </button>
+                  
+                  <AnimatePresence>
+                    {activeDropdown === item.label && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                        className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-64 p-2 bg-bg-surface border border-border rounded-2xl shadow-2xl backdrop-blur-xl"
+                      >
+                        <div className="grid gap-1">
+                          {item.items.map((subItem) => (
+                            <Link
+                              key={subItem.label}
+                              href={subItem.href}
+                              className="flex items-start gap-3 p-3 rounded-xl hover:bg-bg-hover transition-colors group"
+                            >
+                              <div className="w-8 h-8 rounded-lg bg-bg-elevated flex items-center justify-center border border-border group-hover:border-accent/30 transition-colors">
+                                <subItem.icon className="h-4 w-4 text-text-muted group-hover:text-accent transition-colors" />
+                              </div>
+                              <div className="flex flex-col">
+                                <span className="text-xs font-mono font-bold text-text-primary">{subItem.label}</span>
+                                <span className="text-[10px] text-text-muted leading-tight mt-0.5">{subItem.description}</span>
+                              </div>
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               ) : (
                 <Link 
                   href={item.href}
-                  className={`px-4 py-2 rounded-full text-[11px] font-mono uppercase tracking-widest transition-all duration-300 relative group ${
-                    activeSection === item.href ? "text-accent" : "text-text-secondary hover:text-text-primary"
+                  className={`px-5 py-2 rounded-full text-[11px] font-mono uppercase tracking-widest transition-all relative block ${
+                    activeSection === item.href ? "bg-bg-elevated text-accent" : "text-text-secondary hover:text-text-primary"
                   }`}
                 >
                   {item.label}
-                  {activeSection === item.href && (
-                    <motion.span 
-                      layoutId="activeNav"
-                      className="absolute inset-0 bg-accent/5 rounded-full -z-10"
-                      initial={false}
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
-                  )}
                 </Link>
               )}
-
-              <AnimatePresence>
-                {item.items && activeDropdown === item.label && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                    className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 p-2 bg-bg-surface border border-border rounded-2xl shadow-2xl backdrop-blur-xl overflow-hidden"
-                  >
-                    <div className="grid gap-1">
-                      {item.items.map((subItem) => (
-                        <Link
-                          key={subItem.label}
-                          href={subItem.href}
-                          className="flex items-start gap-3 p-3 rounded-xl hover:bg-bg-hover transition-colors group"
-                        >
-                          <div className="w-8 h-8 rounded-lg bg-bg-elevated flex items-center justify-center border border-border group-hover:border-accent/30 transition-colors">
-                            <subItem.icon className="h-4 w-4 text-text-muted group-hover:text-accent transition-colors" />
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="text-xs font-mono font-bold text-text-primary">{subItem.label}</span>
-                            <span className="text-[10px] text-text-muted leading-tight mt-0.5">{subItem.description}</span>
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
-                    <div className="mt-2 p-3 bg-bg-elevated/50 border-t border-border flex items-center justify-between">
-                      <span className="text-[10px] font-mono text-text-muted uppercase">New Updates</span>
-                      <Zap className="h-3 w-3 text-accent animate-pulse" />
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </div>
           ))}
         </nav>
 
+        {/* Right: Auth Buttons */}
         <div className="flex items-center gap-4 ml-auto md:ml-0">
           {!session ? (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-6">
               <Link 
                 href="/login" 
-                className="hidden sm:flex items-center justify-center px-4 py-2 rounded-full text-text-secondary font-mono text-[11px] uppercase tracking-widest hover:text-text-primary transition-colors"
+                className="hidden sm:block font-mono text-[11px] uppercase tracking-widest text-text-secondary hover:text-text-primary transition-colors"
               >
                 Login
               </Link>
               <Link 
                 href="/login?signup=true" 
-                className="flex items-center gap-2 px-5 py-2 rounded-full bg-accent text-bg font-mono font-bold text-[11px] uppercase tracking-widest hover:bg-accent/90 transition-all hover:scale-[1.05] shadow-[0_0_24px_rgba(232,255,71,0.2)]"
+                className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-accent text-bg font-mono font-bold text-[11px] uppercase tracking-widest hover:bg-accent/90 transition-all hover:scale-[1.05] shadow-[0_0_24px_rgba(232,255,71,0.2)]"
               >
                 Sign up
                 <ArrowRight className="h-3 w-3 shrink-0" />
@@ -158,7 +161,7 @@ export function Navbar({ session }: { session: any }) {
           ) : (
             <Link 
               href="/dashboard"
-              className="flex items-center gap-2 px-5 py-2 rounded-full border border-border bg-bg-surface text-text-primary font-mono font-bold text-[11px] uppercase tracking-widest hover:bg-bg-hover transition-all"
+              className="flex items-center gap-2 px-6 py-2.5 rounded-full border border-border bg-bg-surface text-text-primary font-mono font-bold text-[11px] uppercase tracking-widest hover:bg-bg-hover transition-all"
             >
               Dashboard
             </Link>

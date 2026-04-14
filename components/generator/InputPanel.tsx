@@ -108,10 +108,10 @@ refactor(api): improve response time by 40%`)
         ) : (
           <>
             <Zap className="h-5 w-5" />
-            <span>Generate changelog</span>
-            <div className="absolute right-3 hidden sm:flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-              <Kbd className="bg-bg/20 border-bg/30 text-bg text-[10px]">⌘</Kbd>
-              <Kbd className="bg-bg/20 border-bg/30 text-bg text-[10px]">Enter</Kbd>
+            <span className="flex-1 text-center">Generate changelog</span>
+            <div className="hidden sm:flex items-center gap-1 opacity-60 group-hover:opacity-100 transition-opacity pr-2">
+              <Kbd className="bg-bg/20 border-bg/30 text-bg text-[10px] min-w-[20px] h-5 flex items-center justify-center">⌘</Kbd>
+              <Kbd className="bg-bg/20 border-bg/30 text-bg text-[10px] h-5 flex items-center justify-center px-1">Enter</Kbd>
             </div>
           </>
         )}

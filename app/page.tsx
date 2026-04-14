@@ -15,6 +15,14 @@ import { StaggeredMenu } from "@/components/ui/StaggeredMenu"
 import { GallerySection } from "@/components/landing/GallerySection"
 import { Navbar } from "@/components/landing/Navbar"
 import { ResourceSection } from "@/components/landing/ResourceSection"
+import {
+  IoLogoFigma,
+  IoLogoGitlab,
+  IoLogoJavascript,
+  IoLogoLinkedin,
+  IoLogoTwitter,
+  IoLogoVimeo,
+} from "react-icons/io5"
 
 export default async function LandingPage() {
   // Graceful fallback: old JWT cookies from previous auth strategy (database)
@@ -61,20 +69,26 @@ export default async function LandingPage() {
       <main>
         <Hero isLoggedIn={!!session} />
         
-        {/* Integrating official LogoLoop for ecosystem proof */}
         <section className="border-y border-border bg-bg-surface/30">
           <LogoLoop 
             fadeOut={true}
             scaleOnHover={true}
-            speed={60}
+            speed={40}
+            gap={64}
+            logoHeight={24}
             logos={[
-              { node: <span className="font-serif italic text-xl px-4">GitHub</span> },
-              { node: <span className="font-serif italic text-xl px-4">Vercel</span> },
-              { node: <span className="font-serif italic text-xl px-4">Stripe</span> },
-              { node: <span className="font-serif italic text-xl px-4">Slack</span> },
-              { node: <span className="font-serif italic text-xl px-4">Discord</span> },
-              { node: <span className="font-serif italic text-xl px-4">Prisma</span> },
-              { node: <span className="font-serif italic text-xl px-4">Supabase</span> },
+              { node: <IoLogoFigma className="text-[#F24E1E]" />, ariaLabel: "Figma" },
+              { node: <IoLogoTwitter className="text-[#1da1f2]" />, ariaLabel: "Twitter" },
+              { node: <IoLogoLinkedin className="text-[#0077b5]" />, ariaLabel: "LinkedIn" },
+              { node: <IoLogoGitlab className="text-[#fc6d26]" />, ariaLabel: "GitLab" },
+              { node: <IoLogoVimeo className="text-[#1ab7ea]" />, ariaLabel: "Vimeo" },
+              { node: <IoLogoJavascript className="text-[#f7df1e]" />, ariaLabel: "JavaScript" },
+              { node: <IoLogoFigma className="text-[#F24E1E]" />, ariaLabel: "Figma" },
+              { node: <IoLogoTwitter className="text-[#1da1f2]" />, ariaLabel: "Twitter" },
+              { node: <IoLogoLinkedin className="text-[#0077b5]" />, ariaLabel: "LinkedIn" },
+              { node: <IoLogoGitlab className="text-[#fc6d26]" />, ariaLabel: "GitLab" },
+              { node: <IoLogoVimeo className="text-[#1ab7ea]" />, ariaLabel: "Vimeo" },
+              { node: <IoLogoJavascript className="text-[#f7df1e]" />, ariaLabel: "JavaScript" },
             ]} 
           />
         </section>
