@@ -1,8 +1,9 @@
 'use client'
 import { useEffect } from 'react'
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { AlertTriangle, RotateCcw, Home } from "lucide-react"
 import Link from "next/link"
+import { cn } from "@/lib/utils"
 
 export default function ErrorBoundary({
   error,
@@ -45,12 +46,16 @@ export default function ErrorBoundary({
             <RotateCcw className="h-4 w-4 mr-2" />
             Restart Process
           </Button>
-          <Button asChild variant="outline" className="h-12 px-8 rounded-full font-mono text-xs uppercase tracking-widest border-border hover:bg-bg-hover transition-all w-full sm:w-auto">
-            <Link href="/" className="flex items-center gap-2">
-              <Home className="h-4 w-4" />
-              Emergency Exit
-            </Link>
-          </Button>
+          <Link 
+            href="/" 
+            className={cn(
+              buttonVariants({ variant: "outline" }),
+              "h-12 px-8 rounded-full font-mono text-xs uppercase tracking-widest border-border hover:bg-bg-hover transition-all w-full sm:w-auto flex items-center justify-center gap-2"
+            )}
+          >
+            <Home className="h-4 w-4" />
+            Emergency Exit
+          </Link>
         </div>
 
         <p className="text-[10px] font-mono text-text-muted uppercase tracking-[0.3em] pt-12">Error ID: {error.digest || 'SIG_INTERRUPT'}</p>

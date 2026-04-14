@@ -1,7 +1,8 @@
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { Logo } from "@/components/ui/Logo"
 import { ArrowLeft, Home, Ghost } from "lucide-react"
 import Link from "next/link"
+import { cn } from "@/lib/utils"
 
 export default function NotFound() {
   return (
@@ -27,18 +28,26 @@ export default function NotFound() {
         </div>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8">
-          <Button asChild variant="outline" className="h-12 px-8 rounded-full font-mono text-xs uppercase tracking-widest border-border hover:bg-bg-hover transition-all w-full sm:w-auto">
-            <Link href="javascript:history.back()" className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" />
-              Go Back
-            </Link>
-          </Button>
-          <Button asChild className="h-12 px-8 rounded-full font-mono text-xs uppercase tracking-widest bg-accent text-bg hover:bg-accent/90 transition-all shadow-[0_0_24px_rgba(232,255,71,0.2)] w-full sm:w-auto">
-            <Link href="/" className="flex items-center gap-2">
-              <Home className="h-4 w-4" />
-              Return Home
-            </Link>
-          </Button>
+          <Link 
+            href="/" 
+            className={cn(
+              buttonVariants({ variant: "outline" }),
+              "h-12 px-8 rounded-full font-mono text-xs uppercase tracking-widest border-border hover:bg-bg-hover transition-all w-full sm:w-auto flex items-center justify-center gap-2"
+            )}
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Go Back
+          </Link>
+          <Link 
+            href="/" 
+            className={cn(
+              buttonVariants({ variant: "default" }),
+              "h-12 px-8 rounded-full font-mono text-xs uppercase tracking-widest bg-accent text-bg hover:bg-accent/90 transition-all shadow-[0_0_24px_rgba(232,255,71,0.2)] w-full sm:w-auto flex items-center justify-center gap-2"
+            )}
+          >
+            <Home className="h-4 w-4" />
+            Return Home
+          </Link>
         </div>
 
         <div className="pt-16">
