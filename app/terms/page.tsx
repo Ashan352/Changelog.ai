@@ -126,17 +126,13 @@ export default async function TermsPage() {
               </nav>
 
               <div className="mt-8 pt-8 border-t border-border/50">
-                <Link 
+                <a 
                   href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                  className="flex items-center gap-2 text-xs font-mono text-text-muted hover:text-accent transition-all group"
+                  className="flex items-center gap-2 text-xs font-mono text-text-muted hover:text-accent transition-all group w-full"
                 >
                   <ArrowUp className="h-3.5 w-3.5 text-accent" />
                   Back to top
-                </Link>
+                </a>
               </div>
             </div>
           </aside>

@@ -61,7 +61,7 @@ export default async function PrivacyPage() {
             Privacy Policy
           </h1>
           <p className="font-mono text-sm text-text-muted uppercase tracking-[0.2em]">
-            Last Updated October 14th, 2024
+            Last Updated May 23rd, 2022
           </p>
         </div>
 
@@ -74,7 +74,7 @@ export default async function PrivacyPage() {
               </p>
               
               <div className="space-y-8 text-text-secondary leading-loose">
-                <h2 className="text-2xl font-mono font-bold text-text-primary underline decoration-accent/50 underline-offset-8">General Terms</h2>
+                <h2 className="text-2xl font-mono font-bold text-text-primary underline decoration-accent/50 underline-offset-[12px]">Privacy Policy</h2>
                 <p>
                   This privacy policy sets out how Changelog AI Inc. (“Changelog AI”, “we”, “us”, or “our”) collects, uses, and discloses any personal information that you give us or that we collect when you use our website or Services.
                 </p>
@@ -82,6 +82,13 @@ export default async function PrivacyPage() {
                   By using our website or Services, or by choosing to give us personal information, you consent to this Privacy Policy and the processing of your Personal Information it describes. If you do not agree with any terms of this Privacy Policy, please exercise the choices we describe in this Policy, or do not use the Services and do not give us any personal information.
                 </p>
               </div>
+            </section>
+
+            <section className="space-y-8 text-text-secondary leading-loose">
+                <h2 className="text-2xl font-mono font-bold text-text-primary underline decoration-accent/50 underline-offset-[12px]">Privacy Summary</h2>
+                 <p>
+                  <strong className="text-text-primary">1. What Personal Information we collect.</strong> To register for our Services, you provide your GitHub account details. If you make a purchase, we collect information about your transaction, such as public wallet address, date and time, value, and transaction history.
+                </p>
             </section>
 
             <section id="collect" className="scroll-mt-24 space-y-4">
@@ -156,17 +163,13 @@ export default async function PrivacyPage() {
               </nav>
 
               <div className="mt-8 pt-8 border-t border-border/50">
-                <Link 
+                <a 
                   href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                  className="flex items-center gap-2 text-xs font-mono text-text-muted hover:text-accent transition-all group"
+                  className="flex items-center gap-2 text-xs font-mono text-text-muted hover:text-accent transition-all group w-full"
                 >
-                  <ArrowUp className="h-3.5 w-3.5 group-hover:-translate-y-0.5 transition-transform text-accent" />
+                  <ArrowUp className="h-3.5 w-3.5 text-accent" />
                   Back to top
-                </Link>
+                </a>
               </div>
             </div>
           </aside>

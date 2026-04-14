@@ -95,17 +95,13 @@ export default async function SecurityPage() {
         </div>
 
         <div className="mt-24 text-center">
-            <Link 
+            <a 
               href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
               className="inline-flex items-center gap-2 text-xs font-mono text-text-muted hover:text-accent transition-all group"
             >
               <ArrowUp className="h-3.5 w-3.5 text-accent" />
               Back to top
-            </Link>
+            </a>
         </div>
       </main>
 
