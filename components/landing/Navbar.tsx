@@ -73,7 +73,7 @@ export function Navbar({ session }: { session: any }) {
 
         {/* Center: Navigation */}
         <nav className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-1 bg-bg-surface/40 rounded-full border border-border/40 p-1">
-          {navItems.map((item) => (
+          {navItems.map((item: any) => (
             <div 
               key={item.label}
               className="relative"
@@ -98,7 +98,7 @@ export function Navbar({ session }: { session: any }) {
                         className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-64 p-2 bg-bg-surface border border-border rounded-2xl shadow-2xl backdrop-blur-xl"
                       >
                         <div className="grid gap-1">
-                          {item.items.map((subItem) => (
+                          {item.items.map((subItem: any) => (
                             <Link
                               key={subItem.label}
                               href={subItem.href}
@@ -144,7 +144,7 @@ export function Navbar({ session }: { session: any }) {
               </Link>
               <Link 
                 href="/login?signup=true" 
-                className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-accent text-bg font-mono font-bold text-[11px] uppercase tracking-widest hover:bg-accent/90 transition-all hover:scale-[1.05] shadow-[0_0_24px_rgba(232,255,71,0.2)]"
+                className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-accent text-text-primary font-mono font-bold text-[11px] uppercase tracking-widest hover:bg-accent/90 transition-all hover:scale-[1.05] shadow-[0_8px_24px_rgba(155,177,94,0.3)]"
               >
                 Sign up
                 <ArrowRight className="h-3 w-3 shrink-0" />

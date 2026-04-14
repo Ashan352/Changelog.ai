@@ -146,7 +146,7 @@ export function InputPanel({ onGenerate, isLoading }: InputPanelProps) {
           ref={btnRef}
           onClick={handleClick}
           disabled={isLoading || !commits.trim()}
-          className={`w-full flex items-center justify-between px-6 rounded-full bg-accent h-14 font-mono font-bold text-bg hover:bg-accent/90 transition-all active:scale-[0.97] disabled:opacity-50 disabled:active:scale-100 shadow-[0_0_24px_rgba(232,255,71,0.15)] hover:shadow-[0_0_32px_rgba(232,255,71,0.25)] relative group overflow-hidden ${springing ? 'btn-spring' : ''}`}
+          className={`w-full flex items-center justify-between px-6 rounded-full bg-accent h-14 font-mono font-bold text-text-primary hover:bg-accent/90 transition-all active:scale-[0.97] disabled:opacity-50 disabled:active:scale-100 shadow-[0_8px_24px_rgba(155,177,94,0.2)] hover:shadow-[0_12px_32px_rgba(155,177,94,0.3)] relative group overflow-hidden ${springing ? 'btn-spring' : ''}`}
         >
           {isLoading ? (
             <div className="flex items-center justify-center gap-2 w-full">
@@ -158,8 +158,8 @@ export function InputPanel({ onGenerate, isLoading }: InputPanelProps) {
               <Zap className="h-5 w-5 shrink-0" />
               <span className="text-base tracking-tight">Generate changelog</span>
               <div className="hidden sm:flex items-center gap-1.5 opacity-70 group-hover:opacity-100 transition-opacity">
-                <Kbd className="bg-bg/20 border-bg/30 text-bg text-[11px] min-w-[22px] h-6 flex items-center justify-center font-bold">⌘</Kbd>
-                <Kbd className="bg-bg/20 border-bg/30 text-bg text-[11px] h-6 flex items-center justify-center px-1.5 font-bold">Enter</Kbd>
+                <Kbd className="bg-text-primary/10 border-text-primary/20 text-text-primary text-[11px] min-w-[22px] h-6 flex items-center justify-center font-bold">⌘</Kbd>
+                <Kbd className="bg-text-primary/10 border-text-primary/20 text-text-primary text-[11px] h-6 flex items-center justify-center px-1.5 font-bold">Enter</Kbd>
               </div>
             </>
           )}

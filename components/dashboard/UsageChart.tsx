@@ -14,7 +14,7 @@ interface UsageChartProps {
 const chartConfig = {
   commits: {
     label: "Commits Analyzed",
-    color: "#e8ff47",
+    color: "#9bb15e",
   },
 } satisfies ChartConfig
 
@@ -22,12 +22,12 @@ export function UsageChart({ data }: UsageChartProps) {
   return (
     <ChartContainer config={chartConfig} className="min-h-[300px] w-full mt-4">
       <BarChart accessibilityLayer data={data} margin={{ top: 20 }}>
-        <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.05)" />
+        <CartesianGrid vertical={false} stroke="rgba(19, 22, 12, 0.08)" />
         <XAxis 
           dataKey="name" 
           axisLine={false} 
           tickLine={false} 
-          tick={{ fill: 'rgba(255,255,255,0.4)', fontSize: 10, fontFamily: 'monospace' }}
+          tick={{ fill: 'rgba(19, 22, 12, 0.5)', fontSize: 10, fontFamily: 'var(--font-mono)' }}
           tickMargin={10}
         />
         <YAxis hide />

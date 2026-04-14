@@ -17,14 +17,14 @@ export default function SignupPage() {
       <div 
         className="absolute inset-0 pointer-events-none" 
         style={{
-          backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
+          backgroundImage: 'linear-gradient(rgba(19, 22, 12, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(19, 22, 12, 0.05) 1px, transparent 1px)',
           backgroundSize: '60px 60px',
-          maskImage: 'radial-gradient(ellipse at center, black, transparent 80%)',
-          WebkitMaskImage: 'radial-gradient(ellipse at center, black, transparent 80%)'
+          maskImage: 'radial-gradient(ellipse at center, white, transparent 80%)',
+          WebkitMaskImage: 'radial-gradient(ellipse at center, white, transparent 80%)'
         }}
       />
       
-      <div className="relative z-10 mx-auto flex w-full max-w-[400px] flex-col justify-center space-y-8 sm:w-[350px] p-6 rounded-2xl bg-surface border border-border mt-12 sm:mt-0">
+      <div className="relative z-10 mx-auto flex w-full max-w-[400px] flex-col justify-center space-y-8 sm:w-[350px] p-6 rounded-2xl bg-bg-surface border border-border mt-12 sm:mt-0">
         <div className="flex flex-col space-y-2 text-center">
           <div className="flex justify-center pb-4 animate-fade-in" style={{ animationDelay: '0.1s' }}>
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-bg border border-border transform transition-transform hover:scale-105">

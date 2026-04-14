@@ -132,10 +132,10 @@ function LoginFormContent() {
       <div 
         className="absolute inset-0 pointer-events-none" 
         style={{
-          backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
+          backgroundImage: 'linear-gradient(rgba(19, 22, 12, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(19, 22, 12, 0.05) 1px, transparent 1px)',
           backgroundSize: '60px 60px',
-          maskImage: 'radial-gradient(ellipse at center, black, transparent 80%)',
-          WebkitMaskImage: 'radial-gradient(ellipse at center, black, transparent 80%)'
+          maskImage: 'radial-gradient(ellipse at center, white, transparent 80%)',
+          WebkitMaskImage: 'radial-gradient(ellipse at center, white, transparent 80%)'
         }}
       />
       
@@ -200,7 +200,7 @@ function LoginFormContent() {
                         required={isSignUp}
                         placeholder="John Doe"
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e: any) => setName(e.target.value)}
                         className={`w-full h-11 bg-bg border rounded-lg pl-10 pr-4 font-mono text-xs text-text-primary transition-all outline-none focus:ring-1 ${nameError ? 'border-danger focus:border-danger focus:ring-danger/20' : 'border-border hover:border-border-hover focus:border-accent focus:ring-accent/20'}`}
                       />
                     </div>
@@ -225,7 +225,7 @@ function LoginFormContent() {
                     autoComplete="email"
                     placeholder="developer@company.com"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e: any) => setEmail(e.target.value)}
                     className={`w-full h-11 bg-bg border rounded-lg pl-10 pr-4 font-mono text-xs text-text-primary transition-all outline-none focus:ring-1 ${emailError ? 'border-danger focus:border-danger focus:ring-danger/20' : 'border-border hover:border-border-hover focus:border-accent focus:ring-accent/20'}`}
                   />
                 </div>
@@ -249,7 +249,7 @@ function LoginFormContent() {
                     autoComplete={isSignUp ? "new-password" : "current-password"}
                     placeholder="Min. 8 characters"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e: any) => setPassword(e.target.value)}
                     className={`w-full h-11 bg-bg border rounded-lg pl-4 pr-10 font-mono text-xs text-text-primary transition-all outline-none focus:ring-1 ${passwordError ? 'border-danger focus:border-danger focus:ring-danger/20' : 'border-border hover:border-border-hover focus:border-accent focus:ring-accent/20'}`}
                   />
                   <button 
@@ -280,7 +280,7 @@ function LoginFormContent() {
                     type="checkbox"
                     id="newsletter"
                     checked={newsletter}
-                    onChange={(e) => setNewsletter(e.target.checked)}
+                    onChange={(e: any) => setNewsletter(e.target.checked)}
                     className="h-4 w-4 rounded border-border bg-bg text-accent focus:ring-accent focus:ring-offset-bg accent-accent"
                   />
                   <label htmlFor="newsletter" className="font-mono text-[10px] text-text-muted leading-relaxed cursor-pointer select-none">
@@ -294,7 +294,7 @@ function LoginFormContent() {
             <button
               type="submit"
               disabled={isLoading}
-              className="mt-6 w-full flex items-center justify-center rounded-lg bg-accent h-11 font-mono font-bold text-bg text-sm transition-all hover:bg-accent/90 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 disabled:opacity-50"
+              className="mt-6 w-full flex items-center justify-center rounded-lg bg-accent h-11 font-mono font-bold text-text-primary transition-all hover:bg-accent/90 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 disabled:opacity-50"
             >
               {isLoading ? (
                 <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> {isSignUp ? "Creating account..." : "Logging in..."}</>

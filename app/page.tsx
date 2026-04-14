@@ -48,7 +48,7 @@ export default async function LandingPage() {
       <div className="md:hidden">
         <StaggeredMenu 
           isFixed={true}
-          logo={<Logo hideTagline={true} className="text-white" />}
+          logo={<Logo hideTagline={true} className="text-text-primary" />}
           items={[
             { label: 'Process', link: '#how-it-works' },
             { label: 'Demo', link: '#demo' },

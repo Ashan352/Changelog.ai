@@ -50,7 +50,7 @@ export function HowItWorks() {
 
         <div className="relative grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
 
-          {steps.map((step, i) => (
+          {steps.map((step: any, i: any) => (
             <div key={i} className="relative group">
               {/* MOBILE ANIMATED ARROWS */}
               {i < steps.length - 1 && (
@@ -76,7 +76,7 @@ export function HowItWorks() {
                         ? "M 50 0 C 80 30, 80 70, 50 100" 
                         : "M 50 0 C 20 30, 20 70, 50 100"} 
                       vectorEffect="non-scaling-stroke"
-                      stroke="#e8ff47" 
+                      stroke="#9bb15e" 
                       strokeWidth="2" 
                       strokeDasharray="6 6"
                       strokeLinecap="round"
@@ -88,7 +88,7 @@ export function HowItWorks() {
               )}
 
               <div className="mb-8 flex flex-col items-center md:items-start shrink-0">
-                <div className="relative z-20 h-12 w-12 rounded-xl bg-bg-surface border border-border flex items-center justify-center text-accent shadow-[0_0_24px_rgba(232,255,71,0.05)] group-hover:shadow-[0_0_32px_rgba(232,255,71,0.15)] group-hover:-translate-y-1 transition-all duration-300">
+                <div className="relative z-20 h-12 w-12 rounded-xl bg-bg-surface border border-border flex items-center justify-center text-accent shadow-[0_8px_24px_rgba(155,177,94,0.15)] group-hover:shadow-[0_12px_32px_rgba(155,177,94,0.25)] group-hover:-translate-y-1 transition-all duration-300">
                    <step.icon className="h-5 w-5" />
                 </div>
               </div>

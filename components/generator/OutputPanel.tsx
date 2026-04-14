@@ -77,7 +77,7 @@ export function OutputPanel({ data, isLoading, hasStarted, rawResult }: { data: 
   }
 
   return (
-    <div className="flex flex-col h-full bg-bg-surface border border-border rounded-2xl overflow-hidden shadow-2xl transition-all duration-500 hover:shadow-accent/5">
+    <div className="flex flex-col h-full bg-bg-surface border border-border rounded-2xl overflow-hidden shadow-2xl transition-all duration-500 hover:shadow-accent/10">
       {/* Tab Bar */}
       <div className="flex items-center border-b border-border bg-bg-elevated/50 px-2 overflow-x-auto scroller-hide">
         {tabs.map((tab) => (
@@ -188,7 +188,7 @@ export function OutputPanel({ data, isLoading, hasStarted, rawResult }: { data: 
                     <Skeleton className="h-64 w-full" />
                   </div>
                ) : (
-                 <pre className="whitespace-pre-wrap font-sans text-base sm:text-lg text-white leading-relaxed antialiased">
+                 <pre className="whitespace-pre-wrap font-sans text-base sm:text-lg text-text-primary leading-relaxed antialiased">
                    {getContent() || (isLoading && "Crafting artifact...")}
                  </pre>
                )}
@@ -222,7 +222,7 @@ export function OutputPanel({ data, isLoading, hasStarted, rawResult }: { data: 
             <button
               onClick={handleDownload}
               disabled={!data}
-              className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 h-11 rounded-full bg-accent text-bg font-mono text-xs font-bold transition-all active:scale-[0.98] hover:shadow-[0_0_20px_rgba(232,255,71,0.2)]"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 h-11 rounded-full bg-accent text-text-primary font-mono text-xs font-bold transition-all active:scale-[0.98] hover:shadow-[0_0_20px_rgba(155,177,94,0.3)]"
             >
               <Download className="h-4 w-4" />
               Export .md
