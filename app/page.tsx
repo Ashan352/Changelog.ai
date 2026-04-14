@@ -16,13 +16,16 @@ import { GallerySection } from "@/components/landing/GallerySection"
 import { Navbar } from "@/components/landing/Navbar"
 import { ResourceSection } from "@/components/landing/ResourceSection"
 import {
-  IoLogoFigma,
-  IoLogoGitlab,
-  IoLogoJavascript,
-  IoLogoLinkedin,
-  IoLogoTwitter,
-  IoLogoVimeo,
-} from "react-icons/io5"
+  SiNextdotjs,
+  SiReact,
+  SiGithub,
+  SiStripe,
+  SiSupabase,
+  SiPostgresql,
+  SiVercel,
+  SiPrisma,
+  SiFramer
+} from "react-icons/si"
 
 export default async function LandingPage() {
   // Graceful fallback: old JWT cookies from previous auth strategy (database)
@@ -69,7 +72,7 @@ export default async function LandingPage() {
       <main>
         <Hero isLoggedIn={!!session} />
         
-        <section className="border-y border-border bg-bg-surface/30">
+        <section className="border-y border-border bg-bg-surface/30 py-3 flex items-center h-14">
           <LogoLoop 
             fadeOut={true}
             scaleOnHover={true}
@@ -77,18 +80,24 @@ export default async function LandingPage() {
             gap={64}
             logoHeight={24}
             logos={[
-              { node: <IoLogoFigma className="text-[#F24E1E]" />, ariaLabel: "Figma" },
-              { node: <IoLogoTwitter className="text-[#1da1f2]" />, ariaLabel: "Twitter" },
-              { node: <IoLogoLinkedin className="text-[#0077b5]" />, ariaLabel: "LinkedIn" },
-              { node: <IoLogoGitlab className="text-[#fc6d26]" />, ariaLabel: "GitLab" },
-              { node: <IoLogoVimeo className="text-[#1ab7ea]" />, ariaLabel: "Vimeo" },
-              { node: <IoLogoJavascript className="text-[#f7df1e]" />, ariaLabel: "JavaScript" },
-              { node: <IoLogoFigma className="text-[#F24E1E]" />, ariaLabel: "Figma" },
-              { node: <IoLogoTwitter className="text-[#1da1f2]" />, ariaLabel: "Twitter" },
-              { node: <IoLogoLinkedin className="text-[#0077b5]" />, ariaLabel: "LinkedIn" },
-              { node: <IoLogoGitlab className="text-[#fc6d26]" />, ariaLabel: "GitLab" },
-              { node: <IoLogoVimeo className="text-[#1ab7ea]" />, ariaLabel: "Vimeo" },
-              { node: <IoLogoJavascript className="text-[#f7df1e]" />, ariaLabel: "JavaScript" },
+              { node: <SiNextdotjs className="text-text-primary" />, ariaLabel: "Next.js" },
+              { node: <SiReact className="text-[#61DAFB]" />, ariaLabel: "React" },
+              { node: <SiGithub className="text-text-primary" />, ariaLabel: "GitHub" },
+              { node: <SiStripe className="text-[#008CDD]" />, ariaLabel: "Stripe" },
+              { node: <SiSupabase className="text-[#3ECF8E]" />, ariaLabel: "Supabase" },
+              { node: <SiPostgresql className="text-[#4169E1]" />, ariaLabel: "PostgreSQL" },
+              { node: <SiVercel className="text-text-primary" />, ariaLabel: "Vercel" },
+              { node: <SiPrisma className="text-text-primary" />, ariaLabel: "Prisma" },
+              { node: <SiFramer className="text-text-primary" />, ariaLabel: "Framer" },
+              { node: <SiNextdotjs className="text-text-primary" />, ariaLabel: "Next.js" },
+              { node: <SiReact className="text-[#61DAFB]" />, ariaLabel: "React" },
+              { node: <SiGithub className="text-text-primary" />, ariaLabel: "GitHub" },
+              { node: <SiStripe className="text-[#008CDD]" />, ariaLabel: "Stripe" },
+              { node: <SiSupabase className="text-[#3ECF8E]" />, ariaLabel: "Supabase" },
+              { node: <SiPostgresql className="text-[#4169E1]" />, ariaLabel: "PostgreSQL" },
+              { node: <SiVercel className="text-text-primary" />, ariaLabel: "Vercel" },
+              { node: <SiPrisma className="text-text-primary" />, ariaLabel: "Prisma" },
+              { node: <SiFramer className="text-text-primary" />, ariaLabel: "Framer" },
             ]} 
           />
         </section>
