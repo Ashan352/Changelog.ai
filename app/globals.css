@@ -116,21 +116,68 @@
     @apply bg-background text-text-primary antialiased font-sans transition-colors duration-300;
     line-height: 1.6;
     font-size: 17px;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    width: 100%;
+    position: relative;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Improved F-Pattern structure */
+  main {
+    @apply flex flex-col;
+    width: 100%;
+    max-width: 100vw;
+  }
+
+  section {
+    width: 100%;
+    max-width: 100vw;
+    overflow: hidden;
+    @apply py-20 md:py-32; /* Increased spacing to avoid accumulation */
+  }
+
+  /* Color Perception & Accessibility */
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-bg;
+  }
+
+  ::selection {
+    @apply bg-accent/30 text-text-primary;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply tracking-tight font-serif italic;
-    line-height: 1.2;
+    @apply tracking-tight font-serif italic text-text-primary;
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+    text-wrap: balance; /* Better visual balance */
   }
 
+  h1 { @apply text-5xl sm:text-7xl md:text-9xl; }
+  h2 { @apply text-4xl sm:text-5xl md:text-7xl; }
+  h3 { @apply text-3xl sm:text-4xl md:text-5xl; }
+  h4 { @apply text-2xl sm:text-3xl; }
+
   p {
-    @apply text-text-secondary leading-relaxed;
+    @apply text-text-muted leading-relaxed mb-6;
     font-size: 16px;
+    max-width: 65ch; /* Optimal line length for readability */
+    text-wrap: pretty;
   }
 
   pre, code {
     @apply font-mono leading-relaxed;
-    font-size: 15px;
+    font-size: 14px;
+    @apply bg-bg-surface p-1 rounded border border-border;
   }
 
   .scroller-hide {
@@ -139,5 +186,33 @@
   }
   .scroller-hide::-webkit-scrollbar {
     display: none;
+  }
+
+  /* Standardizing lists and tables for better F-scan pattern */
+  ul:not([class]), ol:not([class]) {
+    @apply space-y-3 mb-8 ml-6;
+    list-style-type: disc;
+  }
+
+  table {
+    @apply w-full border-collapse mb-10 text-sm font-mono border border-border shadow-2xl;
+    background: rgba(18, 18, 21, 0.4);
+    backdrop-filter: blur(8px);
+  }
+  
+  th {
+    @apply bg-bg-surface/80 p-4 text-left border-b border-border uppercase tracking-widest text-[11px] text-accent;
+  }
+  
+  td {
+    @apply p-4 border-b border-border/50 text-text-secondary transition-colors;
+  }
+
+  tr:last-child td {
+    @apply border-b-0;
+  }
+
+  tr:hover td {
+    @apply bg-bg-hover/40 text-text-primary;
   }
 }

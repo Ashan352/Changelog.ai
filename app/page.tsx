@@ -13,6 +13,8 @@ import Link from "next/link"
 
 import { StaggeredMenu } from "@/components/ui/StaggeredMenu"
 import { GallerySection } from "@/components/landing/GallerySection"
+import { Navbar } from "@/components/landing/Navbar"
+import { ResourceSection } from "@/components/landing/ResourceSection"
 
 export default async function LandingPage() {
   // Graceful fallback: old JWT cookies from previous auth strategy (database)
@@ -27,7 +29,11 @@ export default async function LandingPage() {
 
   return (
     <div className="bg-bg min-h-screen selection:bg-accent/30">
-      {/* Mobile Staggered Menu */}
+      {/* Desktop/Mobile Navbar */}
+      <div className="hidden md:block">
+        <Navbar session={session} />
+      </div>
+
       <div className="md:hidden">
         <StaggeredMenu 
           isFixed={true}
@@ -51,39 +57,6 @@ export default async function LandingPage() {
           ]}
         />
       </div>
-
-      <header className="fixed top-0 left-0 right-0 z-[100] p-4 sm:p-6 hidden md:flex justify-center pointer-events-none">
-          <div className="max-w-7xl w-full flex items-center justify-between pointer-events-auto relative">
-            
-            <Logo />
-            
-            <nav className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-8 px-6 py-2 rounded-full border border-border bg-bg-surface/50 backdrop-blur-md">
-               <Link href="#how-it-works" className="text-[11px] font-mono text-text-secondary hover:text-accent transition-colors uppercase tracking-widest">Process</Link>
-               <Link href="#demo" className="text-[11px] font-mono text-text-secondary hover:text-accent transition-colors uppercase tracking-widest">Demo</Link>
-               <Link href="#pricing" className="text-[11px] font-mono text-text-secondary hover:text-accent transition-colors uppercase tracking-widest">Pricing</Link>
-            </nav>
-
-            <div className="flex items-center gap-4 ml-auto md:ml-0">
-               {!session && (
-                  <div className="flex items-center gap-3">
-                    <Link 
-                      href="/login" 
-                      className="hidden sm:flex items-center justify-center px-4 py-2.5 rounded-full text-text-secondary font-mono text-xs hover:text-text-primary transition-colors"
-                    >
-                      Login
-                    </Link>
-                    <Link 
-                      href="/login?signup=true" 
-                      className="hidden sm:flex items-center gap-2 px-6 py-2.5 rounded-full bg-accent text-bg font-mono font-bold text-xs hover:bg-accent/90 transition-all hover:scale-[1.02] shadow-[0_0_24px_rgba(232,255,71,0.2)]"
-                    >
-                      Sign up
-                      <ArrowRight className="h-3 w-3 shrink-0" />
-                    </Link>
-                  </div>
-               )}
-            </div>
-         </div>
-      </header>
 
       <main>
         <Hero isLoggedIn={!!session} />
@@ -113,6 +86,7 @@ export default async function LandingPage() {
 
         <div id="stats"><Stats /></div>
         <div id="pricing"><Pricing /></div>
+        <div id="resources"><ResourceSection /></div>
         <div id="faq"><FAQ /></div>
       </main>
 

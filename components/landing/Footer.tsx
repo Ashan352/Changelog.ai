@@ -24,22 +24,33 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 col-span-1 md:col-span-2 gap-8 md:gap-12">
+          <div className="grid grid-cols-2 lg:grid-cols-3 col-span-1 md:col-span-2 gap-8 md:gap-12">
             <div className="space-y-4">
-              <h4 className="font-mono text-[12px] uppercase tracking-widest text-text-primary">Product</h4>
+              <h4 className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent">Product</h4>
               <ul className="space-y-3">
-                <li><Link href="#demo" className="font-mono text-sm text-white hover:text-accent transition-colors">Interactive Demo</Link></li>
-                <li><Link href="#pricing" className="font-mono text-sm text-white hover:text-accent transition-colors">Pricing Options</Link></li>
-                <li><Link href="/login" className="font-mono text-sm text-white hover:text-accent transition-colors">Early Access</Link></li>
+                <li><Link href="#how-it-works" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">Process</Link></li>
+                <li><Link href="#demo" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">Interactive Demo</Link></li>
+                <li><Link href="#pricing" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">Pricing</Link></li>
+                <li><Link href="/login" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">Login / Sign Up</Link></li>
               </ul>
             </div>
 
             <div className="space-y-4">
-              <h4 className="font-mono text-[12px] uppercase tracking-widest text-text-primary">Legal & Identity</h4>
+              <h4 className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent">Resources</h4>
               <ul className="space-y-3">
-                <li><Link href="#" className="font-mono text-sm text-white hover:text-accent transition-colors">Privacy Policy</Link></li>
-                <li><Link href="#" className="font-mono text-sm text-white hover:text-accent transition-colors">Terms of Service</Link></li>
-                <li><Link href="#" className="font-mono text-sm text-white hover:text-accent transition-colors">Sitemap</Link></li>
+                <li><Link href="/blog" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">Blog & Guides</Link></li>
+                <li><Link href="/docs" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">Documentation</Link></li>
+                <li><Link href="/faq" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">FAQ</Link></li>
+                <li><Link href="/support" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">Support</Link></li>
+              </ul>
+            </div>
+
+            <div className="space-y-4 hidden lg:block">
+              <h4 className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent">Legal</h4>
+              <ul className="space-y-3">
+                <li><Link href="/privacy" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">Privacy Policy</Link></li>
+                <li><Link href="/terms" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">Terms of Service</Link></li>
+                <li><Link href="/security" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">Security</Link></li>
               </ul>
             </div>
           </div>

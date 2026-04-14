@@ -163,6 +163,59 @@ export function Pricing() {
           </FadeUp>
         ))}
       </div>
+
+      {/* Comparison Table */}
+      <FadeUp delay={0.3}>
+        <div className="mt-24 overflow-x-auto scroller-hide">
+          <table className="min-w-[700px]">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Free Plan</th>
+                <th>Pro Plan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Monthly Generations</td>
+                <td>5 total</td>
+                <td>Unlimited</td>
+              </tr>
+              <tr>
+                <td>History Retention</td>
+                <td>24 hours</td>
+                <td>Permanent</td>
+              </tr>
+              <tr>
+                <td>AI Models</td>
+                <td>Standard</td>
+                <td>Priority (Latest)</td>
+              </tr>
+              <tr>
+                <td>Custom Hosted Page</td>
+                <td>-</td>
+                <td>Included</td>
+              </tr>
+              <tr>
+                <td>GitHub Integration</td>
+                <td>Basic</td>
+                <td>Advanced (README Badges)</td>
+              </tr>
+              <tr>
+                <td>Twitter/Slack Export</td>
+                <td>Limited</td>
+                <td>Full Support</td>
+              </tr>
+              <tr>
+                <td>Support</td>
+                <td>Community</td>
+                <td>Priority 24/7</td>
+              </tr>
+            </tbody>
+          </table>
+          <p className="text-[11px] font-mono text-text-muted mt-4 text-center">* Pricing excludes local taxes. Billed in USD.</p>
+        </div>
+      </FadeUp>
     </section>
   )
 }
