@@ -28,7 +28,7 @@ async function StatsContent() {
   const history = await getCachedHistory(session.user.id)
 
   // Format data for chart (last 7 generations)
-  const chartData = history.reverse().map((item, index) => ({
+  const chartData = history.reverse().map((item: { commits: number | null }, index: number) => ({
     name: `Gen ${index + 1}`,
     commits: item.commits || 0,
   }))
