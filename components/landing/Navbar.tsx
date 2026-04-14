@@ -69,7 +69,7 @@ export function Navbar({ session }: { session: any }) {
           : "bg-transparent border-transparent py-5"
       }`}
     >
-      <div className="max-w-[1400px] w-full mx-auto px-6 flex items-center relative">
+      <div className="max-w-[1400px] w-full mx-auto px-6 flex items-center justify-between relative">
         {/* Left: Logo */}
         <div className="flex items-center">
           <Logo hideTagline={true} />
@@ -137,7 +137,7 @@ export function Navbar({ session }: { session: any }) {
         </nav>
 
         {/* Right: Auth Buttons */}
-        <div className="flex items-center gap-4 ml-auto md:ml-0">
+        <div className="flex items-center gap-4">
           {!session ? (
             <div className="flex items-center gap-6">
               <Link 
