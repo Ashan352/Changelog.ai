@@ -109,6 +109,31 @@ function computeItemBaseRotation(offsetX, offsetY, sizeX, sizeY, segments) {
   return { rotateX, rotateY };
 }
 
+export interface DomeImage {
+  src: string;
+  alt?: string;
+}
+
+export interface DomeGalleryProps {
+  images?: DomeImage[];
+  fit?: number;
+  fitBasis?: 'auto' | 'min' | 'max' | 'width' | 'height';
+  minRadius?: number;
+  maxRadius?: number;
+  padFactor?: number;
+  overlayBlurColor?: string;
+  maxVerticalRotationDeg?: number;
+  dragSensitivity?: number;
+  enlargeTransitionMs?: number;
+  segments?: number;
+  dragDampening?: number;
+  openedImageWidth?: string;
+  openedImageHeight?: string;
+  imageBorderRadius?: string;
+  openedImageBorderRadius?: string;
+  grayscale?: boolean;
+}
+
 export default function DomeGallery({
   images = DEFAULT_IMAGES,
   fit = 0.5,
@@ -127,7 +152,7 @@ export default function DomeGallery({
   imageBorderRadius = '30px',
   openedImageBorderRadius = '30px',
   grayscale = true
-}) {
+}: DomeGalleryProps) {
   const rootRef = useRef(null);
   const mainRef = useRef(null);
   const sphereRef = useRef(null);
