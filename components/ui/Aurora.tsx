@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { Renderer, Program, Mesh, Color, Triangle } from 'ogl';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const VERT = `#version 300 es
 in vec2 position;
@@ -114,21 +114,33 @@ export default function Aurora(props) {
   propsRef.current = props;
 
   const ctnDom = useRef(null);
+  const [webglSupported, setWebglSupported] = useState(true);
 
   useEffect(() => {
+    // Pre-check WebGL support before attempting to create a full renderer
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+    if (!gl) {
+      setWebglSupported(false);
+      return;
+    }
+
     const ctn = ctnDom.current;
     if (!ctn) return;
 
-    const renderer = new Renderer({
-      alpha: true,
-      premultipliedAlpha: true,
-      antialias: true
-    });
-    const gl = renderer.gl;
-    gl.clearColor(0, 0, 0, 0);
-    gl.enable(gl.BLEND);
-    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
-    gl.canvas.style.backgroundColor = 'transparent';
+    let renderer;
+    try {
+      renderer = new Renderer({ alpha: true, premultipliedAlpha: true, antialias: true });
+    } catch (e) {
+      setWebglSupported(false);
+      return;
+    }
+
+    const gl2 = renderer.gl;
+    gl2.clearColor(0, 0, 0, 0);
+    gl2.enable(gl2.BLEND);
+    gl2.blendFunc(gl2.ONE, gl2.ONE_MINUS_SRC_ALPHA);
+    gl2.canvas.style.backgroundColor = 'transparent';
 
     let program;
 
@@ -143,7 +155,7 @@ export default function Aurora(props) {
     }
     window.addEventListener('resize', resize);
 
-    const geometry = new Triangle(gl);
+    const geometry = new Triangle(gl2);
     if (geometry.attributes.uv) {
       delete geometry.attributes.uv;
     }
@@ -153,7 +165,7 @@ export default function Aurora(props) {
       return [c.r, c.g, c.b];
     });
 
-    program = new Program(gl, {
+    program = new Program(gl2, {
       vertex: VERT,
       fragment: FRAG,
       uniforms: {
@@ -165,8 +177,8 @@ export default function Aurora(props) {
       }
     });
 
-    const mesh = new Mesh(gl, { geometry, program });
-    ctn.appendChild(gl.canvas);
+    const mesh = new Mesh(gl2, { geometry, program });
+    ctn.appendChild(gl2.canvas);
 
     let animateId = 0;
     const update = t => {
@@ -189,13 +201,25 @@ export default function Aurora(props) {
     return () => {
       cancelAnimationFrame(animateId);
       window.removeEventListener('resize', resize);
-      if (ctn && gl.canvas.parentNode === ctn) {
-        ctn.removeChild(gl.canvas);
+      if (ctn && gl2.canvas.parentNode === ctn) {
+        ctn.removeChild(gl2.canvas);
       }
-      gl.getExtension('WEBGL_lose_context')?.loseContext();
+      gl2.getExtension('WEBGL_lose_context')?.loseContext();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amplitude]);
+
+  // CSS-only fallback for devices that don't support WebGL
+  if (!webglSupported) {
+    return (
+      <div
+        className="w-full h-full"
+        style={{
+          background: 'radial-gradient(ellipse at 50% 80%, rgba(58, 74, 10, 0.6) 0%, rgba(16, 16, 16, 0) 70%)',
+        }}
+      />
+    );
+  }
 
   return <div ref={ctnDom} className="w-full h-full" />;
 }
