@@ -175,10 +175,14 @@
     @apply bg-background text-text-primary antialiased font-sans transition-colors duration-300;
     line-height: 1.6;
     font-size: 17px;
-    overflow-x: hidden; /* Prevent horizontal scroll */
-    width: 100%;
+    overflow-x: hidden;
+    width: 100vw;
+    max-width: 100%;
     position: relative;
     text-rendering: optimizeLegibility;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
   }
 
