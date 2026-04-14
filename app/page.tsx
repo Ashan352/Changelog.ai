@@ -14,7 +14,6 @@ import Link from "next/link"
 import { StaggeredMenu } from "@/components/ui/StaggeredMenu"
 import { GallerySection } from "@/components/landing/GallerySection"
 import { Navbar } from "@/components/landing/Navbar"
-import { ResourceSection } from "@/components/landing/ResourceSection"
 import {
   SiNextdotjs,
   SiReact,
@@ -109,7 +108,6 @@ export default async function LandingPage() {
 
         <div id="stats"><Stats /></div>
         <div id="pricing"><Pricing /></div>
-        <div id="resources"><ResourceSection /></div>
         <div id="faq"><FAQ /></div>
       </main>
 

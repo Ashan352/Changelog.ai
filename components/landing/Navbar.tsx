@@ -20,6 +20,7 @@ const navItems: NavItem[] = [
     href: "#", 
     items: [
       { label: "Docs", href: "/docs", icon: Terminal, description: "Integration guides and API reference." },
+      { label: "FAQ", href: "#faq", icon: BookOpen, description: "Common questions answered." },
       { label: "Privacy", href: "/privacy", icon: Shield, description: "How we handle your data." },
     ]
   },
