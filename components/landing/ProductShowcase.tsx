@@ -172,7 +172,7 @@ export function ProductShowcase() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="absolute inset-0 flex flex-col items-center justify-center border border-dashed border-border rounded-2xl bg-bg-surface/30"
+                  className="w-full min-h-[300px] sm:min-h-[400px] flex flex-col items-center justify-center border border-dashed border-border rounded-2xl bg-bg-surface/30"
                 >
                   <div className="h-10 w-10 bg-bg-elevated border border-border rounded-lg flex items-center justify-center mb-4">
                     <span className="text-text-muted font-mono text-lg">⌘</span>
