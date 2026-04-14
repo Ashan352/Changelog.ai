@@ -37,15 +37,15 @@ export function SettingsClient({
       <Accordion className="w-full space-y-4">
         
         {/* Profile Information */}
-        <AccordionItem value="profile" className="border border-border rounded-2xl bg-bg-surface/50 overflow-hidden px-2">
-          <AccordionTrigger className="hover:no-underline px-4 py-6 group">
-            <div className="flex items-start gap-4 text-left">
-              <div className="w-10 h-10 rounded-xl bg-bg border border-border flex items-center justify-center text-text-muted group-hover:text-accent group-hover:border-accent/40 transition-all">
-                <User className="h-5 w-5" />
+        <AccordionItem value="profile" className="border border-border rounded-xl bg-bg-surface/50 overflow-hidden px-1">
+          <AccordionTrigger className="hover:no-underline px-4 py-4 group">
+            <div className="flex items-center gap-4 text-left">
+              <div className="w-9 h-9 rounded-lg bg-bg border border-border flex items-center justify-center text-text-muted group-hover:text-accent group-hover:border-accent/40 transition-all">
+                <User className="h-4.5 w-4.5" />
               </div>
               <div className="flex flex-col">
-                <h3 className="text-sm font-mono font-bold text-text-primary">Profile Information</h3>
-                <p className="text-xs font-mono text-text-muted mt-1">Update your name and avatar</p>
+                <h3 className="text-[15px] font-mono font-bold text-text-primary">Profile Information</h3>
+                <p className="text-sm font-mono text-text-muted mt-0.5">Update your name and avatar</p>
               </div>
             </div>
           </AccordionTrigger>
@@ -76,15 +76,15 @@ export function SettingsClient({
         </AccordionItem>
 
         {/* Notification Preferences */}
-        <AccordionItem value="notifications" className="border border-border rounded-2xl bg-bg-surface/50 overflow-hidden px-2">
-          <AccordionTrigger className="hover:no-underline px-4 py-6 group">
-            <div className="flex items-start gap-4 text-left">
-              <div className="w-10 h-10 rounded-xl bg-bg border border-border flex items-center justify-center text-text-muted group-hover:text-accent group-hover:border-accent/40 transition-all">
-                <Bell className="h-5 w-5" />
+        <AccordionItem value="notifications" className="border border-border rounded-xl bg-bg-surface/50 overflow-hidden px-1">
+          <AccordionTrigger className="hover:no-underline px-4 py-4 group">
+            <div className="flex items-center gap-4 text-left">
+              <div className="w-9 h-9 rounded-lg bg-bg border border-border flex items-center justify-center text-text-muted group-hover:text-accent group-hover:border-accent/40 transition-all">
+                <Bell className="h-4.5 w-4.5" />
               </div>
               <div className="flex flex-col">
-                <h3 className="text-sm font-mono font-bold text-text-primary">Notification Preferences</h3>
-                <p className="text-xs font-mono text-text-muted mt-1">Manage how you receive updates</p>
+                <h3 className="text-[15px] font-mono font-bold text-text-primary">Notification Preferences</h3>
+                <p className="text-sm font-mono text-text-muted mt-0.5">Manage how you receive updates</p>
               </div>
             </div>
           </AccordionTrigger>
@@ -109,15 +109,15 @@ export function SettingsClient({
         </AccordionItem>
 
         {/* Security & Privacy */}
-        <AccordionItem value="security" className="border border-border rounded-2xl bg-bg-surface/50 overflow-hidden px-2">
-          <AccordionTrigger className="hover:no-underline px-4 py-6 group">
-            <div className="flex items-start gap-4 text-left">
-              <div className="w-10 h-10 rounded-xl bg-bg border border-border flex items-center justify-center text-text-muted group-hover:text-accent group-hover:border-accent/40 transition-all">
-                <Shield className="h-5 w-5" />
+        <AccordionItem value="security" className="border border-border rounded-xl bg-bg-surface/50 overflow-hidden px-1">
+          <AccordionTrigger className="hover:no-underline px-4 py-4 group">
+            <div className="flex items-center gap-4 text-left">
+              <div className="w-9 h-9 rounded-lg bg-bg border border-border flex items-center justify-center text-text-muted group-hover:text-accent group-hover:border-accent/40 transition-all">
+                <Shield className="h-4.5 w-4.5" />
               </div>
               <div className="flex flex-col">
-                <h3 className="text-sm font-mono font-bold text-text-primary">Security & Privacy</h3>
-                <p className="text-xs font-mono text-text-muted mt-1">Configure dual-authentication and data</p>
+                <h3 className="text-[15px] font-mono font-bold text-text-primary">Security & Privacy</h3>
+                <p className="text-sm font-mono text-text-muted mt-0.5">Configure dual-authentication and data</p>
               </div>
             </div>
           </AccordionTrigger>

@@ -146,20 +146,20 @@ export function InputPanel({ onGenerate, isLoading }: InputPanelProps) {
           ref={btnRef}
           onClick={handleClick}
           disabled={isLoading || !commits.trim()}
-          className={`w-full flex items-center justify-center gap-2 rounded-lg bg-accent h-12 font-mono font-bold text-bg hover:bg-accent/90 transition-colors active:scale-[0.97] disabled:opacity-50 disabled:active:scale-100 shadow-[0_0_24px_rgba(232,255,71,0.15)] hover:shadow-[0_0_32px_rgba(232,255,71,0.25)] relative group ${springing ? 'btn-spring' : ''}`}
+          className={`w-full flex items-center justify-between px-6 rounded-full bg-accent h-14 font-mono font-bold text-bg hover:bg-accent/90 transition-all active:scale-[0.97] disabled:opacity-50 disabled:active:scale-100 shadow-[0_0_24px_rgba(232,255,71,0.15)] hover:shadow-[0_0_32px_rgba(232,255,71,0.25)] relative group overflow-hidden ${springing ? 'btn-spring' : ''}`}
         >
           {isLoading ? (
-            <>
+            <div className="flex items-center justify-center gap-2 w-full">
               <Loader2 className="h-5 w-5 animate-spin" />
-              Generating...
-            </>
+              <span>Generating...</span>
+            </div>
           ) : (
             <>
-              <Zap className="h-5 w-5" />
-              <span className="flex-1 text-center">Generate changelog</span>
-              <div className="hidden sm:flex items-center gap-1 opacity-60 group-hover:opacity-100 transition-opacity pr-2">
-                <Kbd className="bg-bg/20 border-bg/30 text-bg text-[10px] min-w-[20px] h-5 flex items-center justify-center">⌘</Kbd>
-                <Kbd className="bg-bg/20 border-bg/30 text-bg text-[10px] h-5 flex items-center justify-center px-1">Enter</Kbd>
+              <Zap className="h-5 w-5 shrink-0" />
+              <span className="text-base tracking-tight">Generate changelog</span>
+              <div className="hidden sm:flex items-center gap-1.5 opacity-70 group-hover:opacity-100 transition-opacity">
+                <Kbd className="bg-bg/20 border-bg/30 text-bg text-[11px] min-w-[22px] h-6 flex items-center justify-center font-bold">⌘</Kbd>
+                <Kbd className="bg-bg/20 border-bg/30 text-bg text-[11px] h-6 flex items-center justify-center px-1.5 font-bold">Enter</Kbd>
               </div>
             </>
           )}
