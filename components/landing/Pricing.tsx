@@ -60,17 +60,20 @@ export function Pricing() {
           </button>
           <button
             onClick={() => setIsAnnual(true)}
-            className={`px-6 py-2.5 rounded-full font-mono text-sm transition-colors truncate relative ${isAnnual ? 'bg-bg text-text-primary border border-border' : 'text-text-muted hover:text-text-secondary'}`}
+            className={`px-6 py-2.5 rounded-full font-mono text-sm transition-colors relative ${isAnnual ? 'bg-bg text-text-primary border border-border' : 'text-text-muted hover:text-text-secondary'}`}
           >
             Yearly
             {isAnnual && (
-              <motion.span
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                className="absolute -top-4 -right-4 px-2 py-0.5 rounded bg-accent text-bg font-bold text-[9px]"
-              >
-                -25%
-              </motion.span>
+              <>
+                <motion.span
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="absolute -top-4 -right-4 px-2 py-0.5 rounded bg-accent text-bg font-bold text-[9px] z-10"
+                >
+                  -25%
+                </motion.span>
+                <span className="absolute top-0 right-2 w-1.5 h-1.5 bg-accent rounded-full blur-[2px] animate-pulse" />
+              </>
             )}
           </button>
         </div>

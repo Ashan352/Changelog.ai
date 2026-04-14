@@ -33,8 +33,8 @@ export default async function LandingPage() {
           isFixed={true}
           logo={<Logo hideTagline={true} className="text-white" />}
           items={[
-            { label: 'Demo', link: '#demo' },
             { label: 'Process', link: '#how-it-works' },
+            { label: 'Demo', link: '#demo' },
             { label: 'Impact', link: '#stats' },
             { label: 'Pricing', link: '#pricing' },
             { label: 'FAQ', link: '#faq' },
@@ -58,8 +58,8 @@ export default async function LandingPage() {
             <Logo />
             
             <nav className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-8 px-6 py-2 rounded-full border border-border bg-bg-surface/50 backdrop-blur-md">
-               <Link href="#demo" className="text-[11px] font-mono text-text-secondary hover:text-accent transition-colors uppercase tracking-widest">Demo</Link>
                <Link href="#how-it-works" className="text-[11px] font-mono text-text-secondary hover:text-accent transition-colors uppercase tracking-widest">Process</Link>
+               <Link href="#demo" className="text-[11px] font-mono text-text-secondary hover:text-accent transition-colors uppercase tracking-widest">Demo</Link>
                <Link href="#pricing" className="text-[11px] font-mono text-text-secondary hover:text-accent transition-colors uppercase tracking-widest">Pricing</Link>
             </nav>
 
