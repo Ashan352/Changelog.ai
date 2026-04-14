@@ -63,11 +63,7 @@ export function Navbar({ session }: { session: any }) {
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 border-b ${
-        scrolled 
-          ? "bg-bg/80 backdrop-blur-md border-border py-3" 
-          : "bg-transparent border-transparent py-5"
-      }`}
+      className="fixed top-0 left-0 right-0 z-[100] bg-transparent border-b border-transparent py-5"
     >
       <div className="max-w-[1400px] w-full mx-auto px-6 flex items-center justify-between relative">
         {/* Left: Logo */}
