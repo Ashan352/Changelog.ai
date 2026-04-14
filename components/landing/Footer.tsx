@@ -27,9 +27,9 @@ export function Footer() {
             <div className="space-y-4">
               <h3 className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent font-bold">Product</h3>
               <ul className="space-y-3 list-none p-0">
-                <li><Link href="#process" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">Process</Link></li>
-                <li><Link href="#demo" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">Interactive Demo</Link></li>
-                <li><Link href="#pricing" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">Pricing</Link></li>
+                <li><Link href="/#how-it-works" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">Process</Link></li>
+                <li><Link href="/#demo" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">Interactive Demo</Link></li>
+                <li><Link href="/#pricing" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">Pricing</Link></li>
                 <li><Link href="/login" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">Login / Sign Up</Link></li>
               </ul>
             </div>
@@ -38,8 +38,8 @@ export function Footer() {
               <h3 className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent font-bold">Resources</h3>
               <ul className="space-y-3 list-none p-0">
                 <li><Link href="/docs" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">Documentation</Link></li>
-                <li><Link href="/faq" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">FAQ</Link></li>
-                <li><Link href="/support" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">Support</Link></li>
+                <li><Link href="/#faq" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">FAQ</Link></li>
+                <li><Link href="/docs" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">Support</Link></li>
               </ul>
             </div>
 

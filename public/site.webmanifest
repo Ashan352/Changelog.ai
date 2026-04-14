@@ -1,0 +1,16 @@
+{
+  "name": "Changelog AI",
+  "short_name": "Changelog",
+  "description": "Automate your product updates with AI-driven clarity.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fcfdfb",
+  "theme_color": "#91c96b",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
