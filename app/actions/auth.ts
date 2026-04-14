@@ -51,3 +51,15 @@ export async function signUp(formData: FormData) {
     return { error: "Something went wrong during registration" }
   }
 }
+
+export async function checkUserExists(email: string) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email },
+      select: { id: true }
+    });
+    return { exists: !!user };
+  } catch (error) {
+    return { exists: false };
+  }
+}

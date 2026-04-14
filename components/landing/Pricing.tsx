@@ -150,11 +150,11 @@ export function Pricing() {
                     </ul>
 
                     <Link 
-                      href="/login"
+                      href={`/login?callbackUrl=/dashboard/usage&signup=true`}
                       className={`group w-full flex items-center justify-center gap-2 h-14 rounded-full font-mono font-bold text-sm transition-all active:scale-[0.98] ${
                       plan.featured ? 'bg-accent text-bg hover:brightness-110 shadow-[0_4px_24px_rgba(232,255,71,0.2)]' : 'bg-bg border border-border text-text-primary hover:bg-bg-hover'
                     }`}>
-                      {plan.cta}
+                      {plan.featured ? "Get Premium Access" : plan.cta}
                       <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                     </Link>
                   </div>

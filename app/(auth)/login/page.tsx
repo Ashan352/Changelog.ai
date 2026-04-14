@@ -11,6 +11,7 @@ function LoginFormContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const isSignUpInit = searchParams.get("signup") === "true"
+  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard"
   const [isSignUp, setIsSignUp] = useState(isSignUpInit)
 
   const [name, setName] = useState("")
@@ -78,6 +79,14 @@ function LoginFormContent() {
           setIsLoading(false)
           return
         }
+      } else {
+        // Handle Login Check: Check if user exists first
+        const { exists } = await (await import("@/app/actions/auth")).checkUserExists(email)
+        if (!exists) {
+          setIsSubmitError("Account not found. Please sign up first.")
+          setIsLoading(false)
+          return
+        }
       }
 
       // Handle Login (either after signup or direct)
@@ -85,7 +94,7 @@ function LoginFormContent() {
         email,
         password,
         redirect: false,
-        callbackUrl: "/dashboard",
+        callbackUrl: callbackUrl,
       })
 
       if (res?.error) {
@@ -94,7 +103,7 @@ function LoginFormContent() {
       } else {
         setSuccess(true)
         setTimeout(() => {
-          window.location.href = "/dashboard"
+          window.location.href = callbackUrl
         }, 1500)
       }
     } catch (err) {
@@ -302,7 +311,7 @@ function LoginFormContent() {
               <div className="mt-6 grid grid-cols-2 gap-3">
                 <button
                   type="button"
-                  onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
+                  onClick={() => signIn("github", { callbackUrl })}
                   className="flex items-center justify-center rounded-lg bg-bg border border-border h-10 font-mono text-[11px] text-text-primary transition-all hover:bg-bg-hover hover:-translate-y-0.5"
                 >
                   <svg className="mr-2 h-4 w-4 fill-current" viewBox="0 0 24 24">
@@ -312,7 +321,7 @@ function LoginFormContent() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+                  onClick={() => signIn("google", { callbackUrl })}
                   className="flex items-center justify-center rounded-lg bg-bg border border-border h-10 font-mono text-[11px] text-text-primary transition-all hover:bg-bg-hover hover:-translate-y-0.5"
                 >
                   <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
