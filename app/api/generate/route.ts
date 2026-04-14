@@ -87,8 +87,8 @@ export async function POST(req: Request) {
           });
           revalidatePath('/dashboard');
           revalidatePath('/dashboard/usage');
-          revalidateTag('history');
-          revalidateTag(`history-${session.user.id}`);
+          (revalidateTag as any)('history');
+          (revalidateTag as any)(`history-${session.user.id}`);
         } catch (err) {
           // Non-critical — generation count already incremented above
           console.error("History save failed (non-critical):", err);
