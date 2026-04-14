@@ -1,7 +1,10 @@
-import { auth } from "@/lib/auth";
+import NextAuth from "next-auth";
+import authConfig from "./lib/auth.config";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { ratelimit } from "@/lib/ratelimit";
+
+const { auth } = NextAuth(authConfig);
 
 // Global Security Headers Configuration
 const securityHeaders = {
