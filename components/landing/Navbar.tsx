@@ -19,7 +19,6 @@ const navItems: NavItem[] = [
     label: "Resources", 
     href: "#", 
     items: [
-      { label: "Blog", href: "/blog", icon: BookOpen, description: "Tips and updates from the team." },
       { label: "Docs", href: "/docs", icon: Terminal, description: "Integration guides and API reference." },
       { label: "Privacy", href: "/privacy", icon: Shield, description: "How we handle your data." },
     ]

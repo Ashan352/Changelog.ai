@@ -1,183 +1,65 @@
-import React from "react"
-import { auth } from "@/lib/auth"
-import { Navbar } from "@/components/landing/Navbar"
-import { Footer } from "@/components/landing/Footer"
-import { Logo } from "@/components/ui/Logo"
-import { StaggeredMenu } from "@/components/ui/StaggeredMenu"
-import Link from "next/link"
-import { ArrowUp } from "lucide-react"
+import { Metadata } from 'next'
 
-export default async function PrivacyPage() {
-  let session = null
-  try {
-    session = await auth()
-  } catch {}
+export const metadata: Metadata = {
+  title: 'Privacy Policy',
+  description: 'Privacy Policy for Changelog AI - How we handle your personal data and developer information.',
+}
 
-  const tocItems = [
-    { title: "What Personal Information we collect", id: "collect" },
-    { title: "What we do with the Personal Information we collect", id: "usage" },
-    { title: "When we Disclose Personal Information", id: "disclose" },
-    { title: "How we use cookies and collect information using technology", id: "cookies" },
-    { title: "Security", id: "security" },
-    { title: "We may Transfer Personal Information to Other Countries", id: "transfer" },
-    { title: "Links to other websites", id: "links" },
-    { title: "Your Choices", id: "choices" },
-    { title: "Accessing and Correcting your Personal Information", id: "access" },
-    { title: "Children", id: "children" },
-    { title: "Contact Us", id: "contact" },
-  ]
-
+export default function PrivacyPolicy() {
   return (
-    <div className="bg-bg min-h-screen selection:bg-accent/30 font-sans">
-      {/* Desktop/Mobile Navbar */}
-      <div className="hidden md:block">
-        <Navbar session={session} />
-      </div>
-
-      <div className="md:hidden">
-        <StaggeredMenu 
-          isFixed={true}
-          logo={<Logo hideTagline={true} className="text-white" />}
-          items={[
-            { label: 'Process', link: '/#how-it-works' },
-            { label: 'Demo', link: '/#demo' },
-            { label: 'Pricing', link: '/#pricing' },
-            ...(session ? [
-              { label: 'Dashboard', link: '/dashboard' }
-            ] : [
-              { label: 'Login', link: '/login' },
-            ])
-          ]}
-          socialItems={[
-            { label: 'Twitter', link: 'https://twitter.com' },
-            { label: 'GitHub', link: 'https://github.com' },
-          ]}
-        />
-      </div>
-
-      <main className="pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
-        {/* Header Section */}
-        <div className="text-center mb-24">
-          <h1 className="text-5xl md:text-7xl font-serif italic text-text-primary mb-4 tracking-tight">
-            Privacy Policy
-          </h1>
-          <p className="font-mono text-sm text-text-muted uppercase tracking-[0.2em]">
-            Last Updated May 23rd, 2022
-          </p>
+    <main className="pt-32 pb-24 px-6 max-w-4xl mx-auto">
+      <div className="space-y-12">
+        <div>
+          <h1 className="text-4xl sm:text-6xl font-serif italic text-text-primary mb-6">Privacy Policy</h1>
+          <p className="text-text-muted font-mono text-sm max-w-2xl">Last updated: April 15, 2026. This policy outlines how Changelog AI handles your personal data, GitHub information, and commits.</p>
         </div>
+        
+        <div className="space-y-8 text-text-primary">
+          <section>
+            <h2 className="text-2xl font-serif italic mb-4 text-text-primary">1. Information We Collect</h2>
+            <p className="text-text-secondary leading-relaxed mb-4">
+              When you use Changelog AI, we may collect the following information:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 text-text-secondary font-mono text-sm">
+              <li><strong>Account Data:</strong> Your name, email address, and GitHub profile information when you authenticate via OAuth.</li>
+              <li><strong>Usage Data:</strong> Information about how you interact with our service, including the frequency of changelog generations.</li>
+              <li><strong>Commit Data:</strong> The raw git commits and diffs you provide for generation. <em className="text-text-muted">Note that we do not permanently store your proprietary code unless you opt-in for historical tracking.</em></li>
+            </ul>
+          </section>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-          {/* Main Content Column */}
-          <div className="lg:col-span-8 space-y-16">
-            <section>
-              <p className="text-xl md:text-2xl font-mono text-text-primary leading-relaxed mb-12">
-                This Privacy Policy will help you better understand how we collect, use, and share your personal information.
-              </p>
-              
-              <div className="space-y-8 text-text-secondary leading-loose">
-                <h2 className="text-2xl font-mono font-bold text-text-primary underline decoration-accent/50 underline-offset-[12px]">Privacy Policy</h2>
-                <p>
-                  This privacy policy sets out how Changelog AI Inc. (“Changelog AI”, “we”, “us”, or “our”) collects, uses, and discloses any personal information that you give us or that we collect when you use our website or Services.
-                </p>
-                <p>
-                  By using our website or Services, or by choosing to give us personal information, you consent to this Privacy Policy and the processing of your Personal Information it describes. If you do not agree with any terms of this Privacy Policy, please exercise the choices we describe in this Policy, or do not use the Services and do not give us any personal information.
-                </p>
-              </div>
-            </section>
+          <section>
+            <h2 className="text-2xl font-serif italic mb-4 text-text-primary">2. How We Use Your Information</h2>
+            <p className="text-text-secondary leading-relaxed mb-4">
+              We rely on your data strictly to provide and improve the Changelog AI service:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 text-text-secondary font-mono text-sm">
+              <li>To generate accurate release notes and semantic changelogs.</li>
+              <li>To construct GitHub Releases and Twitter drafts on your behalf when authorized.</li>
+              <li>To prevent abuse, spam, and ensure platform security.</li>
+            </ul>
+          </section>
 
-            <section className="space-y-8 text-text-secondary leading-loose">
-                <h2 className="text-2xl font-mono font-bold text-text-primary underline decoration-accent/50 underline-offset-[12px]">Privacy Summary</h2>
-                 <p>
-                  <strong className="text-text-primary">1. What Personal Information we collect.</strong> To register for our Services, you provide your GitHub account details. If you make a purchase, we collect information about your transaction, such as public wallet address, date and time, value, and transaction history.
-                </p>
-            </section>
+          <section>
+            <h2 className="text-2xl font-serif italic mb-4 text-text-primary">3. Third-Party Services</h2>
+            <p className="text-text-secondary leading-relaxed mb-4">
+              We process your commits using large language models from our AI partners (e.g., OpenAI). By using Changelog AI, you acknowledge that your commit messages are temporarily processed by these external APIs. We have strict data-processing agreements ensuring your data is not used to train public models.
+            </p>
+          </section>
 
-            <section id="collect" className="scroll-mt-24 space-y-4">
-              <h3 className="text-xl font-mono font-bold text-accent">1. What Personal Information we collect</h3>
-              <div className="space-y-4 text-text-secondary leading-relaxed">
-                <p>
-                  To register for our Services, you provide your GitHub account details. If you make a purchase, we collect information about your transaction, such as public wallet address, date and time, value, and transaction history.
-                </p>
-                <p>
-                  We may also collect technical data such as IP address, browser type, and operating system collected via cookies and tracking pixels.
-                </p>
-              </div>
-            </section>
+          <section>
+            <h2 className="text-2xl font-serif italic mb-4 text-text-primary">4. Your Rights</h2>
+            <p className="text-text-secondary leading-relaxed mb-4">
+              You have the right to access, modify, or permanently delete your account and associated data. If you wish to revoke GitHub access, you can do so directly from your GitHub Developer settings.
+            </p>
+          </section>
 
-            <section id="usage" className="scroll-mt-24 space-y-4">
-              <h3 className="text-xl font-mono font-bold text-accent">2. What we do with the Personal Information we collect</h3>
-              <div className="space-y-4 text-text-secondary leading-relaxed">
-                <p>
-                  We use your information to provide the AI-powered changelog generation service, process transitions, and communicate with you about your account.
-                </p>
-                <p>
-                  Importantly, your git commit logs are used solely for the immediate task of generating your release notes and are not used to train our underlying AI models.
-                </p>
-              </div>
-            </section>
-
-             <section id="cookies" className="scroll-mt-24 space-y-4">
-              <h3 className="text-xl font-mono font-bold text-accent">4. Cookies and Technology</h3>
-              <div className="space-y-4 text-text-secondary leading-relaxed">
-                <p>
-                  We use essential cookies for session management and authentication. We also use analytics cookies to understand how users interact with our platform to improve the user experience.
-                </p>
-              </div>
-            </section>
-
-            <section id="security" className="scroll-mt-24 space-y-4">
-              <h3 className="text-xl font-mono font-bold text-accent">5. Security</h3>
-              <div className="space-y-4 text-text-secondary leading-relaxed">
-                <p>
-                  We implement industry-standard security measures to protect your data. All communication is encrypted via TLS/SSL, and sensitive data is stored using secure hashing algorithms.
-                </p>
-              </div>
-            </section>
-
-            <section id="contact" className="scroll-mt-24 space-y-4">
-              <h3 className="text-xl font-mono font-bold text-accent">11. Contact Us</h3>
-              <div className="space-y-4 text-text-secondary leading-relaxed">
-                <p>
-                  If you have questions about this privacy policy, please contact us at support@changelog.ai.
-                </p>
-              </div>
-            </section>
-          </div>
-
-          {/* Sidebar / TOC Column */}
-          <aside className="lg:col-span-4 lg:sticky lg:top-32 h-fit">
-            <div className="border border-border rounded-2xl p-8 bg-bg-surface/30 backdrop-blur-sm">
-              <h4 className="text-sm font-mono font-bold text-text-primary uppercase tracking-widest mb-6 border-b border-border pb-4">
-                Table of contents
-              </h4>
-              <nav>
-                <ul className="space-y-5">
-                  {tocItems.map((item, index) => (
-                    <li key={index} className="flex gap-3 text-sm leading-tight text-text-muted hover:text-accent transition-all group">
-                      <span className="font-mono text-[11px] opacity-40 shrink-0">{String(index + 1).padStart(2, '0')}.</span>
-                      <a href={`#${item.id}`} className="hover:text-accent transition-colors hover:translate-x-1 decoration-accent/30 decoration-dashed">
-                        {item.title}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-
-              <div className="mt-8 pt-8 border-t border-border/50">
-                <a 
-                  href="#"
-                  className="flex items-center gap-2 text-xs font-mono text-text-muted hover:text-accent transition-all group w-full"
-                >
-                  <ArrowUp className="h-3.5 w-3.5 text-accent" />
-                  Back to top
-                </a>
-              </div>
-            </div>
-          </aside>
+          <section className="pt-8 border-t border-border">
+            <p className="text-text-muted font-mono text-sm">
+              If you have any questions or concerns about this policy, please reach out to us at <a href="mailto:privacy@changelog.ai" className="text-accent hover:underline">privacy@changelog.ai</a>.
+            </p>
+          </section>
         </div>
-      </main>
-
-      <Footer />
-    </div>
+      </div>
+    </main>
   )
 }

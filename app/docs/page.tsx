@@ -1,10 +1,16 @@
 import { buttonVariants } from "@/components/ui/button"
 import { Logo } from "@/components/ui/Logo"
-import { ArrowLeft, SearchX, AlertTriangle, Sparkle } from "lucide-react"
+import { ArrowLeft, Terminal, Hammer, Sparkle } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
+import { Metadata } from 'next'
 
-export default function NotFound() {
+export const metadata: Metadata = {
+  title: 'Documentation',
+  description: 'Changelog AI documentation is coming soon.',
+}
+
+export default function DocsComingSoon() {
   return (
     <div className="min-h-screen bg-bg flex items-center justify-center p-4 md:p-8 lg:p-12 relative overflow-hidden selection:bg-accent/30">
       
@@ -22,15 +28,15 @@ export default function NotFound() {
 
           <div className="space-y-6 max-w-md relative z-20">
             <p className="font-mono text-[11px] text-accent uppercase tracking-[0.2em] font-bold">
-              Error 404
+              Engineering in progress
             </p>
             
             <h1 className="text-5xl md:text-6xl font-serif text-text-primary tracking-tight leading-[1.1]">
-              Oops. <span className="block mt-2">Something went</span> <span className="block italic text-text-secondary">wrong!</span>
+              Docs. <span className="block mt-2">Coming</span> <span className="block italic text-text-secondary">very soon!</span>
             </h1>
             
             <p className="text-text-muted font-mono text-sm leading-relaxed pb-6 pt-2">
-              The changelog entry or version of reality you're looking for was either skipped, reverted, or doesn't exist in this branch.
+              We are finalizing the developer guides, integration references, and API documentation for Changelog AI. Stay tuned for the official launch.
             </p>
 
             <Link 
@@ -52,22 +58,22 @@ export default function NotFound() {
           {/* Background Glow */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] max-w-[600px] max-h-[600px] bg-accent/5 blur-[120px] rounded-full animate-pulse z-0 pointer-events-none" />
 
-          {/* Large 404 Graphic Container */}
+          {/* Large Graphic Container */}
           <div className="relative z-10 flex items-center justify-center w-full h-full max-w-[500px]">
-            <h2 className="text-[160px] md:text-[220px] lg:text-[280px] font-serif italic text-accent/90 leading-none drop-shadow-2xl select-none">
-              404
+            <h2 className="text-[140px] md:text-[200px] lg:text-[240px] font-serif italic text-accent/90 leading-none drop-shadow-2xl select-none">
+              WIP
             </h2>
             
-            {/* Floating Element: Not Found Pill (Top Left) */}
+            {/* Floating Element: Terminal Pill (Top Left) */}
             <div className="absolute -left-4 md:-left-8 top-[20%] bg-bg border border-border rounded-[2rem] p-5 shadow-2xl flex flex-col items-center gap-3 transform -rotate-[8deg] animate-[bounce_6s_ease-in-out_infinite]">
-              <SearchX className="h-8 w-8 text-accent" />
-              <span className="font-mono text-[9px] uppercase tracking-wider text-text-secondary font-bold">Not Found!</span>
+              <Terminal className="h-8 w-8 text-accent" />
+              <span className="font-mono text-[9px] uppercase tracking-wider text-text-secondary font-bold">API Refs</span>
             </div>
 
-            {/* Floating Element: Error Pill (Top Right) */}
+            {/* Floating Element: Building Pill (Top Right) */}
             <div className="absolute right-0 md:-right-8 top-[10%] bg-bg-elevated border border-border rounded-full px-5 py-2.5 shadow-xl flex items-center gap-2.5 transform rotate-[6deg] animate-[bounce_5s_ease-in-out_infinite_0.5s]">
-              <AlertTriangle className="h-3.5 w-3.5 text-danger animate-pulse" />
-              <span className="font-mono text-[10px] uppercase tracking-widest text-text-primary font-bold">Error</span>
+              <Hammer className="h-3.5 w-3.5 text-text-secondary animate-pulse" />
+              <span className="font-mono text-[10px] uppercase tracking-widest text-text-primary font-bold">Building</span>
             </div>
 
             {/* Sparkle Decoration (Bottom Right) */}

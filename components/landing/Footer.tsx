@@ -8,16 +8,15 @@ export function Footer() {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 mb-12 md:mb-16">
           <div className="md:col-span-2 space-y-6">
-            <Logo hideTagline={true} />
-            <p className="font-mono text-sm text-white max-w-sm leading-relaxed">
+            <p className="font-mono text-sm text-text-secondary max-w-sm leading-relaxed">
               Founded to eliminate the busywork between shipping code and informing users. We build high-velocity developer tools designed for maximum efficiency.
             </p>
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-1.5 text-[12px] font-mono text-white">
+              <div className="flex items-center gap-1.5 text-[12px] font-mono text-text-secondary">
                 <ShieldCheck className="h-3.5 w-3.5 text-accent" />
                 <span>OAuth Secured</span>
               </div>
-              <div className="flex items-center gap-1.5 text-[12px] font-mono text-white">
+              <div className="flex items-center gap-1.5 text-[12px] font-mono text-text-secondary">
                 <CheckCircle2 className="h-3.5 w-3.5 text-accent" />
                 <span>99.9% Uptime</span>
               </div>
@@ -37,8 +36,6 @@ export function Footer() {
 
             <div className="space-y-4">
               <h4 className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent">Resources</h4>
-              <ul className="space-y-3">
-                <li><Link href="/blog" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">Blog & Guides</Link></li>
                 <li><Link href="/docs" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">Documentation</Link></li>
                 <li><Link href="/faq" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">FAQ</Link></li>
                 <li><Link href="/support" className="font-mono text-[13px] text-text-muted hover:text-accent transition-colors">Support</Link></li>
@@ -57,11 +54,11 @@ export function Footer() {
         </div>
 
         <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="font-mono text-[10px] text-white/60">
+          <p className="font-mono text-[10px] text-text-muted/80">
             © {new Date().getFullYear()} Changelog.ai — Designed for velocity.
           </p>
           <div className="flex items-center gap-6">
-            <span className="font-mono text-[10px] text-white/50 italic">All rights reserved</span>
+            <span className="font-mono text-[10px] text-text-muted/70 italic">All rights reserved</span>
           </div>
         </div>
       </div>

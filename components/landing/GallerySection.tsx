@@ -5,7 +5,7 @@ export function GallerySection() {
   return (
     <section className="relative h-[600px] sm:h-[800px] border-y border-border overflow-hidden bg-bg-surface/30">
       <div 
-        className="absolute inset-x-0 top-0 pt-12 pb-8 z-20 flex flex-col items-center pointer-events-auto px-6 text-center bg-gradient-to-b from-bg to-transparent"
+        className="absolute inset-x-0 top-0 pt-12 pb-8 z-20 flex flex-col items-center pointer-events-auto px-6 text-center"
         style={{ touchAction: 'pan-y' }}
         onPointerDownCapture={e => e.stopPropagation()}
         onTouchStartCapture={e => e.stopPropagation()}
@@ -17,7 +17,7 @@ export function GallerySection() {
       
       <DomeGallery 
         fit={0.65} 
-        overlayBlurColor="#0a0a0a" 
+        overlayBlurColor="#fcfdfb" 
         grayscale={false}
         imageBorderRadius="16px"
         openedImageBorderRadius="24px"
@@ -33,7 +33,7 @@ export function GallerySection() {
 
       {/* Bottom Mobile Scroll Escape Hatch */}
       <div 
-        className="absolute bottom-0 inset-x-0 h-24 z-20 flex flex-col justify-end items-center pointer-events-auto pb-4 bg-gradient-to-t from-bg to-transparent md:hidden"
+        className="absolute bottom-0 inset-x-0 h-24 z-20 flex flex-col justify-end items-center pointer-events-auto pb-4 md:hidden"
         style={{ touchAction: 'pan-y' }}
         onPointerDownCapture={e => e.stopPropagation()}
         onTouchStartCapture={e => e.stopPropagation()}
