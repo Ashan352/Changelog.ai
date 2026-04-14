@@ -54,13 +54,13 @@ export function Pricing() {
         <div className="flex items-center gap-4 bg-bg-surface border border-border p-1 rounded-full mb-8 sm:mb-12 mt-6">
             <button 
                 onClick={() => setIsAnnual(false)}
-                className={`px-4 py-2 rounded-full font-mono text-xs transition-colors ${!isAnnual ? 'bg-bg text-text-primary border border-border' : 'text-text-muted hover:text-text-secondary'}`}
+                className={`px-6 py-2.5 rounded-full font-mono text-sm transition-colors ${!isAnnual ? 'bg-bg text-text-primary border border-border' : 'text-text-muted hover:text-text-secondary'}`}
             >
                 Monthly
             </button>
             <button 
                 onClick={() => setIsAnnual(true)}
-                className={`px-4 py-2 rounded-full font-mono text-xs transition-colors truncate relative ${isAnnual ? 'bg-bg text-text-primary border border-border' : 'text-text-muted hover:text-text-secondary'}`}
+                className={`px-6 py-2.5 rounded-full font-mono text-sm transition-colors truncate relative ${isAnnual ? 'bg-bg text-text-primary border border-border' : 'text-text-muted hover:text-text-secondary'}`}
             >
                 Yearly
                 {isAnnual && (
@@ -98,7 +98,7 @@ export function Pricing() {
                       </svg>
                     </div>
 
-                    <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-[0.2em] mb-4 ${
+                    <span className={`px-4 py-0.5 rounded-full text-[12px] font-mono uppercase tracking-[0.2em] mb-4 ${
                       plan.featured ? 'bg-accent text-bg font-bold' : 'bg-bg-elevated text-text-muted'
                     }`}>
                       {plan.badge}
@@ -143,19 +143,19 @@ export function Pricing() {
                     <ul className="flex-1 space-y-4 mb-10 w-full max-w-[240px]">
                       {plan.features.map((feature, idx) => (
                         <li key={idx} className="flex items-center gap-3 justify-center">
-                          <Check className={`h-3 w-3 shrink-0 ${plan.featured ? 'text-accent' : 'text-text-muted'}`} />
-                          <span className="font-mono text-[10px] text-text-secondary leading-tight">{feature}</span>
+                          <Check className={`h-4 w-4 shrink-0 ${plan.featured ? 'text-accent' : 'text-text-muted'}`} />
+                          <span className="font-mono text-sm text-text-secondary leading-tight">{feature}</span>
                         </li>
                       ))}
                     </ul>
 
                     <Link 
                       href="/login"
-                      className={`group w-full flex items-center justify-center gap-2 h-12 rounded-full font-mono font-bold text-[11px] transition-all active:scale-[0.98] ${
+                      className={`group w-full flex items-center justify-center gap-2 h-14 rounded-full font-mono font-bold text-sm transition-all active:scale-[0.98] ${
                       plan.featured ? 'bg-accent text-bg hover:brightness-110 shadow-[0_4px_24px_rgba(232,255,71,0.2)]' : 'bg-bg border border-border text-text-primary hover:bg-bg-hover'
                     }`}>
                       {plan.cta}
-                      <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                     </Link>
                   </div>
                 </div>

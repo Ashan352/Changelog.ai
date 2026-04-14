@@ -84,7 +84,7 @@ export function OutputPanel({ data, isLoading, hasStarted, rawResult }: { data: 
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center gap-2 px-4 py-4 font-mono text-xs transition-all relative shrink-0 ${
+            className={`flex items-center gap-2 px-4 py-4 font-mono text-sm transition-all relative shrink-0 ${
               activeTab === tab.id ? 'text-text-primary' : 'text-text-muted hover:text-text-secondary'
             }`}
           >
@@ -106,13 +106,13 @@ export function OutputPanel({ data, isLoading, hasStarted, rawResult }: { data: 
           {data.slop_warning && (
             <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-yellow-500/10 border border-yellow-500/20">
               <AlertTriangle className="h-3 w-3 text-yellow-500" />
-              <span className="text-[10px] font-mono text-yellow-500 font-bold uppercase tracking-wider">Review Required: AI Slop Detected</span>
+              <span className="text-[12px] font-mono text-yellow-500 font-bold uppercase tracking-wider">Review Required: AI Slop Detected</span>
             </div>
           )}
           {data.breaking_changes && (
             <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-danger/10 border border-danger/20">
               <ShieldAlert className="h-3 w-3 text-danger" />
-              <span className="text-[10px] font-mono text-danger font-bold uppercase tracking-wider">Breaking Change Flagged</span>
+              <span className="text-[12px] font-mono text-danger font-bold uppercase tracking-wider">Breaking Change Flagged</span>
             </div>
           )}
         </div>
@@ -231,13 +231,13 @@ export function OutputPanel({ data, isLoading, hasStarted, rawResult }: { data: 
         </div>
         
         <div className="hidden sm:flex flex-col items-end gap-1">
-          <div className="text-[10px] font-mono text-text-muted uppercase tracking-[0.2em] flex items-center gap-2">
+          <div className="text-[12px] font-mono text-text-muted uppercase tracking-[0.2em] flex items-center gap-2">
             Status: <span className={isLoading ? "text-accent animate-pulse" : "text-green-500"}>
               {isLoading ? "Generating..." : "Finalized"}
             </span>
           </div>
           {data?.version_detected && (
-            <div className="text-[10px] font-mono text-accent">
+            <div className="text-[12px] font-mono text-accent">
                Target Version: {data.version_detected}
             </div>
           )}

@@ -26,7 +26,7 @@ export function Logo({ className, hideTagline = false }: LogoProps) {
       {!hideTagline && (
         <>
           <div className="h-4 w-px bg-border/40 mx-1 hidden lg:block" />
-          <span className="text-[10px] font-mono text-text-muted uppercase tracking-[0.2em] hidden lg:block whitespace-nowrap mt-1">
+          <span className="text-sm font-mono text-text-muted uppercase tracking-[0.2em] hidden lg:block whitespace-nowrap mt-1">
             Stop writing changelogs
           </span>
         </>

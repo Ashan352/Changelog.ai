@@ -21,9 +21,9 @@
   --color-danger: #ff6b35;
   --color-danger-muted: rgba(255,107,53,0.12);
 
-  --color-text-primary: #f0f0f0;
-  --color-text-secondary: #888888;
-  --color-text-muted: #444444;
+  --color-text-primary: #FFF5EE;
+  --color-text-secondary: #B0A8A2;
+  --color-text-muted: #6B6560;
   --color-text-code: #a8ff78;
 
   --font-serif: "Instrument Serif", Georgia, serif;
@@ -82,21 +82,21 @@
 @layer base {
   :root, .dark {
     --background: #0a0a0a;
-    --foreground: #f0f0f0;
+    --foreground: #FFF5EE;
     --card: #111111;
-    --card-foreground: #f0f0f0;
+    --card-foreground: #FFF5EE;
     --popover: #111111;
-    --popover-foreground: #f0f0f0;
+    --popover-foreground: #FFF5EE;
     --primary: #e8ff47;
     --primary-foreground: #0a0a0a;
     --secondary: #1a1a1a;
-    --secondary-foreground: #f0f0f0;
+    --secondary-foreground: #FFF5EE;
     --muted: #111111;
-    --muted-foreground: #888888;
+    --muted-foreground: #B0A8A2;
     --accent: #111111;
-    --accent-foreground: #f0f0f0;
+    --accent-foreground: #FFF5EE;
     --destructive: #ff6b35;
-    --destructive-foreground: #f0f0f0;
+    --destructive-foreground: #FFF5EE;
     --border: rgba(255,255,255,0.06);
     --input: rgba(255,255,255,0.06);
     --ring: rgba(232,255,71,0.3);
@@ -115,6 +115,7 @@
   body {
     @apply bg-background text-text-primary antialiased font-sans transition-colors duration-300;
     line-height: 1.6;
+    font-size: 17px;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -124,10 +125,12 @@
 
   p {
     @apply text-text-secondary leading-relaxed;
+    font-size: 16px;
   }
 
   pre, code {
     @apply font-mono leading-relaxed;
+    font-size: 15px;
   }
 
   .scroller-hide {

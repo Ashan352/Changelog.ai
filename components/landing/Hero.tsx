@@ -50,7 +50,7 @@ export function Hero({ isLoggedIn }: { isLoggedIn?: boolean }) {
           className="flex items-center gap-2 px-3 py-1 rounded-full bg-accent-dim border border-accent/20 mb-8"
         >
           <GitBranch className="h-3 w-3 text-accent" />
-          <span className="font-mono text-[10px] text-accent uppercase tracking-widest leading-none">For developers who ship</span>
+          <span className="font-mono text-[12px] text-accent uppercase tracking-widest leading-none">For developers who ship</span>
         </motion.div>
 
         {/* Headline */}
@@ -68,7 +68,7 @@ export function Hero({ isLoggedIn }: { isLoggedIn?: boolean }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="max-w-[90%] sm:max-w-[600px] font-mono text-xs sm:text-sm md:text-base text-text-secondary mb-10 sm:mb-12 leading-relaxed text-center px-2"
+          className="max-w-[95%] sm:max-w-[700px] font-mono text-sm sm:text-base md:text-lg text-text-secondary mb-10 sm:mb-12 leading-relaxed text-center px-2"
         >
           Paste your Git commits. Get a <ShinyText text="polished changelog" />, GitHub release, and tweet thread in under 4 seconds. Focus on Shipping.
         </motion.div>
@@ -77,7 +77,7 @@ export function Hero({ isLoggedIn }: { isLoggedIn?: boolean }) {
         <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 mb-12 sm:mb-16 w-full sm:w-auto px-4 sm:px-0">
           <FadeUp delay={0.55}>
             <Magnetic>
-              <Link href={isLoggedIn ? "/dashboard" : "/login?signup=true"} className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 sm:px-10 h-12 sm:h-14 rounded-full bg-accent text-bg font-mono font-bold text-xs sm:text-sm hover:bg-accent/90 transition-all hover:scale-[1.02] shadow-[0_0_32px_rgba(232,255,71,0.25)] active:scale-[0.98]">
+              <Link href={isLoggedIn ? "/dashboard" : "/login?signup=true"} className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 sm:px-10 h-12 sm:h-14 rounded-full bg-accent text-bg font-mono font-bold text-sm sm:text-base hover:bg-accent/90 transition-all hover:scale-[1.02] shadow-[0_0_32px_rgba(232,255,71,0.25)] active:scale-[0.98]">
                 <span>{isLoggedIn ? "Go to Dashboard" : "Start shipping efficiently"}</span>
                 <ArrowRight className="h-4 w-4 shrink-0" />
               </Link>
@@ -96,7 +96,7 @@ export function Hero({ isLoggedIn }: { isLoggedIn?: boolean }) {
             <div className="absolute inset-0 bg-accent rounded-full animate-ping opacity-40" />
             <div className="relative h-full w-full bg-accent rounded-full" />
           </div>
-          <span className="font-mono text-[10px] text-text-muted uppercase tracking-widest underline decoration-border decoration-dashed underline-offset-4">
+          <span className="font-mono text-[12px] text-text-muted uppercase tracking-widest underline decoration-border decoration-dashed underline-offset-4">
             Join {userCount || '...'} developers shipping with speed
           </span>
         </motion.div>

@@ -27,13 +27,13 @@ export function AppSidebar({ plan, generations, maxGenerations, userName, userIm
 
       <SidebarContent className="px-4 py-6">
         <SidebarGroup>
-          <div className="font-mono text-[10px] text-text-muted uppercase tracking-widest mb-4 px-2">Menu</div>
+        <div className="font-mono text-[12px] text-text-muted uppercase tracking-widest mb-4 px-2">Menu</div>
           <SidebarMenu>
             {navItems.map((item) => (
               <SidebarMenuItem key={item.label}>
                 <SidebarMenuButton 
                   isActive={pathname === item.href}
-                  className={`font-mono text-xs transition-all hover:bg-bg-hover hover:text-text-primary active:scale-[0.98] ${pathname === item.href ? 'text-accent border border-accent/20 bg-accent/5' : ''}`}
+                  className={`font-mono text-sm transition-all hover:bg-bg-hover hover:text-text-primary active:scale-[0.98] ${pathname === item.href ? 'text-accent border border-accent/20 bg-accent/5' : ''}`}
                   render={
                     <Link href={item.href} className="flex items-center gap-3 w-full">
                       <item.icon className="h-4 w-4 shrink-0" />
@@ -86,8 +86,8 @@ export function AppSidebar({ plan, generations, maxGenerations, userName, userIm
              )}
           </div>
           <div className="flex flex-col min-w-0">
-             <span className="text-xs font-mono text-text-primary truncate">{userName?.split(' ')[0] || "Developer"}</span>
-             <span className="text-[10px] font-mono text-accent truncate capitalize">{plan} Plan</span>
+             <span className="text-sm font-mono text-text-primary truncate">{userName?.split(' ')[0] || "Developer"}</span>
+             <span className="text-[11px] font-mono text-accent truncate capitalize">{plan} Plan</span>
           </div>
           <button 
             onClick={() => signOut({ callbackUrl: '/' })}

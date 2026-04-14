@@ -9,23 +9,32 @@ import { TrendingUp, GitCommit, CreditCard } from "lucide-react"
 import { UsageChart } from "@/components/dashboard/UsageChart"
 import { unstable_cache } from "next/cache"
 
-const getCachedHistory = unstable_cache(
-  async (userId: string) => {
+const getCachedHistory = (userId: string) => unstable_cache(
+  async () => {
     return await prisma.generation.findMany({
       where: { userId },
       orderBy: { createdAt: "desc" },
       take: 7,
     });
   },
-  ['dashboard-usage-history'],
-  { tags: ['history'], revalidate: 3600 } // Cache for 1 hour, invalidated automatically by the API
-);
+  [`dashboard-usage-history-${userId}`],
+  { tags: ['history', `history-${userId}`], revalidate: 3600 }
+)();
 
 async function StatsContent() {
   const session = await auth()
   if (!session?.user) redirect("/login")
 
-  const history = await getCachedHistory(session.user.id)
+  // Fetch source of truth from database (session data can be stale)
+  const [dbUser, history] = await Promise.all([
+    prisma.user.findUnique({
+      where: { id: session.user.id },
+      select: { generations: true, plan: true }
+    }),
+    getCachedHistory(session.user.id)
+  ])
+
+  if (!dbUser) redirect("/login")
 
   // Format data for chart (last 7 generations)
   const chartData = history.reverse().map((item: { commits: number | null }, index: number) => ({
@@ -41,9 +50,9 @@ async function StatsContent() {
               <div className="p-2 rounded-lg bg-accent/10 border border-accent/20 text-accent">
                  <GitCommit className="h-4 w-4" />
               </div>
-              <span className="text-xs font-mono text-text-muted uppercase tracking-widest">Total Generations</span>
+              <span className="text-sm font-mono text-text-muted uppercase tracking-widest">Total Generations</span>
            </div>
-           <div className="text-4xl font-serif italic text-text-primary">{session.user.generations}</div>
+           <div className="text-4xl font-serif italic text-text-primary">{dbUser.generations}</div>
         </div>
         
         <div className="p-6 rounded-2xl bg-bg-surface border border-border shadow-sm">
@@ -51,9 +60,9 @@ async function StatsContent() {
               <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-500">
                  <TrendingUp className="h-4 w-4" />
               </div>
-              <span className="text-xs font-mono text-text-muted uppercase tracking-widest">Plan Tier</span>
+              <span className="text-sm font-mono text-text-muted uppercase tracking-widest">Plan Tier</span>
            </div>
-           <div className="text-4xl font-serif italic text-text-primary capitalize">{session.user.plan}</div>
+           <div className="text-4xl font-serif italic text-text-primary capitalize">{dbUser.plan}</div>
         </div>
 
         <div className="p-6 rounded-2xl bg-bg-surface border border-border shadow-sm">
@@ -61,10 +70,10 @@ async function StatsContent() {
               <div className="p-2 rounded-lg bg-green-500/10 border border-green-500/20 text-green-500">
                  <CreditCard className="h-4 w-4" />
               </div>
-              <span className="text-xs font-mono text-text-muted uppercase tracking-widest">Usage Limit</span>
+              <span className="text-sm font-mono text-text-muted uppercase tracking-widest">Usage Limit</span>
            </div>
            <div className="text-4xl font-serif italic text-text-primary">
-              {session.user.plan === 'free' ? `${session.user.generations} / 5` : 'Unlimited'}
+              {dbUser.plan === 'free' ? `${dbUser.generations} / 5` : 'Unlimited'}
            </div>
         </div>
       </div>
@@ -73,11 +82,11 @@ async function StatsContent() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h3 className="text-xl font-serif italic text-text-primary">Activity Overview</h3>
-            <p className="font-mono text-[10px] text-text-muted uppercase tracking-widest mt-1">Number of commits processed in recent generations</p>
+            <p className="font-mono text-[12px] text-text-muted uppercase tracking-widest mt-1">Number of commits processed in recent generations</p>
           </div>
           <div className="flex items-center gap-2">
             <div className="size-2 rounded-full bg-accent" />
-            <span className="text-[10px] font-mono text-text-secondary uppercase">Analyzed Commits</span>
+            <span className="text-[12px] font-mono text-text-secondary uppercase">Analyzed Commits</span>
           </div>
         </div>
 

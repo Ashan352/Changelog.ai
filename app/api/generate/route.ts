@@ -3,7 +3,7 @@ import { sanitizeInput } from "@/lib/sanitize";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { checkRateLimit } from "@/lib/ratelimit";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 // Allow up to 60s on Vercel Hobby (streaming functions get extended timeout)
 export const maxDuration = 60;
@@ -87,6 +87,8 @@ export async function POST(req: Request) {
           });
           revalidatePath('/dashboard');
           revalidatePath('/dashboard/usage');
+          revalidateTag('history');
+          revalidateTag(`history-${session.user.id}`);
         } catch (err) {
           // Non-critical — generation count already incremented above
           console.error("History save failed (non-critical):", err);
