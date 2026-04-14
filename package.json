@@ -26,6 +26,7 @@
     "@upstash/redis": "^1.37.0",
     "@use-gesture/react": "^10.3.1",
     "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "ai": "^6.0.158",
     "bcryptjs": "^3.0.3",
     "class-variance-authority": "^0.7.1",

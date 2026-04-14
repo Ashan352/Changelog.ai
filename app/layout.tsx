@@ -65,6 +65,7 @@ import { SmoothScroll } from "@/components/ui/SmoothScroll";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export default function RootLayout({
   children,
@@ -92,6 +93,7 @@ export default function RootLayout({
           </SmoothScroll>
         </ThemeProvider>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
