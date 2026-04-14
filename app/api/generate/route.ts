@@ -4,9 +4,18 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { checkRateLimit } from "@/lib/ratelimit";
 import { revalidatePath, revalidateTag } from "next/cache";
+import { z } from "zod";
 
-// Allow up to 60s on Vercel Hobby (streaming functions get extended timeout)
-export const maxDuration = 60;
+// Input Validation Schema
+const generateSchema = z.object({
+  commits: z.string().min(1, "Commits are required").max(50000, "Input too large"),
+  version: z.string().max(50, "Version too long").optional(),
+  repoName: z.string().max(100, "Project name too long").optional(),
+  projectName: z.string().max(100, "Project name too long").optional(),
+});
+
+// Strictly follow Vercel Free Tier 10s timeout
+export const maxDuration = 10;
 
 // Server-side max input length: 50,000 chars (~12,500 tokens)
 const MAX_INPUT_CHARS = 50_000;
@@ -40,18 +49,18 @@ export async function POST(req: Request) {
       return new Response(JSON.stringify({ error: "Free limit reached" }), { status: 403 });
     }
 
-    const body = await req.json();
-    const { commits, version, repoName, projectName, prompt } = body;
-    const targetCommits = commits || prompt;
-
-    if (!targetCommits || typeof targetCommits !== "string") {
-      return new Response(JSON.stringify({ error: "Invalid commits input" }), { status: 400 });
+    const jsonBody = await req.json();
+    const validation = generateSchema.safeParse(jsonBody);
+    
+    if (!validation.success) {
+      return new Response(JSON.stringify({ 
+        error: "Validation failed", 
+        details: validation.error.flatten().fieldErrors 
+      }), { status: 400 });
     }
 
-    // Server-side size enforcement (client-side can be bypassed)
-    if (targetCommits.length > MAX_INPUT_CHARS) {
-      return new Response(JSON.stringify({ error: "Input too large. Max 50,000 characters." }), { status: 413 });
-    }
+    const { commits, version, repoName, projectName } = validation.data;
+    const targetCommits = commits;
 
     const sanitizedCommits = sanitizeInput(targetCommits);
     const isPro = plan === "pro";
