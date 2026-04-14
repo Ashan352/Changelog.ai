@@ -130,7 +130,18 @@ export function SettingsClient({
                   </p>
                 </div>
                 <button
-                  className="px-6 py-2.5 rounded-full bg-bg border border-danger/50 text-danger font-mono font-bold text-xs hover:bg-danger/10 transition-all"
+                  onClick={async () => {
+                    if (window.confirm("Are you SURE you want to delete your account? This action is permanent and will delete all your generation history.")) {
+                      try {
+                        const { deleteAccount } = await import("@/app/actions/user");
+                        await deleteAccount();
+                        window.location.href = "/";
+                      } catch (err) {
+                        toast.error("Failed to delete account");
+                      }
+                    }
+                  }}
+                  className="px-6 py-2.5 rounded-full bg-bg border border-danger/50 text-danger font-mono font-bold text-xs hover:bg-danger/10 transition-all active:scale-[0.98]"
                 >
                   Delete Account
                 </button>

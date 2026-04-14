@@ -11,7 +11,13 @@ function LoginFormContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const isSignUpInit = searchParams.get("signup") === "true"
-  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard"
+  const [callbackUrl, setCallbackUrl] = useState("/dashboard")
+  
+  useEffect(() => {
+    const url = searchParams.get("callbackUrl")
+    if (url) setCallbackUrl(url)
+  }, [searchParams])
+
   const [isSignUp, setIsSignUp] = useState(isSignUpInit)
 
   const [name, setName] = useState("")

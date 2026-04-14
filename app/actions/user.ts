@@ -21,3 +21,17 @@ export async function updateProfile(data: { name: string }) {
     throw new Error("Failed to update profile");
   }
 }
+
+export async function deleteAccount() {
+  const session = await auth();
+  if (!session?.user?.id) throw new Error("Unauthorized");
+
+  try {
+    await prisma.user.delete({
+      where: { id: session.user.id }
+    });
+    return { success: true };
+  } catch (error) {
+    throw new Error("Failed to delete account");
+  }
+}
