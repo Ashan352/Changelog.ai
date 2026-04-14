@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { FileText, MessageSquare, Copy, Check, Download, Zap, AlertTriangle, ShieldAlert, Sparkles } from 'lucide-react'
 
 // Custom X/Twitter Logo
@@ -129,9 +129,9 @@ export function OutputPanel({ data, isLoading, hasStarted, rawResult }: { data: 
           {/* Skeletons while streaming */}
           {isLoading && !data && (
             <div className="space-y-4">
-              <Skeleton className="h-8 w-2/3 bg-white/5" />
-              <Skeleton className="h-32 w-full bg-white/5" />
-              <Skeleton className="h-24 w-5/6 bg-white/5" />
+              <Skeleton className="h-8 w-2/3" />
+              <Skeleton className="h-32 w-full" />
+              <Skeleton className="h-24 w-5/6" />
             </div>
           )}
 
@@ -182,10 +182,10 @@ export function OutputPanel({ data, isLoading, hasStarted, rawResult }: { data: 
             <div className="max-w-4xl mx-auto">
                {!getContent() && isLoading ? (
                   <div className="space-y-4">
-                    <Skeleton className="h-10 w-1/3 bg-white/5" />
-                    <Skeleton className="h-4 w-full bg-white/5" />
-                    <Skeleton className="h-4 w-5/6 bg-white/5" />
-                    <Skeleton className="h-64 w-full bg-white/5" />
+                    <Skeleton className="h-10 w-1/3" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-5/6" />
+                    <Skeleton className="h-64 w-full" />
                   </div>
                ) : (
                  <pre className="whitespace-pre-wrap font-sans text-base sm:text-lg text-white leading-relaxed antialiased">

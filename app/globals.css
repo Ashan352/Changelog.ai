@@ -110,6 +110,12 @@
     100% { transform: scale(1); }
   }
 
+  /* ─── Skeleton Shimmer ─── */
+  @keyframes skeletonShimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
   /* shadcn mappings */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -338,4 +344,16 @@
 /* Generate button spring click */
 .btn-spring {
   animation: btnSpring 500ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Premium Skeleton Shimmer */
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 25%,
+    rgba(232, 255, 71, 0.12) 50%,
+    rgba(255, 255, 255, 0.03) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.5s infinite linear;
 }

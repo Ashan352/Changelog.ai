@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { GitCommit, Zap, Loader2, Info } from 'lucide-react'
 import { Kbd } from '@/components/ui/kbd'
 

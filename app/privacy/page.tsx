@@ -1,3 +1,4 @@
+import React from "react"
 import { auth } from "@/lib/auth"
 import { Navbar } from "@/components/landing/Navbar"
 import { Footer } from "@/components/landing/Footer"
