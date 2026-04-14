@@ -11,6 +11,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
 import { ArrowRight, AlertTriangle, XSquare } from "lucide-react";
 
 export function CancelSubscriptionDialog() {
@@ -48,7 +49,7 @@ export function CancelSubscriptionDialog() {
           {step === 1 && (
             <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
               <h3 className="font-mono text-sm text-text-secondary">Why are you leaving?</h3>
-              <textarea 
+              <Textarea 
                 className="w-full h-32 rounded-xl bg-bg border border-border p-4 text-sm font-mono text-text-primary focus:border-accent focus:outline-none transition-colors"
                 placeholder="Tell us what we can do better..."
               />

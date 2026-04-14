@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { GitCommit, Zap, Loader2, Info } from 'lucide-react'
 import { Kbd } from '@/components/ui/kbd'
+import { Textarea } from '@/components/ui/textarea'
 
 interface InputPanelProps {
   onGenerate: (commits: string, version: string, repoName?: string) => void;
@@ -82,12 +83,12 @@ export function InputPanel({ onGenerate, isLoading }: InputPanelProps) {
         </div>
 
         <div className="relative flex-1 flex flex-col group">
-          <textarea
+          <Textarea
             value={commits}
             onChange={(e) => setCommits(e.target.value)}
             disabled={isLoading}
             placeholder="Paste your git log or commit messages here..."
-            className="input-focus-glow w-full flex-1 bg-bg-surface border border-border rounded-xl p-4 font-mono text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-border-strong transition-all resize-none"
+            className="input-focus-glow w-full flex-1 bg-bg-surface border border-border rounded-xl p-4 font-mono text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-border-strong transition-all resize-none min-h-[200px]"
           />
           <div className={`absolute bottom-3 right-3 font-mono text-[10px] ${percentage > 95 ? 'text-danger' : percentage > 80 ? 'text-danger/70' : 'text-text-muted'}`}>
             {charCount.toLocaleString()} / {maxChars.toLocaleString()}
