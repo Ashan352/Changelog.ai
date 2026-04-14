@@ -3,6 +3,16 @@ import { GitBranch, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 
 export default function SignupPage() {
+  async function handleGithubSignup() {
+    "use server"
+    await signIn("github", { redirectTo: "/dashboard" })
+  }
+
+  async function handleGoogleSignup() {
+    "use server"
+    await signIn("google", { redirectTo: "/dashboard" })
+  }
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-bg relative overflow-hidden">
       <Link 
@@ -40,12 +50,7 @@ export default function SignupPage() {
         </div>
 
         <div className="space-y-3 animate-fade-up" style={{ animationDelay: '0.4s' }}>
-          <form
-            action={async () => {
-              "use server"
-              await signIn("github", { redirectTo: "/dashboard" })
-            }}
-          >
+          <form action={handleGithubSignup}>
             <button
               type="submit"
               className="flex w-full items-center justify-center rounded-lg bg-bg border border-border hover:border-border-hover px-4 h-11 font-mono font-medium text-text-primary transition-all hover:bg-bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
@@ -57,12 +62,7 @@ export default function SignupPage() {
             </button>
           </form>
 
-          <form
-            action={async () => {
-              "use server"
-              await signIn("google", { redirectTo: "/dashboard" })
-            }}
-          >
+          <form action={handleGoogleSignup}>
             <button
               type="submit"
               className="flex w-full items-center justify-center rounded-lg bg-bg border border-border hover:border-border-hover px-4 h-11 font-mono font-medium text-text-primary transition-all hover:bg-bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
