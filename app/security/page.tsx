@@ -13,7 +13,7 @@ export default async function SecurityPage() {
     session = await auth()
   } catch {}
 
-  const securityFeatures = [
+  const securityFeatures: { title: string; icon: React.ReactNode; content: string }[] = [
     { 
       title: "Data Encryption", 
       icon: <Lock className="h-5 w-5" />, 

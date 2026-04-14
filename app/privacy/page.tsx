@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 }
 
 export default function PrivacyPolicy() {
-  const sections = [
+  const sections: { id: string; title: string }[] = [
     { id: 'data-collection', title: '1. Information We Collect' },
     { id: 'usage', title: '2. How We Use Data' },
     { id: 'processing', title: '3. Processing & AI' },

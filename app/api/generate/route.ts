@@ -28,9 +28,12 @@ export async function POST(req: Request) {
     }
 
     // Rate Limiting — check first to protect DB
-    const { success } = await checkRateLimit(session.user.id);
-    if (!success) {
-      return new Response(JSON.stringify({ error: "Too many requests. Please wait a moment." }), { status: 429 });
+    const limitResult = await checkRateLimit(session.user.id) as { success: boolean };
+    if (!limitResult.success) {
+      return new Response(JSON.stringify({ error: "Too many requests. Please wait a moment." }), { 
+        status: 429,
+        headers: { "Content-Type": "application/json" }
+      });
     }
 
     // Always re-fetch user from DB — don't trust stale session JWT for plan/generations
@@ -91,8 +94,8 @@ export async function POST(req: Request) {
               repoName: repoName || projectName || "Unnamed Project",
               version: object.version_detected || version || "Latest",
               content: object.changelog,
-              commits: sanitizedCommits.split('\n').filter(l => l.trim()).length,
-            }
+              commits: String(sanitizedCommits).split('\n').filter((l: string) => l.trim()).length,
+            } as any
           });
           revalidatePath('/dashboard');
           revalidatePath('/dashboard/usage');
@@ -105,7 +108,7 @@ export async function POST(req: Request) {
       }
     );
 
-    return result.toTextStreamResponse();
+    return (result as any).toTextStreamResponse();
 
   } catch (error: any) {
     console.error("Generate API Error:", error.message || error);

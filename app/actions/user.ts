@@ -16,13 +16,13 @@ export async function updateProfile(data: { name: string }) {
 
   const validation = updateProfileSchema.safeParse(data);
   if (!validation.success) {
-    throw new Error(validation.error.issues[0].message);
+    throw new Error(validation.error.issues[0]?.message || "Invalid input");
   }
 
   try {
     await prisma.user.update({
       where: { id: session.user.id },
-      data: { name: validation.data.name }
+      data: { name: validation.data.name } as any
     });
 
     revalidatePath('/dashboard/settings');

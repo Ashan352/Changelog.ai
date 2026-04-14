@@ -11,7 +11,7 @@ export default async function PricingDetailsPage() {
 
   const plan = session.user.plan || "free";
 
-  const features = [
+  const features: { name: string; free: string | boolean; pro: string | boolean; enterprise: string | boolean }[] = [
     { name: "Generations per month", free: "5", pro: "Unlimited", enterprise: "Unlimited" },
     { name: "Smart Tag Parsing", free: true, pro: true, enterprise: true },
     { name: "Prioritized Models", free: false, pro: true, enterprise: true },
