@@ -1,19 +1,20 @@
 import { Logo } from "@/components/ui/Logo"
 import { auth } from "@/lib/auth"
 import { Hero } from "@/components/landing/Hero"
-import { ProductShowcase } from "@/components/landing/ProductShowcase"
-import { HowItWorks } from "@/components/landing/HowItWorks"
-import { Stats } from "@/components/landing/Stats"
-import { Pricing } from "@/components/landing/Pricing"
-import { FAQ } from "@/components/landing/FAQ"
-import { Footer } from "@/components/landing/Footer"
-import { LogoLoop } from "@/components/ui/LogoLoop"
-import { GitBranch, ArrowRight } from "lucide-react"
-import Link from "next/link"
-
-import { StaggeredMenu } from "@/components/ui/StaggeredMenu"
-import { GallerySection } from "@/components/landing/GallerySection"
 import { Navbar } from "@/components/landing/Navbar"
+import dynamic from "next/dynamic"
+
+// Lazy Load Heavy Sections
+const HowItWorks = dynamic(() => import("@/components/landing/HowItWorks").then(m => m.HowItWorks), { ssr: true })
+const ProductShowcase = dynamic(() => import("@/components/landing/ProductShowcase").then(m => m.ProductShowcase), { ssr: false })
+const GallerySection = dynamic(() => import("@/components/landing/GallerySection").then(m => m.GallerySection), { ssr: false })
+const Stats = dynamic(() => import("@/components/landing/Stats").then(m => m.Stats), { ssr: false })
+const Pricing = dynamic(() => import("@/components/landing/Pricing").then(m => m.Pricing), { ssr: false })
+const FAQ = dynamic(() => import("@/components/landing/FAQ").then(m => m.FAQ), { ssr: false })
+const Footer = dynamic(() => import("@/components/landing/Footer").then(m => m.Footer), { ssr: true })
+const LogoLoop = dynamic(() => import("@/components/ui/LogoLoop").then(m => m.LogoLoop), { ssr: false })
+const StaggeredMenu = dynamic(() => import("@/components/ui/StaggeredMenu").then(m => m.StaggeredMenu), { ssr: false })
+
 import {
   SiNextdotjs,
   SiReact,

@@ -1,6 +1,7 @@
 'use client'
 import { cn } from "@/lib/utils"
 import { Marquee } from "@/components/ui/marquee"
+import Image from "next/image"
 
 const reviews = [
   {
@@ -64,7 +65,14 @@ const ReviewCard = ({
       )}
     >
       <div className="flex flex-row items-center gap-3">
-        <img className="rounded-full border border-border" width="40" height="40" alt="" src={img} />
+        <Image 
+          className="rounded-full border border-border" 
+          width={40} 
+          height={40} 
+          alt={name} 
+          src={img} 
+          unoptimized={img.includes('avatar.vercel.sh')} // Vercel avatars are already optimized
+        />
         <div className="flex flex-col">
           <figcaption className="text-[12px] font-mono font-bold text-text-primary uppercase tracking-wider">
             {name}

@@ -1,6 +1,7 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  compress: true,
   headers: async () => [
     {
       source: '/(.*)',
@@ -25,9 +26,26 @@ const nextConfig: NextConfig = {
           key: 'Strict-Transport-Security',
           value: 'max-age=63072000; includeSubDomains; preload',
         },
+        {
+          key: 'Cache-Control',
+          value: 'public, max-age=31536000, immutable',
+        },
       ],
     },
+    {
+      source: '/fonts/(.*)',
+      headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+    },
   ],
+  images: {
+    remotePatterns: [
+      { protocol: 'https', hostname: 'avatars.githubusercontent.com' },
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'lh3.googleusercontent.com' },
+      { protocol: 'https', hostname: 'avatar.vercel.sh' },
+      { protocol: 'https', hostname: 'pbs.twimg.com' },
+    ],
+  },
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion'],
   },
