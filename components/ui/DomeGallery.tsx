@@ -1,4 +1,5 @@
 // @ts-nocheck
+'use client';
 import { useEffect, useMemo, useRef, useCallback } from 'react';
 import { useGesture } from '@use-gesture/react';
 
