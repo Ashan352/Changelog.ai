@@ -110,7 +110,9 @@ export async function generateStreamingContent(
     throw new Error("No API keys configured for " + (isPro ? "Pro" : "Free") + " plan.");
   }
 
-  // Iterate through keys and models with failover
+  const errors: string[] = [];
+
+  // Multi-tier failover: Try every key with every model until success
   for (let keyIdx = 0; keyIdx < keys.length; keyIdx++) {
     const key = keys[keyIdx];
     const openrouter = createOpenAI({
@@ -131,37 +133,45 @@ export async function generateStreamingContent(
           system: SYSTEM_PROMPT,
           prompt: prompt,
           temperature: 0.1,
-          maxRetries: 0, // Disable internal SDK retries to handle key rotation ourselves
+          maxRetries: 0, 
           onFinish,
         });
 
-        // We try to "tickle" the stream to see if the first chunk/response is a 402/401/429
-        // If it throws here, we catch and rotate.
-        // Wait briefly for headers to ensure it's not a blocked key
+        // "Tickle" the stream to see if it fails immediately (auth/quota)
+        // This initialization check catches immediate 401s/402s
+        try {
+          const reader = result.fullStream.getReader();
+          reader.releaseLock();
+        } catch (e) {
+             throw e;
+        }
+
         return result;
 
       } catch (error: any) {
-        const status = error.status || error.statusCode || (error.data?.error?.code);
+        const status = error.status || error.statusCode || error.data?.error?.code;
         const msg = error.message || "";
-        
-        console.warn(`[AI] Error on ${model}: [Status ${status}] ${msg}`);
+        errors.push(`${model} (Key #${keyIdx+1}): [${status}] ${msg}`);
+
+        console.warn(`[AI] Error on ${model} with Key #${keyIdx+1}: ${msg}`);
 
         // Specific codes that trigger key rotation
-        const shouldRotateKey = status === 402 || status === 401 || status === 429 || msg.includes("limit exceeded");
+        const isQuotaError = status === 402 || msg.includes("credits") || msg.includes("balance");
+        const isAuthError = status === 401 || msg.includes("API key");
         
-        if (shouldRotateKey) {
-          console.log(`[AI] Key #${keyIdx + 1} exhausted or invalid. Rotating to next key if available.`);
-          break; // Exit model loop for THIS key, try next key
+        if (isAuthError || isQuotaError) {
+          console.log(`[AI] Key #${keyIdx+1} is dead/exhausted. Rotating to next key if available...`);
+          break; // Next key
         }
 
-        // For other errors, try the next model with the SAME key
-        console.log(`[AI] Trying next model with same key...`);
+        // For other errors (overloaded model, etc.), try the next model with same key
+        console.log(`[AI] Model ${model} failed. Trying next model...`);
         continue;
       }
     }
   }
 
-  throw new Error("All provider keys and models exhausted. Please check your OpenRouter limits.");
+  throw new Error(`All provider keys and models exhausted.\nErrors details:\n${errors.join('\n')}`);
 }
 
 /**

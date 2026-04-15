@@ -1,6 +1,6 @@
 import { generateStreamingContent } from "@/lib/openrouter";
 import { sanitizeInput } from "@/lib/sanitize";
-import { getToken } from "next-auth/jwt";
+import { authEdge } from "@/lib/auth-edge";
 import { checkRateLimit } from "@/lib/ratelimit";
 import { z } from "zod";
 
@@ -17,18 +17,15 @@ const generateSchema = z.object({
 
 export async function POST(req: Request) {
   try {
-    // Use getToken instead of auth() to keep this route Edge-compatible
-    // getToken reads from the cookie directly and doesn't trigger Prisma initialization
-    const token = await getToken({ 
-      req: req as any, 
-      secret: process.env.AUTH_SECRET 
-    });
-
-    if (!token?.id) {
+    // Use the Edge-safe authEdge instead of the Prisma-heavy auth()
+    const session = await authEdge();
+    if (!session?.user?.id) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
     }
 
-    const userId = token.id as string;
+    const userId = session.user.id;
+    const plan = session.user.plan || "free";
+    const generations = session.user.generations || 0;
 
     // Rate Limiting (Upstash works on Edge)
     const limitResult = await checkRateLimit(userId);
@@ -39,10 +36,7 @@ export async function POST(req: Request) {
       });
     }
 
-    // Check plan limits from token (Soft check for Edge)
-    const plan = (token.plan as string) || "free";
-    const generations = (token.generations as number) || 0;
-    
+    // Check plan limits from session
     if (plan === "free" && generations >= 5) {
       return new Response(JSON.stringify({ error: "Free limit reached" }), { status: 403 });
     }
@@ -61,9 +55,7 @@ export async function POST(req: Request) {
     const sanitizedCommits = sanitizeInput(commits);
     const isPro = plan === "pro";
 
-    // Start generation
-    // We don't save to DB here because Prisma is not Edge-compatible.
-    // The client will call /api/history once the stream is finished.
+    // Start generation with retry logic handled inside generateStreamingContent
     const result = await generateStreamingContent(
       sanitizedCommits,
       version || "Latest",
