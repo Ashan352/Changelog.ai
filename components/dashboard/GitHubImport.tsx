@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Loader2, GitBranch, GitCommit, ChevronRight, Search, AlertTriangle, RefreshCcw } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { signIn } from 'next-auth/react'
 
 // Manual GitHub icon to avoid versioning issues with lucide-react
 const GitHubIcon = ({ className }: { className?: string }) => (
@@ -156,7 +157,7 @@ export function GitHubImport({ accessToken, plan }: { accessToken?: string | nul
              We need permission to access your repositories to fetch commit history.
           </p>
           <button 
-            onClick={() => router.push('/api/auth/signin/github')}
+            onClick={() => signIn('github')}
             className="px-8 h-12 rounded-full bg-accent text-text-primary font-mono text-sm font-bold shadow-lg hover:shadow-accent/40 active:scale-[0.98] transition-all"
           >
              Sign in with GitHub
