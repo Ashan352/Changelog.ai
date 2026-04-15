@@ -23,8 +23,8 @@ export function HowItWorks() {
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col items-center text-center mb-24">
           <FadeUp>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif italic text-text-primary mb-4">One input. Infinite clarity.</h2>
-            <div className="font-mono text-xs sm:text-sm text-text-secondary max-w-[600px] mx-auto">Our AI engine maps your engineering velocity to stakeholders in seconds.</div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif italic text-text-primary mb-4">One paste. That&apos;s it.</h2>
+            <div className="font-mono text-xs sm:text-sm text-text-secondary max-w-[600px] mx-auto">We take your messy git notes and turn them into something humans actually enjoy reading.</div>
           </FadeUp>
         </div>
 

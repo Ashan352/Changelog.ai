@@ -76,7 +76,7 @@ export function Hero({ isLoggedIn }: { isLoggedIn?: boolean }) {
           className="flex items-center gap-2 px-3 py-1 rounded-full bg-accent-dim border border-accent/20 mb-8"
         >
           <GitBranch className="h-3 w-3 text-accent" />
-          <span className="font-mono text-[12px] text-accent uppercase tracking-widest leading-none">For developers who ship</span>
+          <span className="font-mono text-[12px] text-accent uppercase tracking-widest leading-none">Built for the ones who actually ship</span>
         </motion.div>
 
         {/* Headline */}
@@ -85,7 +85,7 @@ export function Hero({ isLoggedIn }: { isLoggedIn?: boolean }) {
                .blur-text-container span { font-size: clamp(2rem, 8vw, 6rem); line-height: 1.1; font-family: var(--font-serif); font-style: italic; color: var(--color-text-primary); }
             `}</style>
             <div className="blur-text-container text-center">
-               <BlurText text="Stop wasting hours on release notes" delay={0.1} />
+               <BlurText text="Stop fighting your git history" delay={0.1} />
             </div>
         </h1>
 
@@ -97,7 +97,7 @@ export function Hero({ isLoggedIn }: { isLoggedIn?: boolean }) {
           style={{ willChange: 'opacity', contain: 'content' }}
           className="max-w-[95%] sm:max-w-[700px] font-mono text-sm sm:text-base md:text-lg text-text-secondary mb-10 sm:mb-12 leading-relaxed text-center px-2"
         >
-          Paste your Git commits. Get a <ShinyText text="polished changelog" />, GitHub release, and tweet thread in under 4 seconds. Focus on Shipping.
+          Just paste your commits. We&apos;ll handle the <ShinyText text="polished changelog" />, the GitHub release, and even the tweet thread—all in about 4 seconds. You focus on the code.
         </motion.div>
 
         {/* CTA Row */}
@@ -108,7 +108,7 @@ export function Hero({ isLoggedIn }: { isLoggedIn?: boolean }) {
                 href={isLoggedIn ? "/dashboard" : "/login?signup=true"}
                 className="cta-pulse w-full sm:w-auto flex items-center justify-center gap-2 px-8 sm:px-10 h-12 sm:h-14 rounded-full bg-accent text-bg font-mono font-bold text-sm sm:text-base hover:bg-accent/90 transition-all hover:scale-[1.02] shadow-[0_0_32px_rgba(232,255,71,0.25)] active:scale-[0.98]"
               >
-                <span>{isLoggedIn ? "Go to Dashboard" : "Start shipping efficiently"}</span>
+                <span>{isLoggedIn ? "Go to Dashboard" : "Ship faster now"}</span>
                 <ArrowRight className="h-4 w-4 shrink-0" />
               </Link>
             </Magnetic>
@@ -128,7 +128,7 @@ export function Hero({ isLoggedIn }: { isLoggedIn?: boolean }) {
             <div className="relative h-full w-full bg-accent rounded-full" />
           </div>
           <span className="font-mono text-[12px] text-text-secondary uppercase tracking-widest underline decoration-border decoration-dashed underline-offset-4 pointer-events-auto">
-            Join {userCount !== null ? userCount : '12,492'} {userCount === 1 ? 'developer' : 'developers'} shipping with speed
+            Join {userCount !== null ? userCount : '12,492'} {userCount === 1 ? 'dev' : 'devs'} shipping every single day
           </span>
         </motion.div>
       </div>

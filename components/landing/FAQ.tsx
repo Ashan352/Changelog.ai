@@ -8,20 +8,20 @@ export function FAQ() {
   const [openIdx, setOpenIdx] = useState<number | null>(null)
 
   const faqs = [
-    { q: "What Git formats do you support?", a: "We support standard git log, git shortlog, and even raw diffs. If you can copy it from your terminal, we can parse it." },
-    { q: "Do you store my code or commits?", a: "No. We only process the text you paste. We do not integrate with your repositories directly unless you specifically use our future GitHub Action." },
-    { q: "Which AI model do you use?", a: "By default, we use Mistral instruction-tuned models optimized for developer workflows. Pro users get access to higher-context models for massive commit logs." },
-    { q: "What happens when I hit the free limit?", a: "You'll be prompted to upgrade to Pro. Free accounts are limited to 5 total generations to help us cover API costs." },
-    { q: "Can I cancel anytime?", a: "Yes. Our Pro subscription is handled by Stripe. You can cancel with one click in your billing dashboard." },
-    { q: "Is there a GitHub Action?", a: "It's currently in beta for Pro users. You'll be able to automatically generate releases on every tag push soon." },
+    { q: "Which Git formats do you support?", a: "Honestly, almost all of them. Standard git log, shortlog, and even raw diffs—if you can copy it from your terminal, we can probably make sense of it." },
+    { q: "Do you store my code or commits?", a: "No way. We only process the text you paste in. We don't touch your repositories directly unless you decide to use our GitHub Action later on." },
+    { q: "Which AI model do you use?", a: "We use Mistral models that we've tuned specifically for dev workflows. If you're on Pro, you get access to models with way more 'brain power' for those massive commit logs." },
+    { q: "What happens when I hit the free limit?", a: "You'll just see a prompt to upgrade to Pro. We keep it at 5 generations for free accounts just so we can keep the lights on and cover the API costs." },
+    { q: "Can I cancel anytime?", a: "Yeah, of course. Everything is handled via Stripe, so you can cancel with one click from your billing page whenever you want." },
+    { q: "Is there a GitHub Action?", a: "It's in beta for our Pro users right now. You'll be able to automate the whole release process on every tag push pretty soon." },
   ]
 
   return (
     <section id="faq" className="py-16 sm:py-24 px-4 sm:px-6 max-w-[640px] mx-auto">
       <div className="flex flex-col items-center text-center mb-16">
         <FadeUp>
-          <h2 className="text-2xl sm:text-3xl font-serif italic text-text-primary mb-4">Questions about shipment?</h2>
-          <p className="font-mono text-xs text-text-muted">Everything you need to know about automating your release workflow.</p>
+          <h2 className="text-2xl sm:text-3xl font-serif italic text-text-primary mb-4">Got questions? We&apos;ve got answers.</h2>
+          <p className="font-mono text-xs text-text-muted">Everything you might want to know about automating your releases.</p>
         </FadeUp>
       </div>
       

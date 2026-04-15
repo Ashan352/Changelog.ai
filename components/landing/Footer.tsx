@@ -9,16 +9,16 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 mb-12 md:mb-16">
           <div className="md:col-span-2 space-y-6">
             <p className="font-mono text-sm text-text-secondary max-w-sm leading-relaxed">
-              Founded to eliminate the busywork between shipping code and informing users. We build high-velocity developer tools designed for maximum efficiency.
+              We built this to cut out the tedious work between finishing your code and actually telling your users about it. It’s all about keeping your momentum going.
             </p>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1.5 text-[12px] font-mono text-text-secondary">
                 <ShieldCheck className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
-                <span>OAuth Secured</span>
+                <span>Secure authentication</span>
               </div>
               <div className="flex items-center gap-1.5 text-[12px] font-mono text-text-secondary">
                 <CheckCircle2 className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
-                <span>99.9% Uptime</span>
+                <span>Always online</span>
               </div>
             </div>
           </div>
@@ -56,7 +56,7 @@ export function Footer() {
 
         <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="font-mono text-[10px] text-text-muted/80">
-            © {new Date().getFullYear()} Changelog.ai — Designed for velocity.
+            © {new Date().getFullYear()} Changelog.ai — Built by devs, for devs.
           </p>
           <div className="flex items-center gap-6">
             <span className="font-mono text-[10px] text-text-muted/70 italic">All rights reserved</span>

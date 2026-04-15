@@ -19,9 +19,9 @@ export function Stats() {
   }, [])
 
   const stats = [
-    { label: 'Changelogs generated', value: data.totalGenerations, icon: GitCommit },
-    { label: 'Avg processing time', value: data.avgTime, icon: Clock, suffix: 's', decimal: true },
-    { label: 'Early adopters', value: data.userCount, icon: Users },
+    { label: 'Changelogs shipped', value: data.totalGenerations, icon: GitCommit },
+    { label: 'Avg speed to ship', value: data.avgTime, icon: Clock, suffix: 's', decimal: true },
+    { label: 'Developers on board', value: data.userCount, icon: Users },
     { label: 'Success rate', value: data.successRate, icon: Zap, suffix: '%', decimal: true },
   ]
 

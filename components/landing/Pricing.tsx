@@ -16,9 +16,9 @@ export function Pricing() {
       price: '0',
       period: ' forever',
       features: [
-        '5 total generations',
-        '24-hour output history',
-        'Standard AI model',
+        'Up to 5 total generations',
+        '24-hour history window',
+        'Our standard AI model',
         'No public hosted page',
       ],
       cta: 'Start free',
@@ -30,11 +30,11 @@ export function Pricing() {
       price: isAnnual ? '6' : '8',
       period: '/month',
       features: [
-        'Unlimited generations',
-        'Permanent history',
-        'Priority AI model',
-        'Custom hosted page',
-        'GitHub README badge',
+        'Unlimited AI generations',
+        'Permanent history storage',
+        'Priority access to AI models',
+        'A custom hosted page for your brand',
+        'A cool GitHub README badge',
       ],
       cta: 'Start 7-day free trial',
       featured: true,
@@ -46,8 +46,8 @@ export function Pricing() {
     <section id="pricing" className="py-16 sm:py-24 px-4 sm:px-6 max-w-7xl mx-auto">
       <div className="flex flex-col items-center text-center mb-16">
         <FadeUp>
-          <h2 className="text-2xl sm:text-4xl md:text-5xl font-serif italic text-text-primary mb-4">Fair pricing for high-velocity teams</h2>
-          <div className="font-mono text-xs sm:text-sm text-text-secondary max-w-[600px] px-2">Focus on building. We&apos;ll handle the documentation. Save 5+ hours every sprint.</div>
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-serif italic text-text-primary mb-4">Pricing that actually makes sense</h2>
+          <div className="font-mono text-xs sm:text-sm text-text-secondary max-w-[600px] px-2">Focus on the code. We&apos;ll handle the boring paperwork. Save yourself 5+ hours every single sprint.</div>
         </FadeUp>
 
         {/* Toggle */}
