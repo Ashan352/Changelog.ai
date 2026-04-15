@@ -4,8 +4,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { AlertTriangle, X, Check, Loader2 } from 'lucide-react'
 import { useState } from 'react'
 
-export function UpgradeModal({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
+export function UpgradeModal({ isOpen, onClose, reason = 'usage' }: { isOpen: boolean, onClose: () => void, reason?: 'usage' | 'text' }) {
   const [isLoading, setIsLoading] = useState(false)
+
+  const isTextLimit = reason === 'text'
 
   const handleUpgrade = async () => {
     setIsLoading(true)
@@ -57,13 +59,19 @@ export function UpgradeModal({ isOpen, onClose }: { isOpen: boolean, onClose: ()
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-danger/20 border border-danger/30">
                     <AlertTriangle className="h-5 w-5 text-danger" />
                   </div>
-                  <span className="font-mono text-[10px] text-danger uppercase tracking-widest font-bold">Limit Reached (5/5)</span>
+                  <span className="font-mono text-[10px] text-danger uppercase tracking-widest font-bold">
+                    {isTextLimit ? 'Character Limit Reached' : 'Limit Reached (5/5)'}
+                  </span>
                 </div>
                 <h2 className="text-2xl sm:text-3xl font-serif italic text-text-primary max-w-[90%] leading-tight">
-                  Your changelog history will be deleted in 23 hours.
+                  {isTextLimit
+                    ? 'Your input exceeds the free plan character limit.'
+                    : 'Your changelog history will be deleted in 23 hours.'}
                 </h2>
                 <p className="mt-3 font-mono text-xs sm:text-sm text-text-secondary leading-relaxed">
-                  The Free tier only stores outputs temporarily. Upgrade to permanently save your work, unlock Priority AI, and host public release pages.
+                  {isTextLimit
+                    ? 'The Free tier is limited to 500 characters per generation. Upgrade to Pro for unlimited input length and process even the largest git logs.'
+                    : 'The Free tier only stores outputs temporarily. Upgrade to permanently save your work, unlock Priority AI, and host public release pages.'}
                 </p>
               </div>
 
@@ -72,7 +80,7 @@ export function UpgradeModal({ isOpen, onClose }: { isOpen: boolean, onClose: ()
                 <div className="space-y-3">
                    <div className="flex items-center gap-3">
                      <Check className="h-4 w-4 text-accent shrink-0" />
-                     <span className="font-mono text-xs text-text-secondary">Unlimited generations</span>
+                     <span className="font-mono text-xs text-text-secondary">{isTextLimit ? 'Unlimited input characters' : 'Unlimited generations'}</span>
                    </div>
                    <div className="flex items-center gap-3">
                      <Check className="h-4 w-4 text-accent shrink-0" />
@@ -94,7 +102,7 @@ export function UpgradeModal({ isOpen, onClose }: { isOpen: boolean, onClose: ()
                     disabled={isLoading}
                     className="w-full flex items-center justify-center gap-2 h-14 rounded-xl bg-accent text-bg font-mono font-bold text-sm transition-all hover:bg-accent/90 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 disabled:opacity-50"
                   >
-                    {isLoading ? <><Loader2 className="h-4 w-4 animate-spin" /> Processing...</> : "Start 7-day free trial"}
+                    {isLoading ? <><Loader2 className="h-4 w-4 animate-spin" /> Processing...</> : isTextLimit ? 'Upgrade for unlimited input' : 'Start 7-day free trial'}
                   </button>
                   <p className="text-center font-mono text-[10px] text-text-muted mt-4">
                     Defaults to Annual ($72/year). Cancel anytime during trial.

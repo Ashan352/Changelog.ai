@@ -40,11 +40,10 @@ export function InputPanel({ onGenerate, isLoading, plan = 'free' }: InputPanelP
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [commits, version, repoName, isLoading])
 
-  const wordCount = commits.split(/\s+/).filter(Boolean).length
   const charCount = commits.length
-  const maxWords = plan === 'pro' ? 10000 : 500
-  const isOverLimit = wordCount > maxWords
-  const percentage = (wordCount / maxWords) * 100
+  const maxChars = plan === 'pro' ? 50000 : 500
+  const isOverLimit = charCount > maxChars
+  const percentage = (charCount / maxChars) * 100
 
   const handleLoadExample = () => {
     setCommits(`feat(auth): add GitHub OAuth login\nfix: resolve crash on empty input\nchore: update dependencies\nrefactor(api): improve response time by 40%`)
@@ -85,22 +84,19 @@ export function InputPanel({ onGenerate, isLoading, plan = 'free' }: InputPanelP
           </button>
         </div>
 
-        <div className="relative flex-1 flex flex-col group">
+        <div className="relative flex flex-col group">
           <Textarea
             value={commits}
             onChange={(e) => setCommits(e.target.value)}
             disabled={isLoading}
             placeholder="Paste your git log or commit messages here..."
-            className={`input-focus-glow w-full flex-1 bg-bg-surface border rounded-xl p-4 font-mono text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-border-strong transition-all resize-none min-h-[200px] ${isOverLimit ? 'border-danger/50' : 'border-border'}`}
+            className={`input-focus-glow w-full bg-bg-surface border rounded-xl p-4 font-mono text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-border-strong transition-all overflow-y-auto ${isOverLimit ? 'border-danger/50' : 'border-border'}`}
+            style={{ resize: 'none', height: '200px', maxHeight: '280px' }}
           />
           <div className="absolute bottom-3 right-3 flex items-center gap-2.5 transition-all duration-300">
-             <div className={`font-mono text-[9px] uppercase tracking-[0.1em] ${isOverLimit ? 'text-danger' : 'text-text-muted'} opacity-40 font-bold`}>
-                {charCount.toLocaleString()} chars
-             </div>
-             <div className="h-3 w-[1px] bg-border/40" />
-             <div className={`font-mono text-[10px] tabular-nums ${isOverLimit ? 'text-danger' : percentage > 80 ? 'text-danger/70' : 'text-text-muted'}`}>
-                <span className="font-bold">{wordCount.toLocaleString()}</span>
-                <span className="text-[9px] font-normal opacity-50 ml-1 uppercase tracking-tighter">/ {maxWords.toLocaleString()} words</span>
+             <div className={`font-mono text-[10px] tabular-nums ${isOverLimit ? 'text-danger font-bold animate-pulse' : percentage > 80 ? 'text-danger/70' : 'text-text-muted'}`}>
+                <span>{charCount.toLocaleString()}</span>
+                <span className="text-[9px] font-normal opacity-50 ml-1 uppercase tracking-tighter">/ {maxChars.toLocaleString()} chars</span>
              </div>
           </div>
         </div>

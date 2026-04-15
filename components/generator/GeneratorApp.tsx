@@ -11,6 +11,7 @@ export function GeneratorApp({ plan }: { plan: string }) {
   const router = useRouter()
   const [error, setError] = useState<string | null>(null)
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
+  const [upgradeReason, setUpgradeReason] = useState<'usage' | 'text'>('usage')
   const [hasStarted, setHasStarted] = useState(false)
   const [lastParams, setLastParams] = useState({ repoName: '', version: '', commitsCount: 0 });
 
@@ -48,6 +49,7 @@ export function GeneratorApp({ plan }: { plan: string }) {
     onError: (err) => {
       console.error(err)
       if (err.message.includes("Free limit reached")) {
+        setUpgradeReason('usage')
         setShowUpgradeModal(true)
       } else {
         setError(err.message || "Failed to generate artifacts.")
@@ -61,11 +63,12 @@ export function GeneratorApp({ plan }: { plan: string }) {
       return
     }
 
-    // Free plan word limit check (100 words)
+    // Free plan character limit check (500 chars)
     if (plan !== 'pro') {
-      const wordCount = commits.trim().split(/\s+/).length;
-      if (wordCount > 100) {
-        setError(`Free plan is limited to 100 words per generation. Your input has ${wordCount} words. Please upgrade for unlimited processing.`);
+      const charCount = commits.trim().length;
+      if (charCount > 500) {
+        setError(`Free plan is limited to 500 characters per generation. Your input has ${charCount.toLocaleString()} characters. Upgrade for unlimited input.`);
+        setUpgradeReason('text');
         setShowUpgradeModal(true);
         return;
       }
@@ -119,7 +122,7 @@ export function GeneratorApp({ plan }: { plan: string }) {
       </div>
 
       {/* Upgrade Modal Hook */}
-      <UpgradeModal isOpen={showUpgradeModal} onClose={() => setShowUpgradeModal(false)} />
+      <UpgradeModal isOpen={showUpgradeModal} onClose={() => setShowUpgradeModal(false)} reason={upgradeReason} />
     </div>
   )
 }
