@@ -1,14 +1,29 @@
 import Stripe from "stripe";
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error("Missing STRIPE_SECRET_KEY. Please add it to your environment variables.");
+// Lazy Stripe initialization — prevents top-level crash during build
+// if STRIPE_SECRET_KEY is not yet available (e.g. during Next.js page collection).
+let _stripe: Stripe | null = null;
+
+function getStripeClient(): Stripe {
+  if (!_stripe) {
+    if (!process.env.STRIPE_SECRET_KEY) {
+      throw new Error("Missing STRIPE_SECRET_KEY. Please add it to your environment variables.");
+    }
+    _stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      typescript: true,
+    });
+  }
+  return _stripe;
 }
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  typescript: true,
+export const stripe = new Proxy({} as Stripe, {
+  get(_target, prop, receiver) {
+    return Reflect.get(getStripeClient(), prop, receiver);
+  },
 });
 
 export const getStripeSession = async (userId: string, email: string, isAnnual: boolean) => {
+  const client = getStripeClient();
   const priceId = isAnnual 
     ? process.env.STRIPE_ANNUAL_PRICE_ID 
     : process.env.STRIPE_MONTHLY_PRICE_ID;
@@ -17,7 +32,7 @@ export const getStripeSession = async (userId: string, email: string, isAnnual: 
     throw new Error("Stripe Price ID not configured. Please add real price IDs to your .env file.");
   }
 
-  return await stripe.checkout.sessions.create({
+  return await client.checkout.sessions.create({
     success_url: `${process.env.NEXTAUTH_URL}/?upgraded=true`,
     cancel_url: `${process.env.NEXTAUTH_URL}/`,
     payment_method_types: ["card"],

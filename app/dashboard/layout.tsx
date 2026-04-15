@@ -12,12 +12,17 @@ export default async function DashboardLayout({ children }: { children: React.Re
     redirect("/login")
   }
 
-  const dbUser = await prisma.user.findUnique({
-    where: { id: session.user.id },
-    select: { plan: true, generations: true, name: true, image: true }
-  })
+  let dbUser: { plan: string; generations: number; name: string | null; image: string | null } | null = null
+  try {
+    dbUser = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      select: { plan: true, generations: true, name: true, image: true }
+    })
+  } catch (err) {
+    console.error("Dashboard: Failed to fetch user from DB, falling back to session", err)
+  }
 
-  // Fallback to session if somehow DB read fails, though it shouldn't
+  // Fallback to session if DB read fails
   const plan = dbUser?.plan || session.user.plan || "free"
   const generations = dbUser?.generations ?? session.user.generations ?? 0
   const maxGenerations = 5
