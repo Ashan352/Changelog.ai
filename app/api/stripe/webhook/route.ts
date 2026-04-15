@@ -38,30 +38,35 @@ export async function POST(req: Request) {
 
   if (event.type === "checkout.session.completed") {
     const userId = session.metadata?.userId;
-    console.log(`[Stripe Webhook] Checkout completed for user: ${userId}`);
+    const email = session.customer_details?.email || session.customer_email;
     
-    if (!userId) {
-      console.error("[Stripe Webhook] Missing userId in session metadata");
-      return NextResponse.json({ error: "No user ID" }, { status: 400 });
+    console.log(`[Stripe Webhook] Checkout completed. UserID: ${userId}, Email: ${email}`);
+    
+    if (!email && !userId) {
+      console.error("[Stripe Webhook] Missing both email and userId");
+      return NextResponse.json({ error: "Missing identity metadata" }, { status: 400 });
     }
 
     try {
-      await prisma.user.update({
-        where: { id: userId },
+      // Bulk update all accounts sharing this email (handles GitHub/Google merge issues)
+      const updateFilter = email ? { email } : { id: userId };
+      
+      const { count } = await prisma.user.updateMany({
+        where: updateFilter,
         data: { 
           plan: "pro",
           stripeCustomerId: session.customer as string,
           stripeSubscriptionId: session.subscription as string,
         },
       });
-      console.log(`[Stripe Webhook] Successfully upgraded user ${userId} to pro`);
+
+      console.log(`[Stripe Webhook] Successfully upgraded ${count} account(s) to pro for ${email || userId}`);
     } catch (dbErr: any) {
       console.error(`[Stripe Webhook] Database update failed: ${dbErr.message}`);
       return NextResponse.json({ error: "Database update failed" }, { status: 500 });
     }
     
     // Sync to Redis for Edge API access
-    const email = session.customer_details?.email || session.customer_email;
     if (email) {
       await updatePlan(email, "pro");
       console.log(`[Stripe Webhook] Synced pro plan to Redis for ${email}`);
@@ -72,17 +77,25 @@ export async function POST(req: Request) {
     const subscription = event.data.object as any;
     const customerId = subscription.customer as string;
     
-    await prisma.user.update({
+    // Attempt to find user to get email for bulk downgrade
+    const user = await prisma.user.findFirst({
       where: { stripeCustomerId: customerId },
+      select: { email: true }
+    });
+
+    const updateFilter = user?.email ? { email: user.email } : { stripeCustomerId: customerId };
+
+    const { count } = await prisma.user.updateMany({
+      where: updateFilter,
       data: { plan: "free", stripeSubscriptionId: null },
     });
     
     // Sync to Redis for Edge API access
-    if (subscription.customer_email) {
-      await updatePlan(subscription.customer_email, "free");
+    if (user?.email) {
+      await updatePlan(user.email, "free");
     }
 
-    console.log(`Subscription deleted and plan downgraded for customer: ${customerId}`);
+    console.log(`[Stripe Webhook] Subscription deleted. Downgraded ${count} account(s) for customer: ${customerId}`);
   }
 
   return NextResponse.json({ received: true });
