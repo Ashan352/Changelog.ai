@@ -4,7 +4,7 @@ import { useRef } from 'react'
 import { Terminal, Cpu, Layers } from 'lucide-react'
 import { FadeUp } from '@/components/motion/FadeUp'
 import { AnimatedBeam } from '@/components/ui/animated-beam'
-import { User, Sparkles, FileText, Send, Twitter } from 'lucide-react'
+import { User, Sparkles, FileText, Send, Share2 } from 'lucide-react'
 
 export function HowItWorks() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -90,7 +90,7 @@ export function HowItWorks() {
 
             <div ref={output3Ref} className="relative group cursor-help">
                <div className="h-14 w-14 rounded-full bg-bg-surface border border-border flex items-center justify-center text-text-secondary shadow-sm group-hover:border-accent/40 transition-all duration-500">
-                  <Twitter className="h-6 w-6" aria-hidden="true" />
+                  <Share2 className="h-6 w-6" aria-hidden="true" />
                </div>
                <span className="absolute -right-24 top-1/2 -translate-y-1/2 font-mono text-[9px] text-text-muted uppercase tracking-widest hidden lg:block">Social</span>
             </div>
