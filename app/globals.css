@@ -214,7 +214,7 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply tracking-tight font-serif italic text-text-primary;
+    @apply tracking-normal font-serif italic text-text-primary;
     line-height: 1.05;
     margin-bottom: 1.5rem;
     text-wrap: balance; /* Better visual balance */

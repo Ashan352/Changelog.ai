@@ -122,34 +122,81 @@ export function SettingsClient({
             </div>
           </AccordionTrigger>
           <AccordionContent className="px-6 pb-6 pt-2 border-t border-border/50">
-             <div className="space-y-6 max-w-md">
+              <div className="space-y-6 max-w-md">
                 <div className="p-4 rounded-xl border border-border bg-bg space-y-3">
                   <h4 className="font-mono text-sm text-text-primary">Data Telemetry</h4>
-                  <p className="text-xs font-mono text-text-muted">
+                  <p className="text-xs font-mono text-text-muted leading-relaxed">
                     Your commit logs are never used to train our AI models. They are immediately dropped after processing.
                   </p>
                 </div>
-                <button
-                  onClick={async () => {
-                    if (window.confirm("Are you SURE you want to delete your account? This action is permanent and will delete all your generation history.")) {
-                      try {
-                        const { deleteAccount } = await import("@/app/actions/user");
-                        await deleteAccount();
-                        window.location.href = "/";
-                      } catch (err) {
-                        toast.error("Failed to delete account");
-                      }
-                    }
-                  }}
-                  className="px-6 py-2.5 rounded-full bg-bg border border-danger/50 text-danger font-mono font-bold text-xs hover:bg-danger/10 transition-all active:scale-[0.98]"
-                >
-                  Delete Account
-                </button>
+                
+                <DeleteAccountButton />
              </div>
           </AccordionContent>
         </AccordionItem>
 
       </Accordion>
+    </div>
+  );
+}
+
+function DeleteAccountButton() {
+  const [step, setStep] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const { signOut } = require("next-auth/react");
+
+  const handleDelete = async () => {
+    if (step < 2) {
+      setStep(s => s + 1);
+      return;
+    }
+
+    setIsDeleting(true);
+    try {
+      const { deleteAccount } = await import("@/app/actions/user");
+      await deleteAccount();
+      toast.success("Account deleted successfully");
+      // Critical: Sign out to clear cookies and redirect
+      await signOut({ callbackUrl: "/", redirect: true });
+    } catch (err) {
+      toast.error("Failed to delete account");
+      setStep(0);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  const steps = [
+    { label: "Delete Account", color: "text-danger border-danger/20 hover:bg-danger/5" },
+    { label: "Are you sure? (Click again)", color: "text-danger bg-danger/10 border-danger/40 animate-pulse" },
+    { label: "Final Warning: THIS IS PERMANENT", color: "text-bg bg-danger border-danger" }
+  ];
+
+  return (
+    <div className="space-y-4">
+      <div className="flex gap-2 h-1.5 w-full max-w-[200px]">
+        {[0, 1, 2].map((i) => (
+          <div 
+            key={i} 
+            className={`flex-1 rounded-full transition-all duration-300 ${i <= step - 1 ? 'bg-danger shadow-[0_0_8px_rgba(217,93,57,0.4)]' : 'bg-border'}`} 
+          />
+        ))}
+      </div>
+      <button
+        onClick={handleDelete}
+        disabled={isDeleting}
+        className={`px-6 py-2.5 rounded-full font-mono font-bold text-xs transition-all active:scale-[0.98] border flex items-center gap-2 ${steps[step].color}`}
+      >
+        {isDeleting ? <Loader2 className="h-3 w-3 animate-spin" /> : steps[step].label}
+      </button>
+      {step > 0 && !isDeleting && (
+        <button 
+          onClick={() => setStep(0)}
+          className="text-[10px] font-mono text-text-muted hover:text-text-primary underline ml-2"
+        >
+          Cancel
+        </button>
+      )}
     </div>
   );
 }
