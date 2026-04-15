@@ -8,6 +8,7 @@ const historySchema = z.object({
   version: z.string(),
   content: z.string(),
   commitsCount: z.number(),
+  isPublic: z.boolean().optional().default(false),
 });
 
 export async function POST(req: Request) {
@@ -24,7 +25,7 @@ export async function POST(req: Request) {
       return new Response(JSON.stringify({ error: "Invalid data" }), { status: 400 });
     }
 
-    const { repoName, version, content, commitsCount } = validation.data;
+    const body = validation.data;
 
     // Update generation count and save history
     await prisma.$transaction([
@@ -35,10 +36,11 @@ export async function POST(req: Request) {
       prisma.generation.create({
         data: {
           userId: session.user.id,
-          repoName: repoName || "Unnamed Project",
-          version: version || "Latest",
-          content: content,
-          commits: commitsCount,
+          repoName: body.repoName || "Unnamed Project",
+          version: body.version || "Latest",
+          content: body.content,
+          commits: body.commitsCount,
+          isPublic: body.isPublic,
         }
       })
     ]);

@@ -5,7 +5,7 @@ import { Kbd } from '@/components/ui/kbd'
 import { Textarea } from '@/components/ui/textarea'
 
 interface InputPanelProps {
-  onGenerate: (commits: string, version: string, repoName?: string) => void;
+  onGenerate: (commits: string, version: string, repoName?: string, isPublic?: boolean) => void;
   isLoading: boolean;
   initialValues?: {
     commits: string;
@@ -30,6 +30,7 @@ export function InputPanel({ onGenerate, isLoading, plan = 'free', initialValues
   const [commits, setCommits] = useState(initialValues?.commits || '')
   const [version, setVersion] = useState(initialValues?.version || '')
   const [repoName, setRepoName] = useState(initialValues?.repoName || '')
+  const [isPublic, setIsPublic] = useState(false)
   
   useEffect(() => {
     if (initialValues) {
@@ -75,7 +76,7 @@ export function InputPanel({ onGenerate, isLoading, plan = 'free', initialValues
     setShowParticles(true)
     setTimeout(() => setShowParticles(false), 520)
     // Actual generation
-    onGenerate(commits, version, repoName)
+    onGenerate(commits, version, repoName, isPublic)
   }
 
   const handleClick = () => {
@@ -140,6 +141,19 @@ export function InputPanel({ onGenerate, isLoading, plan = 'free', initialValues
             />
           </div>
         </div>
+      </div>
+
+      <div className="flex items-center gap-3 py-2 px-1">
+         <input 
+            type="checkbox" 
+            id="public-toggle" 
+            checked={isPublic} 
+            onChange={(e) => setIsPublic(e.target.checked)} 
+            className="w-4 h-4 rounded border-border bg-bg-surface text-accent focus:ring-accent/50 focus:ring-offset-bg transition-all cursor-pointer"
+         />
+         <label htmlFor="public-toggle" className="font-mono text-xs text-text-secondary cursor-pointer hover:text-text-primary transition-colors select-none">
+            Publish this to the public Ship Log feed
+         </label>
       </div>
 
       {/* Generate button with spring + particle burst */}

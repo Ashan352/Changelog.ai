@@ -80,7 +80,7 @@ export default async function TermsPage() {
               </div>
             </section>
 
-            <section id="acceptance" className="scroll-mt-24 space-y-4">
+            <section id="acceptance" className="scroll-mt-32 space-y-4">
               <h3 className="text-xl font-mono font-bold text-accent">1. Acceptance of Terms</h3>
               <div className="space-y-4 text-text-secondary leading-relaxed">
                 <p>
@@ -89,16 +89,88 @@ export default async function TermsPage() {
               </div>
             </section>
 
-            <section id="billing" className="scroll-mt-24 space-y-4">
-              <h3 className="text-xl font-mono font-bold text-accent">4. Subscription and Billing</h3>
+            <section id="description" className="scroll-mt-32 space-y-4">
+              <h3 className="text-xl font-mono font-bold text-accent">2. Description of Service</h3>
               <div className="space-y-4 text-text-secondary leading-relaxed">
                 <p>
-                  We offer various subscription tiers. You'll be billed in advance on a recurring and periodic basis. At the end of each period, your subscription will automatically renew under the exact same conditions unless you cancel it.
+                  Changelog.ai provides an automated changelog and release notes generator using AI. We parse git commit data and transform it into formatted documentation endpoints.
                 </p>
               </div>
             </section>
 
-            <section id="contact" className="scroll-mt-24 space-y-4">
+            <section id="accounts" className="scroll-mt-32 space-y-4">
+              <h3 className="text-xl font-mono font-bold text-accent">3. User Accounts</h3>
+              <div className="space-y-4 text-text-secondary leading-relaxed">
+                <p>
+                  You must be 18 years or older to use this Service. You are responsible for safeguarding your account access and OAuth tokens. We cannot and will not be liable for any loss or damage from your failure to comply with this security obligation.
+                </p>
+              </div>
+            </section>
+
+            <section id="billing" className="scroll-mt-32 space-y-4">
+              <h3 className="text-xl font-mono font-bold text-accent">4. Subscription and Billing</h3>
+              <div className="space-y-4 text-text-secondary leading-relaxed">
+                <p>
+                  We offer various subscription tiers. You'll be billed in advance on a recurring and periodic basis. At the end of each period, your subscription will automatically renew under the exact same conditions unless you cancel it. All payments are non-refundable unless required by law.
+                </p>
+              </div>
+            </section>
+            
+            <section id="ip" className="scroll-mt-32 space-y-4">
+              <h3 className="text-xl font-mono font-bold text-accent">5. Intellectual Property Rights</h3>
+              <div className="space-y-4 text-text-secondary leading-relaxed">
+                <p>
+                  You retain all rights to your code and commit data. Changelog.ai does not claim ownership of any content you transmit to the Service. The outputs (changelogs) generated are owned by you. However, the Service itself, including algorithms, UI, and branding, are the exclusive property of Changelog AI Inc.
+                </p>
+              </div>
+            </section>
+
+            <section id="prohibited" className="scroll-mt-32 space-y-4">
+              <h3 className="text-xl font-mono font-bold text-accent">6. Prohibited Conduct</h3>
+              <div className="space-y-4 text-text-secondary leading-relaxed">
+                <p>
+                  You agree not to use the Service to generate false or misleading documentation intentionally, attempt to bypass our usage rate limits, reverse engineer the AI generation pipelines, or use the platform for any illegal activities.
+                </p>
+              </div>
+            </section>
+
+            <section id="termination" className="scroll-mt-32 space-y-4">
+              <h3 className="text-xl font-mono font-bold text-accent">7. Termination</h3>
+              <div className="space-y-4 text-text-secondary leading-relaxed">
+                <p>
+                  We may terminate or suspend your account and bar access to the Service immediately, without prior notice or liability, under our sole discretion, for any reason whatsoever and without limitation, including but not limited to a breach of the Terms.
+                </p>
+              </div>
+            </section>
+
+            <section id="liability" className="scroll-mt-32 space-y-4">
+              <h3 className="text-xl font-mono font-bold text-accent">8. Limitation of Liability</h3>
+              <div className="space-y-4 text-text-secondary leading-relaxed">
+                <p>
+                  In no event shall Changelog AI Inc, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your access to or use of or inability to access or use the Service.
+                </p>
+              </div>
+            </section>
+
+            <section id="law" className="scroll-mt-32 space-y-4">
+              <h3 className="text-xl font-mono font-bold text-accent">9. Governing Law</h3>
+              <div className="space-y-4 text-text-secondary leading-relaxed">
+                <p>
+                  These Terms shall be governed and construed in accordance with the laws of Delaware, United States, without regard to its conflict of law provisions.
+                </p>
+              </div>
+            </section>
+
+            <section id="changes" className="scroll-mt-32 space-y-4">
+              <h3 className="text-xl font-mono font-bold text-accent">10. Changes to Terms</h3>
+              <div className="space-y-4 text-text-secondary leading-relaxed">
+                <p>
+                  We reserve the right, at our sole discretion, to modify or replace these Terms at any time. By continuing to access or use our Service after those revisions become effective, you agree to be bound by the revised terms.
+                </p>
+              </div>
+            </section>
+
+            <section id="contact" className="scroll-mt-32 space-y-4">
               <h3 className="text-xl font-mono font-bold text-accent">11. Contact Information</h3>
               <div className="space-y-4 text-text-secondary leading-relaxed">
                 <p>

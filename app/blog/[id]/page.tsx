@@ -3,9 +3,38 @@ import { notFound } from "next/navigation"
 import Link from "next/link"
 import { format } from "date-fns"
 import { ArrowLeft, User, Calendar, GitCommit } from "lucide-react"
-import ReactMarkdown from 'react-markdown'
+import { BlogContent } from "./BlogContent"
+import { Metadata, ResolvingMetadata } from "next"
 
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata({ params }: { params: { id: string } }, parent: ResolvingMetadata): Promise<Metadata> {
+  const generation = await prisma.generation.findUnique({
+    where: { id: params.id },
+    include: {
+      user: { select: { name: true } }
+    }
+  })
+  
+  if (!generation) return { title: 'Not Found' }
+  
+  return {
+    title: `${generation.repoName || 'Project'} v${generation.version} Changelog | Changelog.ai`,
+    description: `Read the latest release notes for ${generation.repoName} v${generation.version}, shipped by ${generation.user?.name || 'a developer'}.`,
+    openGraph: {
+      title: `${generation.repoName || 'Project'} v${generation.version} Released`,
+      description: `Automatically generated changelog for ${generation.repoName}. See what's new in version ${generation.version}.`,
+    }
+  }
+}
+
+// Inline GitHub icon for the external link
+const GitHubIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+    <path d="M9 18c-4.51 2-5-2-7-2" />
+  </svg>
+)
 
 export default async function BlogPostPage({ params }: { params: { id: string } }) {
   const generation = await prisma.generation.findUnique({
@@ -20,6 +49,10 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
   if (!generation) {
     notFound()
   }
+
+  // Best-effort GitHub URL parsing if repoName looks like "owner/repo"
+  const isOwnerRepo = generation.repoName?.includes('/')
+  const githubUrl = isOwnerRepo ? `https://github.com/${generation.repoName}` : `https://github.com/search?q=${generation.repoName}`
 
   return (
     <div className="min-h-screen bg-bg selection:bg-accent/30 flex flex-col">
@@ -41,6 +74,9 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
                 <span className="inline-flex items-center px-3 py-1.5 rounded-md bg-accent/10 text-accent border border-accent/20 font-mono text-xs uppercase tracking-widest font-bold">
                   v{generation.version}
                 </span>
+                <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-bg text-text-primary border border-border hover:border-accent/40 font-mono text-xs uppercase tracking-widest font-bold transition-all">
+                  <GitHubIcon className="h-3 w-3" /> View Repo
+                </a>
              </div>
              
              <h1 className="text-4xl md:text-6xl font-serif italic text-text-primary mb-8 leading-tight">
@@ -70,21 +106,7 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
           </header>
 
           <div className="prose prose-invert prose-emerald max-w-none">
-            <ReactMarkdown 
-               components={{
-                  h1: ({node, ...props}) => <h2 className="text-2xl font-serif italic text-text-primary mt-12 mb-6" {...props} />,
-                  h2: ({node, ...props}) => <h3 className="text-xl font-mono uppercase tracking-widest text-accent mt-10 mb-4" {...props} />,
-                  h3: ({node, ...props}) => <h4 className="text-lg font-bold text-text-primary mt-8 mb-3" {...props} />,
-                  ul: ({node, ...props}) => <ul className="space-y-2 mb-6 font-mono text-sm text-text-secondary" {...props} />,
-                  li: ({node, ...props}) => <li className="flex items-start gap-2" {...props}><span className="text-accent mt-1 select-none">→</span><span className="flex-1">{props.children}</span></li>,
-                  code: ({node, inline, ...props}: any) => 
-                     inline 
-                     ? <code className="bg-bg border border-border px-1.5 py-0.5 rounded text-accent text-[0.9em] mx-1" {...props} />
-                     : <pre className="bg-[#0D0D0D] border border-border/50 p-4 rounded-xl overflow-x-auto my-6"><code className="text-sm font-mono text-text-secondary" {...props} /></pre>
-               }}
-            >
-               {generation.content}
-            </ReactMarkdown>
+            <BlogContent content={generation.content} />
           </div>
         </article>
 

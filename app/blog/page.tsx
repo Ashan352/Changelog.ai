@@ -7,6 +7,7 @@ export const dynamic = 'force-dynamic'
 
 export default async function BlogIndexPage() {
   const generations = await prisma.generation.findMany({
+    where: { isPublic: true },
     take: 20,
     orderBy: { createdAt: 'desc' },
     include: {

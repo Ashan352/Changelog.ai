@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import { Logo } from "@/components/ui/Logo"
-import { ArrowRight, ChevronDown, BookOpen, Terminal, Shield, Zap } from "lucide-react"
+import { ArrowRight, ChevronDown, BookOpen, Terminal, Shield, Zap, LayoutGrid } from "lucide-react"
 
 interface NavItem {
   label: string
@@ -19,6 +19,7 @@ const navItems: NavItem[] = [
     label: "Resources", 
     href: "#", 
     items: [
+      { label: "Blog", href: "/blog", icon: LayoutGrid, description: "Public feed of changelogs." },
       { label: "Docs", href: "/docs", icon: Terminal, description: "Integration guides and API reference." },
       { label: "FAQ", href: "#faq", icon: BookOpen, description: "Common questions answered." },
       { label: "Privacy", href: "/privacy", icon: Shield, description: "How we handle your data." },

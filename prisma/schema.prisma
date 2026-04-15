@@ -31,6 +31,7 @@ model Generation {
   version   String
   content   String   @db.Text
   commits   Int?
+  isPublic  Boolean  @default(false)
   createdAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)

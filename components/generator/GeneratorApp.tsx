@@ -15,7 +15,7 @@ export function GeneratorApp({ plan }: { plan: string }) {
   const [upgradeReason, setUpgradeReason] = useState<'usage' | 'text'>('usage')
   const [hasStarted, setHasStarted] = useState(false)
   const [hasCompleted, setHasCompleted] = useState(false);
-  const [lastParams, setLastParams] = useState({ repoName: '', version: '', commitsCount: 0 });
+  const [lastParams, setLastParams] = useState({ repoName: '', version: '', commitsCount: 0, isPublic: false });
 
   const initialValues = useMemo(() => {
     const import_commits = searchParams.get('import_commits')
@@ -63,6 +63,7 @@ export function GeneratorApp({ plan }: { plan: string }) {
             version: parsed.version_detected || lastParams.version || "Latest",
             content: parsed.changelog,
             commitsCount: lastParams.commitsCount,
+            isPublic: lastParams.isPublic,
           }),
         });
         
@@ -85,7 +86,7 @@ export function GeneratorApp({ plan }: { plan: string }) {
     }
   });
 
-  const handleGenerate = async (commits: string, version: string, repoName?: string) => {
+  const handleGenerate = async (commits: string, version: string, repoName?: string, isPublic?: boolean) => {
     if (!commits || commits.trim().length < 10) {
       setError("Input too short. Please provide more commit history (min 10 characters).")
       return
@@ -103,7 +104,7 @@ export function GeneratorApp({ plan }: { plan: string }) {
     }
 
     const count = commits.split('\n').filter(l => l.trim()).length;
-    setLastParams({ repoName: repoName || '', version: version || '', commitsCount: count });
+    setLastParams({ repoName: repoName || '', version: version || '', commitsCount: count, isPublic: !!isPublic });
 
     setError(null)
     setHasStarted(true)
