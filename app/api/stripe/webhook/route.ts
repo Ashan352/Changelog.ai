@@ -4,10 +4,14 @@ import { stripe } from "@/lib/stripe";
 import { prisma } from "@/lib/prisma";
 import { updatePlan } from "@/lib/usage";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: Request) {
   const body = await req.text();
   const headerList = await headers();
   const signature = headerList.get("Stripe-Signature");
+
+  console.log(`[Stripe Webhook Incoming] Body Length: ${body.length}, Signature Present: ${!!signature}`);
 
   if (!signature) {
     return NextResponse.json({ error: "No signature provided" }, { status: 400 });

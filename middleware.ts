@@ -20,6 +20,12 @@ export default auth(async (req) => {
   const isApiRoute = nextUrl.pathname.startsWith("/api");
   const isDashboardRoute = nextUrl.pathname.startsWith("/dashboard");
   const isAuthRoute = nextUrl.pathname.startsWith("/api/auth") || nextUrl.pathname.startsWith("/login");
+  const isWebhookRoute = nextUrl.pathname.startsWith("/api/stripe/webhook");
+
+  // 0. Bypass everything for Stripe webhooks
+  if (isWebhookRoute) {
+    return NextResponse.next();
+  }
 
   // 1. Edge-based Rate Limiting (Protects Serverless Invocations)
   if (isApiRoute && !isAuthRoute) {
