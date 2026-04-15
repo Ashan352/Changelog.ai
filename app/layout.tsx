@@ -69,11 +69,11 @@ export const metadata: Metadata = {
     images: ["https://changelog-ai.vercel.app/og-image.png"],
   },
   verification: {
-    google: "google-site-verification-placeholder",
+    google: "J1p5DIxzr2GfL6I2Ouuu-ASvS8WgjdKlIu4pqawLAHM",
     yandex: "yandex-verification-placeholder",
     yahoo: "yahoo-verification-placeholder",
     other: {
-      "msvalidate.01": "bing-verification-placeholder",
+      "msvalidate.01": "0CE40AA79AE219E065CCF60DBDD27315",
     },
   },
   icons: {
