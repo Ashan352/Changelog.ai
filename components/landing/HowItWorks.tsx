@@ -17,27 +17,6 @@ export function HowItWorks() {
   const output1Ref = useRef<HTMLDivElement>(null)
   const output2Ref = useRef<HTMLDivElement>(null)
   const output3Ref = useRef<HTMLDivElement>(null)
-  
-  const stepsData = [
-    {
-      id: '01',
-      title: 'Paste your commits',
-      desc: 'Git log, diff, or shortlog — we handle all formats.',
-      content: 'git log --oneline\n7f2a1b Add OAuth\n3c4d5e Fix typo'
-    },
-    {
-      id: '02',
-      title: 'AI parses and groups',
-      desc: 'Breaking changes, features, fixes — automatically categorized.',
-      content: 'Grouping...\n[Features]: 1\n[Fixes]: 1'
-    },
-    {
-      id: '03',
-      title: 'Three artifacts, ready to ship',
-      desc: 'Changelog, release body, tweet — copy with one click.',
-      content: 'CHANGELOG.md\nRELEASE_NOTES\nTWEET_THREAD'
-    }
-  ]
 
   return (
     <section id="process" className="relative py-24 sm:py-32 px-4 sm:px-6 overflow-hidden">
@@ -154,21 +133,6 @@ export function HowItWorks() {
               delay={0.7}
             />
           </div>
-        </div>
-
-        {/* Tier 2: Step Descriptions (Text only) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 pt-12 border-t border-border/40">
-          {stepsData.map((step: any, i: any) => (
-            <div key={`info-${i}`} className="group">
-              <FadeUp delay={i * 0.1}>
-                <div className="space-y-4 text-left md:text-center px-4">
-                  <span className="font-mono text-[10px] text-accent font-bold uppercase tracking-[0.2em] leading-none px-3 py-1 bg-accent/10 border border-accent/20 rounded-full inline-block">Step {step.id}</span>
-                  <h3 className="text-xl sm:text-2xl font-serif italic text-text-primary leading-tight">{step.title}</h3>
-                  <p className="font-mono text-[12px] text-text-muted leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity mx-auto">{step.desc}</p>
-                </div>
-              </FadeUp>
-            </div>
-          ))}
         </div>
       </div>
     </section>
