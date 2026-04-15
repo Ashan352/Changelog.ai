@@ -1,6 +1,6 @@
 import { generateStreamingContent } from "@/lib/openrouter";
 import { sanitizeInput } from "@/lib/sanitize";
-import { auth } from "@/lib/auth";
+import { getToken } from "next-auth/jwt";
 import { checkRateLimit } from "@/lib/ratelimit";
 import { z } from "zod";
 
@@ -17,13 +17,21 @@ const generateSchema = z.object({
 
 export async function POST(req: Request) {
   try {
-    const session = await auth();
-    if (!session?.user?.id) {
+    // Use getToken instead of auth() to keep this route Edge-compatible
+    // getToken reads from the cookie directly and doesn't trigger Prisma initialization
+    const token = await getToken({ 
+      req: req as any, 
+      secret: process.env.AUTH_SECRET 
+    });
+
+    if (!token?.id) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
     }
 
+    const userId = token.id as string;
+
     // Rate Limiting (Upstash works on Edge)
-    const limitResult = await checkRateLimit(session.user.id);
+    const limitResult = await checkRateLimit(userId);
     if (!limitResult.success) {
       return new Response(JSON.stringify({ error: "Too many requests. Please wait a moment." }), { 
         status: 429,
@@ -31,9 +39,11 @@ export async function POST(req: Request) {
       });
     }
 
-    // Check plan limits from session (Soft check for Edge)
-    const { plan, generations } = session.user;
-    if (plan === "free" && (generations || 0) >= 5) {
+    // Check plan limits from token (Soft check for Edge)
+    const plan = (token.plan as string) || "free";
+    const generations = (token.generations as number) || 0;
+    
+    if (plan === "free" && generations >= 5) {
       return new Response(JSON.stringify({ error: "Free limit reached" }), { status: 403 });
     }
 
