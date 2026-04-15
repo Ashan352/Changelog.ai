@@ -20,12 +20,12 @@ export function AppSidebar({ plan, generations, maxGenerations, userName, userIm
   ]
 
   return (
-    <Sidebar className="border-r border-border bg-bg-surface lg:bg-bg-surface/50 lg:backdrop-blur-xl">
-      <SidebarHeader className="p-4 border-b border-border/50">
+    <Sidebar className="border-r border-border bg-bg-surface">
+      <SidebarHeader className="p-4 border-b border-border/50 bg-bg-surface">
         <Logo hideTagline={true} className="!gap-2" />
       </SidebarHeader>
 
-      <SidebarContent className="px-4 py-6 overflow-y-auto">
+      <SidebarContent className="px-4 py-6 overflow-y-auto bg-bg-surface">
         <SidebarGroup>
           <div className="font-mono text-[10px] text-text-muted uppercase tracking-[0.2em] mb-4 px-2 opacity-60">Main Menu</div>
           <SidebarMenu className="gap-1">
@@ -52,10 +52,10 @@ export function AppSidebar({ plan, generations, maxGenerations, userName, userIm
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="p-6 border-t border-border/50 bg-bg-surface lg:bg-transparent">
+      <SidebarFooter className="p-6 border-t border-border/50 bg-bg-surface">
         {/* Modern Usage Chart */}
         {plan === "free" && (
-          <div className="mb-6 rounded-2xl bg-bg border border-border shadow-sm overflow-hidden p-4 group hover:border-accent/30 transition-colors">
+          <div className="mb-6 rounded-2xl bg-bg-elevated/50 border border-border shadow-sm overflow-hidden p-4 group hover:border-accent/30 transition-colors">
              <div className="flex items-center justify-between mb-4">
                <div>
                   <div className="font-mono text-[10px] text-text-muted uppercase tracking-[0.2em] mb-0.5 opacity-60">Usage Stats</div>
@@ -67,7 +67,7 @@ export function AppSidebar({ plan, generations, maxGenerations, userName, userIm
              </div>
              
              <div className="space-y-1.5 pt-1">
-                <div className="w-full bg-bg-elevated h-1.5 rounded-full overflow-hidden">
+                <div className="w-full bg-bg h-1.5 rounded-full overflow-hidden border border-border/50">
                   <div 
                     className="h-full bg-accent transition-all duration-1000 ease-in-out shadow-[0_0_10px_rgba(155,177,94,0.4)]" 
                     style={{ width: `${Math.min((generations / maxGenerations) * 100, 100)}%` }}
