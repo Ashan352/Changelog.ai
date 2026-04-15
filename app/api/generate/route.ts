@@ -55,6 +55,16 @@ export async function POST(req: Request) {
     const sanitizedCommits = sanitizeInput(commits);
     const isPro = plan === "pro";
 
+    // Enforce 100 word limit on Free Plan
+    if (!isPro) {
+      const wordCount = sanitizedCommits.trim().split(/\s+/).length;
+      if (wordCount > 100) {
+        return new Response(JSON.stringify({ 
+          error: "100 word limit exceeded on Free Plan. Please upgrade for unlimited words." 
+        }), { status: 403 });
+      }
+    }
+
     // Start generation with retry logic handled inside generateStreamingContent
     const result = await generateStreamingContent(
       sanitizedCommits,

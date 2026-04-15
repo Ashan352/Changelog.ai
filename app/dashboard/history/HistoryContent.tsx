@@ -150,7 +150,7 @@ export function HistoryContent({ history }: { history: Generation[] }) {
               </div>
 
               {/* Content */}
-              <ScrollArea className="flex-1 p-8">
+              <ScrollArea className="flex-1 p-8" data-slot="history-content-scroll">
                 <div className="max-w-3xl mx-auto pb-24">
                    <div className="font-mono text-[11px] text-text-muted uppercase tracking-[0.3em] mb-8 border-b border-border pb-2 inline-block">
                      Document Content

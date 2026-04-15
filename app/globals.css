@@ -165,11 +165,6 @@
 @layer base {
   * {
     @apply border-border;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  }
-  *::-webkit-scrollbar {
-    display: none; /* WebKit */
   }
   body {
     @apply bg-background text-text-primary antialiased font-sans transition-colors duration-300;
@@ -249,6 +244,21 @@
   }
   .scroller-hide::-webkit-scrollbar {
     display: none;
+  }
+
+  /* Custom Premium Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border-strong/20 rounded-full transition-colors;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-accent/40;
   }
 
   /* Standardizing lists and tables for better F-scan pattern */

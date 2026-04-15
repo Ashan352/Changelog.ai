@@ -4,9 +4,11 @@ import { useCompletion } from '@ai-sdk/react'
 import { InputPanel } from './InputPanel'
 import { OutputPanel } from './OutputPanel'
 import { UpgradeModal } from '@/components/ui/UpgradeModal'
+import { useRouter } from 'next/navigation'
 import { parseTaggedResponse } from '@/lib/openrouter'
 
-export function GeneratorApp() {
+export function GeneratorApp({ plan }: { plan: string }) {
+  const router = useRouter()
   const [error, setError] = useState<string | null>(null)
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
   const [hasStarted, setHasStarted] = useState(false)
@@ -24,7 +26,7 @@ export function GeneratorApp() {
       // Once stream finishes, save to history in a separate Serverless call
       const parsed = parseTaggedResponse(completionText);
       try {
-        await fetch('/api/history', {
+        const res = await fetch('/api/history', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -34,6 +36,11 @@ export function GeneratorApp() {
             commitsCount: lastParams.commitsCount,
           }),
         });
+        
+        if (res.ok) {
+          // Trigger a silent refresh to update Sidebar usage stats
+          router.refresh();
+        }
       } catch (err) {
         console.error("Failed to log history:", err);
       }
@@ -52,6 +59,16 @@ export function GeneratorApp() {
     if (!commits || commits.trim().length < 10) {
       setError("Input too short. Please provide more commit history (min 10 characters).")
       return
+    }
+
+    // Free plan word limit check (100 words)
+    if (plan !== 'pro') {
+      const wordCount = commits.trim().split(/\s+/).length;
+      if (wordCount > 100) {
+        setError(`Free plan is limited to 100 words per generation. Your input has ${wordCount} words. Please upgrade for unlimited processing.`);
+        setShowUpgradeModal(true);
+        return;
+      }
     }
 
     const count = commits.split('\n').filter(l => l.trim()).length;
