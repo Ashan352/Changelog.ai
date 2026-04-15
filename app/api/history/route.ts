@@ -43,6 +43,12 @@ export async function POST(req: Request) {
       })
     ]);
 
+    // Persistent Redis tracking to prevent delete/recreate abuse
+    if (session.user.email) {
+      const { incrementUsage } = await import("@/lib/usage");
+      await incrementUsage(session.user.email);
+    }
+
     revalidatePath('/dashboard');
     revalidatePath('/dashboard/usage');
     // @ts-ignore

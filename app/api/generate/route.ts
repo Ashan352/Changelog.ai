@@ -26,6 +26,12 @@ export async function POST(req: Request) {
     const userId = session.user.id;
     const plan = session.user.plan || "free";
     const generations = session.user.generations || 0;
+    const email = session.user.email;
+
+    // Check Redis for permanent usage (prevents delete/recreate abuse)
+    const { getUsage } = await import("@/lib/usage");
+    const redisGenerations = email ? await getUsage(email) : 0;
+    const totalGenerations = Math.max(generations, redisGenerations);
 
     // Rate Limiting (Upstash works on Edge)
     const limitResult = await checkRateLimit(userId);
@@ -36,8 +42,8 @@ export async function POST(req: Request) {
       });
     }
 
-    // Check plan limits from session
-    if (plan === "free" && generations >= 5) {
+    // Check plan limits from session OR Redis
+    if (plan === "free" && totalGenerations >= 5) {
       return new Response(JSON.stringify({ error: "Free limit reached" }), { status: 403 });
     }
 

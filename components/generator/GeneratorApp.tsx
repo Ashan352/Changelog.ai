@@ -90,7 +90,7 @@ export function GeneratorApp({ plan }: { plan: string }) {
     <div className="max-w-[1400px] mx-auto h-full flex flex-col md:flex-row gap-6">
       {/* Input Panel */}
       <div className="w-full md:w-[400px] lg:w-[450px] shrink-0 flex flex-col gap-4">
-        <InputPanel onGenerate={handleGenerate} isLoading={isLoading} />
+        <InputPanel onGenerate={handleGenerate} isLoading={isLoading} plan={plan} />
         
         {error && (
           <div className="p-3 rounded-lg bg-danger/10 border border-danger/20 text-danger text-xs font-mono">

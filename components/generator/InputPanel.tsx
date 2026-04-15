@@ -20,7 +20,7 @@ const PARTICLES = Array.from({ length: 12 }, (_, i) => {
   }
 })
 
-export function InputPanel({ onGenerate, isLoading }: InputPanelProps) {
+export function InputPanel({ onGenerate, isLoading, plan = 'free' }: InputPanelProps & { plan?: string }) {
   const [commits, setCommits] = useState('')
   const [version, setVersion] = useState('')
   const [repoName, setRepoName] = useState('')
@@ -40,9 +40,10 @@ export function InputPanel({ onGenerate, isLoading }: InputPanelProps) {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [commits, version, repoName, isLoading])
 
-  const charCount = commits.length
-  const maxChars = 50000
-  const percentage = (charCount / maxChars) * 100
+  const wordCount = commits.trim() ? commits.trim().split(/\s+/).length : 0
+  const maxWords = plan === 'pro' ? 10000 : 500
+  const isOverLimit = wordCount > maxWords
+  const percentage = (wordCount / maxWords) * 100
 
   const handleLoadExample = () => {
     setCommits(`feat(auth): add GitHub OAuth login\nfix: resolve crash on empty input\nchore: update dependencies\nrefactor(api): improve response time by 40%`)
@@ -51,6 +52,7 @@ export function InputPanel({ onGenerate, isLoading }: InputPanelProps) {
   }
 
   const triggerAndGenerate = () => {
+    if (isOverLimit) return
     // Spring animation
     setSpringing(true)
     setTimeout(() => setSpringing(false), 500)
@@ -88,10 +90,10 @@ export function InputPanel({ onGenerate, isLoading }: InputPanelProps) {
             onChange={(e) => setCommits(e.target.value)}
             disabled={isLoading}
             placeholder="Paste your git log or commit messages here..."
-            className="input-focus-glow w-full flex-1 bg-bg-surface border border-border rounded-xl p-4 font-mono text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-border-strong transition-all resize-none min-h-[200px]"
+            className={`input-focus-glow w-full flex-1 bg-bg-surface border rounded-xl p-4 font-mono text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-border-strong transition-all resize-none min-h-[200px] ${isOverLimit ? 'border-danger/50' : 'border-border'}`}
           />
-          <div className={`absolute bottom-3 right-3 font-mono text-[10px] ${percentage > 95 ? 'text-danger' : percentage > 80 ? 'text-danger/70' : 'text-text-muted'}`}>
-            {charCount.toLocaleString()} / {maxChars.toLocaleString()}
+          <div className={`absolute bottom-3 right-3 font-mono text-[10px] ${isOverLimit ? 'text-danger' : percentage > 80 ? 'text-danger/70' : 'text-text-muted'}`}>
+            {wordCount.toLocaleString()} / {maxWords.toLocaleString()} <span className="opacity-50 ml-1">words</span>
           </div>
         </div>
 
