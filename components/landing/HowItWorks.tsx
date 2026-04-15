@@ -4,38 +4,37 @@ import { useRef } from 'react'
 import { Terminal, Cpu, Layers } from 'lucide-react'
 import { FadeUp } from '@/components/motion/FadeUp'
 import { AnimatedBeam } from '@/components/ui/animated-beam'
+import { User, Sparkles, FileText, Send, Twitter } from 'lucide-react'
 
 export function HowItWorks() {
   const containerRef = useRef<HTMLDivElement>(null)
-  const step1Ref = useRef<HTMLDivElement>(null)
-  const step2Ref = useRef<HTMLDivElement>(null)
-  const step3Ref = useRef<HTMLDivElement>(null)
   
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  })
-
-  const steps = [
+  // Input Ref
+  const inputRef = useRef<HTMLDivElement>(null)
+  // Hub Ref
+  const hubRef = useRef<HTMLDivElement>(null)
+  // Output Refs
+  const output1Ref = useRef<HTMLDivElement>(null)
+  const output2Ref = useRef<HTMLDivElement>(null)
+  const output3Ref = useRef<HTMLDivElement>(null)
+  
+  const stepsData = [
     {
       id: '01',
       title: 'Paste your commits',
       desc: 'Git log, diff, or shortlog — we handle all formats.',
-      icon: Terminal,
       content: 'git log --oneline\n7f2a1b Add OAuth\n3c4d5e Fix typo'
     },
     {
       id: '02',
       title: 'AI parses and groups',
       desc: 'Breaking changes, features, fixes — automatically categorized.',
-      icon: Cpu,
       content: 'Grouping...\n[Features]: 1\n[Fixes]: 1'
     },
     {
       id: '03',
       title: 'Three artifacts, ready to ship',
       desc: 'Changelog, release body, tweet — copy with one click.',
-      icon: Layers,
       content: 'CHANGELOG.md\nRELEASE_NOTES\nTWEET_THREAD'
     }
   ]
@@ -43,101 +42,124 @@ export function HowItWorks() {
   return (
     <section ref={containerRef} id="process" className="relative py-24 sm:py-32 px-4 sm:px-6 overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col items-center text-center mb-20">
+        <div className="flex flex-col items-center text-center mb-24">
           <FadeUp>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif italic text-text-primary mb-4">Stop manual mapping. Start shipping</h2>
-            <div className="font-mono text-xs sm:text-sm text-text-secondary max-w-[600px] mx-auto">From messy git logs to polished marketing artifacts in under 4 seconds.</div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif italic text-text-primary mb-4">One input. Infinite clarity.</h2>
+            <div className="font-mono text-xs sm:text-sm text-text-secondary max-w-[600px] mx-auto">Our AI engine maps your engineering velocity to stakeholders in seconds.</div>
           </FadeUp>
         </div>
 
-        {/* Tiered Layout: Rows instead of Columns */}
-        <div className="space-y-4 md:space-y-12">
+        {/* The Animated Network Flow */}
+        <div className="relative flex w-full max-w-[800px] mx-auto items-center justify-between h-[300px] mb-24">
           
-          {/* Tier 1: Icons and Beams */}
-          <div className="hidden md:flex items-center w-full mb-16 relative h-20">
-            <div className="grid grid-cols-[auto_1fr_auto_1fr_auto] items-center w-full">
-              {/* Step 1 Icon */}
-              <div ref={step1Ref} className="relative z-10 group cursor-help">
-                <div className="h-16 w-16 rounded-[1.5rem] bg-bg-surface border border-border flex items-center justify-center text-accent shadow-sm group-hover:border-accent/40 transition-all duration-500">
-                  <Terminal className="h-7 w-7" aria-hidden="true" />
-                </div>
-              </div>
+          {/* Column 1: Input (Step 1) */}
+          <div className="flex flex-col items-center gap-12 z-10">
+            <div ref={inputRef} className="relative group cursor-help">
+               <div className="h-16 w-16 rounded-full bg-bg-surface border border-border flex items-center justify-center text-accent shadow-sm group-hover:border-accent/40 transition-all duration-500">
+                  <User className="h-7 w-7" aria-hidden="true" />
+               </div>
+               <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 font-mono text-[10px] text-text-muted uppercase tracking-widest whitespace-nowrap">Commits</span>
+            </div>
+          </div>
 
-              {/* Spacer 1 */}
-              <div className="h-px bg-border/20 w-full" />
+          {/* Column 2: The Hub (Step 2 - AI) */}
+          <div className="flex flex-col items-center z-10">
+            <div ref={hubRef} className="relative group cursor-help">
+               <div className="h-24 w-24 rounded-full bg-bg-surface border border-accent/20 flex items-center justify-center text-accent shadow-[0_0_40px_rgba(145,201,107,0.1)] group-hover:border-accent/40 transition-all duration-500 bg-gradient-to-br from-accent/5 to-transparent">
+                  <Sparkles className="h-10 w-10 animate-pulse" aria-hidden="true" />
+               </div>
+               <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 font-mono text-[10px] text-text-primary font-bold uppercase tracking-widest whitespace-nowrap">AI ENGINE</span>
+            </div>
+          </div>
 
-              {/* Step 2 Icon */}
-              <div ref={step2Ref} className="relative z-10 group cursor-help">
-                <div className="h-16 w-16 rounded-[1.5rem] bg-bg-surface border border-border flex items-center justify-center text-accent shadow-sm group-hover:border-accent/40 transition-all duration-500">
-                  <Cpu className="h-7 w-7" aria-hidden="true" />
-                </div>
-              </div>
-
-              {/* Spacer 2 */}
-              <div className="h-px bg-border/20 w-full" />
-
-              {/* Step 3 Icon */}
-              <div ref={step3Ref} className="relative z-10 group cursor-help">
-                <div className="h-16 w-16 rounded-[1.5rem] bg-bg-surface border border-border flex items-center justify-center text-accent shadow-sm group-hover:border-accent/40 transition-all duration-500">
-                  <Layers className="h-7 w-7" aria-hidden="true" />
-                </div>
-              </div>
+          {/* Column 3: Outputs (Step 3) */}
+          <div className="flex flex-col items-center gap-6 z-10">
+            <div ref={output1Ref} className="relative group cursor-help">
+               <div className="h-14 w-14 rounded-full bg-bg-surface border border-border flex items-center justify-center text-text-secondary shadow-sm group-hover:border-accent/40 transition-all duration-500">
+                  <FileText className="h-6 w-6" aria-hidden="true" />
+               </div>
+               <span className="absolute -right-24 top-1/2 -translate-y-1/2 font-mono text-[9px] text-text-muted uppercase tracking-widest hidden lg:block">Changelog</span>
             </div>
 
-            {/* MagicUI Animated Beams */}
-            <AnimatedBeam
-              containerRef={containerRef}
-              fromRef={step1Ref}
-              toRef={step2Ref}
-              curvature={-20}
-              duration={3}
-              pathColor="#ffffff10"
-              gradientStartColor="#e8ff47"
-              gradientStopColor="#e8ff47"
-              pathWidth={3}
-            />
-            <AnimatedBeam
-              containerRef={containerRef}
-              fromRef={step2Ref}
-              toRef={step3Ref}
-              curvature={20}
-              duration={3}
-              delay={1}
-              pathColor="#ffffff10"
-              gradientStartColor="#e8ff47"
-              gradientStopColor="#e8ff47"
-              pathWidth={3}
-            />
+            <div ref={output2Ref} className="relative group cursor-help">
+               <div className="h-14 w-14 rounded-full bg-bg-surface border border-border flex items-center justify-center text-text-secondary shadow-sm group-hover:border-accent/40 transition-all duration-500">
+                  <Send className="h-6 w-6" aria-hidden="true" />
+               </div>
+               <span className="absolute -right-24 top-1/2 -translate-y-1/2 font-mono text-[9px] text-text-muted uppercase tracking-widest hidden lg:block">Release</span>
+            </div>
+
+            <div ref={output3Ref} className="relative group cursor-help">
+               <div className="h-14 w-14 rounded-full bg-bg-surface border border-border flex items-center justify-center text-text-secondary shadow-sm group-hover:border-accent/40 transition-all duration-500">
+                  <Twitter className="h-6 w-6" aria-hidden="true" />
+               </div>
+               <span className="absolute -right-24 top-1/2 -translate-y-1/2 font-mono text-[9px] text-text-muted uppercase tracking-widest hidden lg:block">Social</span>
+            </div>
           </div>
 
-          {/* Tier 2: Headers */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 pb-12">
-            {steps.map((step: any, i: any) => (
-              <div key={`header-${i}`} className="relative group">
-                <FadeUp delay={i * 0.1}>
-                  <div className="space-y-5 text-left p-6 sm:p-8 rounded-[2rem] border border-transparent hover:border-border hover:bg-bg-surface/20 transition-all duration-500">
-                    <span className="font-mono text-[10px] text-accent font-bold uppercase tracking-[0.2em] leading-none px-3 py-1.5 bg-accent/10 border border-accent/20 rounded-xl inline-block">Step {step.id}</span>
-                    <h3 className="text-2xl sm:text-3xl font-serif italic text-text-primary tracking-tight">{step.title}</h3>
-                    <p className="font-mono text-[13px] text-text-muted leading-relaxed opacity-60 group-hover:opacity-100 transition-opacity">{step.desc}</p>
-                  </div>
-                </FadeUp>
-              </div>
-            ))}
-          </div>
+          {/* Animated Beams */}
+          <AnimatedBeam
+            containerRef={containerRef}
+            fromRef={inputRef}
+            toRef={hubRef}
+            duration={3}
+            curvature={0} // Straight line for input
+            pathColor="#00000005"
+            gradientStartColor="#91c96b"
+            gradientStopColor="#e8ff47"
+            pathWidth={3}
+          />
 
-          {/* Tier 3: Artifact Previews */}
-          <div className="hidden md:grid grid-cols-3 gap-12">
-            {steps.map((step: any, i: any) => (
-              <FadeUp key={`preview-${i}`} delay={i * 0.15}>
-                <div className="relative overflow-hidden p-8 sm:p-10 rounded-[2.5rem] bg-bg-surface border border-border/40 hover:border-accent/20 transition-all duration-700 group shadow-[0_8px_32px_rgba(0,0,0,0.02)] min-h-[180px] flex items-center">
-                  <div className="absolute inset-0 bg-gradient-to-br from-accent/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="font-mono text-[11px] sm:text-[12px] text-text-muted whitespace-pre-wrap leading-relaxed group-hover:text-text-primary transition-colors relative z-10">
-                    {step.content}
-                  </div>
+          <AnimatedBeam
+            containerRef={containerRef}
+            fromRef={hubRef}
+            toRef={output1Ref}
+            duration={3}
+            curvature={-40}
+            pathColor="#00000005"
+            gradientStartColor="#91c96b"
+            gradientStopColor="#e8ff47"
+            pathWidth={2}
+            delay={0.5}
+          />
+          <AnimatedBeam
+            containerRef={containerRef}
+            fromRef={hubRef}
+            toRef={output2Ref}
+            duration={3}
+            curvature={0}
+            pathColor="#00000005"
+            gradientStartColor="#91c96b"
+            gradientStopColor="#e8ff47"
+            pathWidth={2}
+            delay={0.6}
+          />
+          <AnimatedBeam
+            containerRef={containerRef}
+            fromRef={hubRef}
+            toRef={output3Ref}
+            duration={3}
+            curvature={40}
+            pathColor="#00000005"
+            gradientStartColor="#91c96b"
+            gradientStopColor="#e8ff47"
+            pathWidth={2}
+            delay={0.7}
+          />
+        </div>
+
+        {/* Tier 2: Step Descriptions (Text only) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 pt-12 border-t border-border/40">
+          {stepsData.map((step: any, i: any) => (
+            <div key={`info-${i}`} className="group">
+              <FadeUp delay={i * 0.1}>
+                <div className="space-y-4">
+                  <span className="font-mono text-[10px] text-accent font-bold uppercase tracking-[0.2em] leading-none px-3 py-1 bg-accent/10 border border-accent/20 rounded-full inline-block">Step {step.id}</span>
+                  <h3 className="text-xl sm:text-2xl font-serif italic text-text-primary leading-tight">{step.title}</h3>
+                  <p className="font-mono text-[12px] text-text-muted leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity">{step.desc}</p>
                 </div>
               </FadeUp>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
