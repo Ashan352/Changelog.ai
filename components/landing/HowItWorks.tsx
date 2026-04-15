@@ -56,15 +56,15 @@ export function HowItWorks() {
           <div className="hidden md:grid grid-cols-3 gap-12 relative w-full mb-12">
             
             {/* Animated Connector Arrows spanning from icon to icon */}
-            <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 flex z-0 pointer-events-none w-full">
+            <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 flex z-0 pointer-events-none w-full px-6">
               {/* Arrow 1 to 2 */}
-              <div className="w-[33%] ml-12 mr-2 flex items-center flex-1">
-                 <FloatingArrow className="w-full h-12" />
+              <div className="flex-1 flex items-center justify-center -mx-12">
+                 <FloatingArrow className="w-full h-16 max-w-[200px]" />
               </div>
               
               {/* Arrow 2 to 3 */}
-              <div className="w-[33%] ml-12 mr-2 flex items-center flex-1">
-                 <FloatingArrow className="w-full h-12" />
+              <div className="flex-1 flex items-center justify-center -mx-12">
+                 <FloatingArrow className="w-full h-16 max-w-[200px]" />
               </div>
             </div>
 
