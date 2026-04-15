@@ -6,10 +6,15 @@ import { AppSidebar } from "@/components/dashboard/AppSidebar"
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs"
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const session = await auth()
+  let session = null
+  try {
+    session = await auth()
+  } catch (err) {
+    console.error("DashboardLayout: Auth session check failed", err)
+  }
 
   if (!session?.user) {
-    redirect("/login")
+    return redirect("/login")
   }
 
   let dbUser: { plan: string; generations: number; name: string | null; image: string | null } | null = null
