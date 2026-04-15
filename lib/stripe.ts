@@ -33,8 +33,8 @@ export const getStripeSession = async (userId: string, email: string, isAnnual: 
   }
 
   return await client.checkout.sessions.create({
-    success_url: `${process.env.NEXTAUTH_URL}/?upgraded=true`,
-    cancel_url: `${process.env.NEXTAUTH_URL}/`,
+    success_url: `${process.env.NEXTAUTH_URL}/dashboard?upgraded=true`,
+    cancel_url: `${process.env.NEXTAUTH_URL}/dashboard/billing`,
     payment_method_types: ["card"],
     mode: "subscription",
     billing_address_collection: "auto",

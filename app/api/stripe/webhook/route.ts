@@ -34,24 +34,37 @@ export async function POST(req: Request) {
   }
 
   const session = event.data.object as any;
+  console.log(`[Stripe Webhook] Received Event: ${event.type}`);
 
   if (event.type === "checkout.session.completed") {
     const userId = session.metadata?.userId;
-    if (!userId) return NextResponse.json({ error: "No user ID" }, { status: 400 });
+    console.log(`[Stripe Webhook] Checkout completed for user: ${userId}`);
+    
+    if (!userId) {
+      console.error("[Stripe Webhook] Missing userId in session metadata");
+      return NextResponse.json({ error: "No user ID" }, { status: 400 });
+    }
 
-    await prisma.user.update({
-      where: { id: userId },
-      data: { 
-        plan: "pro",
-        stripeCustomerId: session.customer as string,
-        stripeSubscriptionId: session.subscription as string,
-      },
-    });
+    try {
+      await prisma.user.update({
+        where: { id: userId },
+        data: { 
+          plan: "pro",
+          stripeCustomerId: session.customer as string,
+          stripeSubscriptionId: session.subscription as string,
+        },
+      });
+      console.log(`[Stripe Webhook] Successfully upgraded user ${userId} to pro`);
+    } catch (dbErr: any) {
+      console.error(`[Stripe Webhook] Database update failed: ${dbErr.message}`);
+      return NextResponse.json({ error: "Database update failed" }, { status: 500 });
+    }
     
     // Sync to Redis for Edge API access
     const email = session.customer_details?.email || session.customer_email;
     if (email) {
       await updatePlan(email, "pro");
+      console.log(`[Stripe Webhook] Synced pro plan to Redis for ${email}`);
     }
   }
 
