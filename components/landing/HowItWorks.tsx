@@ -89,40 +89,66 @@ export function HowItWorks() {
           </div>
 
           {/* Tier 2: Headers (Badge, Title, Desc) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-            {steps.map((step: any, i: any) => (
-              <div key={`header-${i}`} className="relative">
-                {/* Mobile Icon (shows only on mobile) */}
-                <div className="md:hidden mb-4">
-                  <div className="h-10 w-10 rounded-xl bg-bg-surface border border-border flex items-center justify-center text-accent">
-                    <step.icon className="h-4 w-4" aria-hidden="true" />
-                  </div>
+          <div className="hidden md:flex items-center w-full mb-16 relative">
+            <div className="grid grid-cols-[auto_1fr_auto_1fr_auto] items-center w-full gap-0">
+              {/* Step 1 Icon */}
+              <div className="relative group cursor-help">
+                <div className="h-14 w-14 rounded-2xl bg-bg-surface border border-border flex items-center justify-center text-accent shadow-sm group-hover:border-accent/50 group-hover:bg-accent/5 transition-all duration-500">
+                  <Terminal className="h-6 w-6" aria-hidden="true" />
+                  <div className="absolute inset-0 rounded-2xl bg-accent/20 blur-xl opacity-0 group-hover:opacity-40 transition-opacity" />
                 </div>
+              </div>
 
+              {/* Arrow 1 */}
+              <div className="h-14 flex items-center px-0">
+                <FloatingArrow className="w-full h-32" delay={0} />
+              </div>
+
+              {/* Step 2 Icon */}
+              <div className="relative group cursor-help">
+                <div className="h-14 w-14 rounded-2xl bg-bg-surface border border-border flex items-center justify-center text-accent shadow-sm group-hover:border-accent/50 group-hover:bg-accent/5 transition-all duration-500">
+                  <Cpu className="h-6 w-6" aria-hidden="true" />
+                  <div className="absolute inset-0 rounded-2xl bg-accent/20 blur-xl opacity-0 group-hover:opacity-40 transition-opacity" />
+                </div>
+              </div>
+
+              {/* Arrow 2 */}
+              <div className="h-14 flex items-center px-0">
+                <FloatingArrow className="w-full h-32" delay={1} />
+              </div>
+
+              {/* Step 3 Icon */}
+              <div className="relative group cursor-help">
+                <div className="h-14 w-14 rounded-2xl bg-bg-surface border border-border flex items-center justify-center text-accent shadow-sm group-hover:border-accent/50 group-hover:bg-accent/5 transition-all duration-500">
+                  <Layers className="h-6 w-6" aria-hidden="true" />
+                  <div className="absolute inset-0 rounded-2xl bg-accent/20 blur-xl opacity-0 group-hover:opacity-40 transition-opacity" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Tier 2: Headers (Badge, Title, Desc) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 pb-12">
+            {steps.map((step: any, i: any) => (
+              <div key={`header-${i}`} className="relative group">
                 <FadeUp delay={i * 0.1}>
-                  <div className="space-y-4 text-left">
-                    <span className="font-mono text-[9px] text-accent font-bold uppercase tracking-widest leading-none px-2 py-1 bg-accent/5 border border-accent/10 rounded-md inline-block">Step {step.id}</span>
-                    <h3 className="text-xl font-serif italic text-text-primary h-auto md:h-8">{step.title}</h3>
-                    <p className="font-mono text-[11px] text-text-muted leading-relaxed min-h-[40px]">{step.desc}</p>
+                  <div className="space-y-4 text-left p-6 rounded-2xl border border-transparent hover:border-border hover:bg-bg-surface/30 transition-all">
+                    <span className="font-mono text-[10px] text-accent font-bold uppercase tracking-[0.2em] leading-none px-2.5 py-1.5 bg-accent/10 border border-accent/20 rounded-lg inline-block transition-colors group-hover:bg-accent group-hover:text-bg">Step {step.id}</span>
+                    <h3 className="text-2xl font-serif italic text-text-primary">{step.title}</h3>
+                    <p className="font-mono text-[12px] text-text-muted leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity">{step.desc}</p>
                   </div>
                 </FadeUp>
-
-                {/* Mobile Preview (shows only on mobile) */}
-                <div className="md:hidden mt-6 p-4 rounded-xl bg-bg-surface border border-border">
-                  <div className="font-mono text-[11px] text-text-muted whitespace-pre-wrap leading-loose">
-                    {step.content}
-                  </div>
-                </div>
               </div>
             ))}
           </div>
 
-          {/* Tier 3: Code Previews (Desktop Only) */}
+          {/* Tier 3: Artifact Previews (Desktop Only) */}
           <div className="hidden md:grid grid-cols-3 gap-12">
             {steps.map((step: any, i: any) => (
               <FadeUp key={`preview-${i}`} delay={i * 0.15}>
-                <div className="p-6 rounded-xl bg-bg-surface border border-border hover:border-border-hover transition-colors shadow-sm min-h-[140px]">
-                  <div className="font-mono text-[11px] text-text-muted whitespace-pre-wrap leading-loose">
+                <div className="relative overflow-hidden p-8 rounded-[2rem] bg-bg-surface border border-border/60 hover:border-accent/30 transition-all group shadow-sm min-h-[160px] flex items-center">
+                  <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="font-mono text-[11px] text-text-muted whitespace-pre-wrap leading-relaxed group-hover:text-text-primary transition-colors">
                     {step.content}
                   </div>
                 </div>
