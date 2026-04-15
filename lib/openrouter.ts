@@ -103,8 +103,11 @@ export async function generateStreamingContent(
   const keys = getApiKeys(isPro);
   const models = getModels(isPro);
   const today = new Date().toISOString().split("T")[0];
+  const hashtagInstruction = isPro 
+    ? "Include at least 10 highly-relevant, viral hashtags." 
+    : "Include at least 3 highly-relevant, viral hashtags.";
 
-  const prompt = `Commits:\n${commits}\n\nProject: ${projectName || "Unknown"}\nTarget Version: ${version}\nDate: ${today}`;
+  const prompt = `Commits:\n${commits}\n\nProject: ${projectName || "Unknown"}\nTarget Version: ${version}\nDate: ${today}\nTweet Constraints: ${hashtagInstruction}`;
 
   if (keys.length === 0) {
     throw new Error("No API keys configured for " + (isPro ? "Pro" : "Free") + " plan.");

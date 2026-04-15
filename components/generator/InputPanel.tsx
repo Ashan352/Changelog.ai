@@ -13,6 +13,7 @@ interface InputPanelProps {
     repoName: string;
   };
   hasCompleted?: boolean;
+  onReset?: () => void;
 }
 
 // 12 particles at evenly-spaced angles with slight random spread
@@ -26,7 +27,7 @@ const PARTICLES = Array.from({ length: 12 }, (_, i) => {
   }
 })
 
-export function InputPanel({ onGenerate, isLoading, plan = 'free', initialValues, hasCompleted }: InputPanelProps & { plan?: string }) {
+export function InputPanel({ onGenerate, isLoading, plan = 'free', initialValues, hasCompleted, onReset }: InputPanelProps & { plan?: string }) {
   const [commits, setCommits] = useState(initialValues?.commits || '')
   const [version, setVersion] = useState(initialValues?.version || '')
   const [repoName, setRepoName] = useState(initialValues?.repoName || '')
@@ -80,7 +81,19 @@ export function InputPanel({ onGenerate, isLoading, plan = 'free', initialValues
   }
 
   const handleClick = () => {
-    if (!isLoading && commits.trim()) triggerAndGenerate()
+    if (isLoading) return;
+    
+    if (hasCompleted) {
+      // User clicked "Generate a new one"
+      setCommits('');
+      setVersion('');
+      if (onReset) onReset();
+      return;
+    }
+
+    if (commits.trim()) {
+      triggerAndGenerate()
+    }
   }
 
   return (
@@ -143,7 +156,7 @@ export function InputPanel({ onGenerate, isLoading, plan = 'free', initialValues
         </div>
       </div>
 
-      <div className="flex items-center gap-3 py-2 px-1">
+      <div className="flex items-center gap-3 pt-2 pb-1 px-1">
          <input 
             type="checkbox" 
             id="public-toggle" 

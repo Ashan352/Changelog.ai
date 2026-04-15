@@ -46,6 +46,7 @@ export function GeneratorApp({ plan }: { plan: string }) {
     completion,
     isLoading,
     stop,
+    setCompletion,
   } = useCompletion({
     api: '/api/generate',
     streamProtocol: 'text',
@@ -113,6 +114,12 @@ export function GeneratorApp({ plan }: { plan: string }) {
     complete(targetCommits, { body: { commits: targetCommits, version, repoName, projectName: repoName } })
   }
 
+  const handleReset = () => {
+    setHasCompleted(false)
+    setHasStarted(false)
+    setCompletion("")
+  }
+
   // Parse tags on the fly for the output panel
   const data = useMemo(() => {
     if (!completion) return null;
@@ -129,6 +136,7 @@ export function GeneratorApp({ plan }: { plan: string }) {
           plan={plan} 
           initialValues={initialValues}
           hasCompleted={hasCompleted}
+          onReset={handleReset}
         />
         
         {error && (
