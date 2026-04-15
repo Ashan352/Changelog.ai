@@ -38,38 +38,57 @@ export async function POST(req: Request) {
 
   if (event.type === "checkout.session.completed") {
     const userId = session.metadata?.userId;
-    const email = session.customer_details?.email || session.customer_email;
+    const email = (session.customer_details?.email || session.customer_email)?.toLowerCase();
+    const customerId = session.customer as string;
     
-    console.log(`[Stripe Webhook] Checkout completed. UserID: ${userId}, Email: ${email}`);
+    console.log(`[Stripe Webhook] Checkout completed. UserID: ${userId}, Email: ${email}, CustomerID: ${customerId}`);
     
-    if (!email && !userId) {
-      console.error("[Stripe Webhook] Missing both email and userId");
+    if (!email && !userId && !customerId) {
+      console.error("[Stripe Webhook] Critical: Missing all identity markers");
       return NextResponse.json({ error: "Missing identity metadata" }, { status: 400 });
     }
 
     try {
-      // Bulk update all accounts sharing this email (handles GitHub/Google merge issues)
-      const updateFilter = email ? { email } : { id: userId };
-      
+      // Find all accounts associated with any of these identifiers
+      const usersToUpgrade = await prisma.user.findMany({
+        where: {
+          OR: [
+            ...(email ? [{ email }] : []),
+            ...(userId ? [{ id: userId }] : []),
+            ...(customerId ? [{ stripeCustomerId: customerId }] : [])
+          ]
+        },
+        select: { id: true, email: true }
+      });
+
+      if (usersToUpgrade.length === 0) {
+        console.warn(`[Stripe Webhook] No users found for the provided identifiers. (Email: ${email}, UID: ${userId}, CID: ${customerId})`);
+      }
+
+      const userIds = usersToUpgrade.map(u => u.id);
+
+      // Aggressively update all found IDs in a single bulk operation
       const { count } = await prisma.user.updateMany({
-        where: updateFilter,
+        where: {
+          id: { in: userIds }
+        },
         data: { 
           plan: "pro",
-          stripeCustomerId: session.customer as string,
+          stripeCustomerId: customerId,
           stripeSubscriptionId: session.subscription as string,
         },
       });
 
-      console.log(`[Stripe Webhook] Successfully upgraded ${count} account(s) to pro for ${email || userId}`);
+      console.log(`[Stripe Webhook] Successfully upgraded ${count} account(s) to pro.`);
+
+      // Sync unique emails to Redis
+      const uniqueEmails = Array.from(new Set(usersToUpgrade.map(u => u.email).filter(Boolean)));
+      for (const uEmail of uniqueEmails) {
+        await updatePlan(uEmail as string, "pro");
+      }
     } catch (dbErr: any) {
-      console.error(`[Stripe Webhook] Database update failed: ${dbErr.message}`);
+      console.error(`[Stripe Webhook] Aggressive update failed: ${dbErr.message}`);
       return NextResponse.json({ error: "Database update failed" }, { status: 500 });
-    }
-    
-    // Sync to Redis for Edge API access
-    if (email) {
-      await updatePlan(email, "pro");
-      console.log(`[Stripe Webhook] Synced pro plan to Redis for ${email}`);
     }
   }
 

@@ -1,4 +1,5 @@
 import Stripe from "stripe";
+import { prisma } from "./prisma";
 
 // Lazy Stripe initialization — prevents top-level crash during build
 // if STRIPE_SECRET_KEY is not yet available (e.g. during Next.js page collection).
@@ -32,13 +33,18 @@ export const getStripeSession = async (userId: string, email: string, isAnnual: 
     throw new Error("Stripe Price ID not configured. Please add real price IDs to your .env file.");
   }
 
-  return await client.checkout.sessions.create({
+  // Check if user already has a Stripe Customer ID
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { stripeCustomerId: true }
+  });
+
+  const sessionConfig: Stripe.Checkout.SessionCreateParams = {
     success_url: `${process.env.NEXTAUTH_URL}/dashboard?upgraded=true`,
     cancel_url: `${process.env.NEXTAUTH_URL}/dashboard/billing`,
     payment_method_types: ["card"],
     mode: "subscription",
     billing_address_collection: "auto",
-    customer_email: email,
     line_items: [
       {
         price: priceId,
@@ -48,5 +54,14 @@ export const getStripeSession = async (userId: string, email: string, isAnnual: 
     metadata: {
       userId: userId,
     },
-  });
+  };
+
+  // Link to existing customer or use email
+  if (user?.stripeCustomerId) {
+    sessionConfig.customer = user.stripeCustomerId;
+  } else {
+    sessionConfig.customer_email = email;
+  }
+
+  return await client.checkout.sessions.create(sessionConfig);
 };
