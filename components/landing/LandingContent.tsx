@@ -7,6 +7,8 @@ import dynamic from "next/dynamic"
 import {
   SiNextdotjs,
   SiReact,
+  SiTypescript,
+  SiTailwindcss,
   SiGithub,
   SiStripe,
   SiSupabase,
@@ -62,32 +64,22 @@ export function LandingContent({ session }: { session: any }) {
       <main>
         <Hero isLoggedIn={!!session} />
         
-        <section className="border-y border-border bg-bg-surface/30 py-3 flex items-center h-14">
+        <section className="border-y border-border bg-bg-surface/30 py-4 flex items-center overflow-hidden">
           <LogoLoop 
             fadeOut={true}
             scaleOnHover={true}
-            speed={40}
-            gap={64}
-            logoHeight={24}
+            speed={100}
+            gap={60}
+            logoHeight={32}
             logos={[
-              { node: <SiNextdotjs className="text-text-primary" />, ariaLabel: "Next.js" },
-              { node: <SiReact className="text-[#61DAFB]" />, ariaLabel: "React" },
-              { node: <SiGithub className="text-text-primary" />, ariaLabel: "GitHub" },
-              { node: <SiStripe className="text-[#008CDD]" />, ariaLabel: "Stripe" },
-              { node: <SiSupabase className="text-[#3ECF8E]" />, ariaLabel: "Supabase" },
-              { node: <SiPostgresql className="text-[#4169E1]" />, ariaLabel: "PostgreSQL" },
-              { node: <SiVercel className="text-text-primary" />, ariaLabel: "Vercel" },
-              { node: <SiPrisma className="text-text-primary" />, ariaLabel: "Prisma" },
-              { node: <SiFramer className="text-text-primary" />, ariaLabel: "Framer" },
-              { node: <SiNextdotjs className="text-text-primary" />, ariaLabel: "Next.js" },
-              { node: <SiReact className="text-[#61DAFB]" />, ariaLabel: "React" },
-              { node: <SiGithub className="text-text-primary" />, ariaLabel: "GitHub" },
-              { node: <SiStripe className="text-[#008CDD]" />, ariaLabel: "Stripe" },
-              { node: <SiSupabase className="text-[#3ECF8E]" />, ariaLabel: "Supabase" },
-              { node: <SiPostgresql className="text-[#4169E1]" />, ariaLabel: "PostgreSQL" },
-              { node: <SiVercel className="text-text-primary" />, ariaLabel: "Vercel" },
-              { node: <SiPrisma className="text-text-primary" />, ariaLabel: "Prisma" },
-              { node: <SiFramer className="text-text-primary" />, ariaLabel: "Framer" },
+              { node: <SiReact className="text-[#61DAFB]" />, title: "React", href: "https://react.dev", ariaLabel: "React" },
+              { node: <SiNextdotjs className="text-text-primary" />, title: "Next.js", href: "https://nextjs.org", ariaLabel: "Next.js" },
+              { node: <SiTypescript className="text-[#3178C6]" />, title: "TypeScript", href: "https://www.typescriptlang.org", ariaLabel: "TypeScript" },
+              { node: <SiTailwindcss className="text-[#06B6D4]" />, title: "Tailwind CSS", href: "https://tailwindcss.com", ariaLabel: "Tailwind CSS" },
+              { node: <SiReact className="text-[#61DAFB]" />, title: "React", href: "https://react.dev", ariaLabel: "React" },
+              { node: <SiNextdotjs className="text-text-primary" />, title: "Next.js", href: "https://nextjs.org", ariaLabel: "Next.js" },
+              { node: <SiTypescript className="text-[#3178C6]" />, title: "TypeScript", href: "https://www.typescriptlang.org", ariaLabel: "TypeScript" },
+              { node: <SiTailwindcss className="text-[#06B6D4]" />, title: "Tailwind CSS", href: "https://tailwindcss.com", ariaLabel: "Tailwind CSS" },
             ]} 
           />
         </section>
