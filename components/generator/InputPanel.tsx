@@ -40,7 +40,8 @@ export function InputPanel({ onGenerate, isLoading, plan = 'free' }: InputPanelP
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [commits, version, repoName, isLoading])
 
-  const wordCount = commits.trim() ? commits.trim().split(/\s+/).length : 0
+  const wordCount = commits.split(/\s+/).filter(Boolean).length
+  const charCount = commits.length
   const maxWords = plan === 'pro' ? 10000 : 500
   const isOverLimit = wordCount > maxWords
   const percentage = (wordCount / maxWords) * 100
@@ -92,8 +93,15 @@ export function InputPanel({ onGenerate, isLoading, plan = 'free' }: InputPanelP
             placeholder="Paste your git log or commit messages here..."
             className={`input-focus-glow w-full flex-1 bg-bg-surface border rounded-xl p-4 font-mono text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-border-strong transition-all resize-none min-h-[200px] ${isOverLimit ? 'border-danger/50' : 'border-border'}`}
           />
-          <div className={`absolute bottom-3 right-3 font-mono text-[10px] ${isOverLimit ? 'text-danger' : percentage > 80 ? 'text-danger/70' : 'text-text-muted'}`}>
-            {wordCount.toLocaleString()} / {maxWords.toLocaleString()} <span className="opacity-50 ml-1">words</span>
+          <div className="absolute bottom-3 right-3 flex items-center gap-2.5 transition-all duration-300">
+             <div className={`font-mono text-[9px] uppercase tracking-[0.1em] ${isOverLimit ? 'text-danger' : 'text-text-muted'} opacity-40 font-bold`}>
+                {charCount.toLocaleString()} chars
+             </div>
+             <div className="h-3 w-[1px] bg-border/40" />
+             <div className={`font-mono text-[10px] tabular-nums ${isOverLimit ? 'text-danger' : percentage > 80 ? 'text-danger/70' : 'text-text-muted'}`}>
+                <span className="font-bold">{wordCount.toLocaleString()}</span>
+                <span className="text-[9px] font-normal opacity-50 ml-1 uppercase tracking-tighter">/ {maxWords.toLocaleString()} words</span>
+             </div>
           </div>
         </div>
 
