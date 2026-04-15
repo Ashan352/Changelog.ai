@@ -59,17 +59,27 @@ export function GitHubImport({ accessToken, plan }: { accessToken?: string | nul
   }, [accessToken])
 
   const fetchRepos = async () => {
+    if (!accessToken) {
+      setError("No GitHub access token found. Please try logging in again.")
+      return
+    }
     setLoading(true)
     setError(null)
     try {
       const res = await fetch('https://api.github.com/user/repos?sort=updated&per_page=100', {
-        headers: { Authorization: `token ${accessToken}` }
+        headers: { 
+          'Authorization': `Bearer ${accessToken}`,
+          'Accept': 'application/vnd.github.v3+json'
+        }
       })
-      if (!res.ok) throw new Error('Failed to fetch repositories')
+      if (!res.ok) {
+        if (res.status === 401) throw new Error('Unauthorized: Your session may have expired. Please log out and back in.')
+        throw new Error(`GitHub API Error: ${res.status} ${res.statusText}`)
+      }
       const data = await reposFilter(await res.json())
       setRepos(data)
     } catch (err: any) {
-      setError(err.message)
+      setError(err.message === 'Failed to fetch' ? 'Network Error: Please check your internet connection or browser settings.' : err.message)
     } finally {
       setLoading(false)
     }
@@ -92,7 +102,10 @@ export function GitHubImport({ accessToken, plan }: { accessToken?: string | nul
     setError(null)
     try {
       const res = await fetch(`https://api.github.com/repos/${repo.full_name}/branches`, {
-        headers: { Authorization: `token ${accessToken}` }
+        headers: { 
+          'Authorization': `Bearer ${accessToken}`,
+          'Accept': 'application/vnd.github.v3+json'
+        }
       })
       if (!res.ok) throw new Error('Failed to fetch branches')
       const data = await res.json()
@@ -111,7 +124,10 @@ export function GitHubImport({ accessToken, plan }: { accessToken?: string | nul
     setError(null)
     try {
       const res = await fetch(`https://api.github.com/repos/${selectedRepo?.full_name}/commits?sha=${selectedBranch}&per_page=30`, {
-        headers: { Authorization: `token ${accessToken}` }
+        headers: { 
+          'Authorization': `Bearer ${accessToken}`,
+          'Accept': 'application/vnd.github.v3+json'
+        }
       })
       if (!res.ok) throw new Error('Failed to fetch commits')
       const data = await res.json()
