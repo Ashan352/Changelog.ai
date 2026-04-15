@@ -52,7 +52,6 @@ export function GeneratorApp({ plan }: { plan: string }) {
     streamProtocol: 'text',
     onFinish: async (prompt, completionText) => {
       setHasCompleted(true)
-      setHasStarted(false)
       // Once stream finishes, save to history in a separate Serverless call
       const parsed = parseTaggedResponse(completionText);
       try {
