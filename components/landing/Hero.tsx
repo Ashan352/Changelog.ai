@@ -40,8 +40,8 @@ export function Hero({ isLoggedIn }: { isLoggedIn?: boolean }) {
       {/* Aurora Ambient Background */}
       <div className="absolute inset-0 z-0 opacity-50 pointer-events-none flex items-center justify-center">
         <Aurora 
-          colorStops={['#e8ff47', '#3a4a0a', '#101010']} 
-          blend={0.6}
+          colorStops={['#e8ff47', '#91c96b', '#e8ff47']} 
+          blend={0.5}
           amplitude={1.2}
           speed={0.8}
         />
