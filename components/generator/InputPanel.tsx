@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect, useRef } from 'react'
-import { GitCommit, Zap, Loader2, Info } from 'lucide-react'
+import { GitCommit, Zap, Loader2, Info, Check } from 'lucide-react'
 import { Kbd } from '@/components/ui/kbd'
 import { Textarea } from '@/components/ui/textarea'
 
