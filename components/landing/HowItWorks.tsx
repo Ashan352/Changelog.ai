@@ -122,7 +122,7 @@ export function HowItWorks() {
               fromRef={hubRef}
               toRef={output1Ref}
               duration={3}
-              curvature={-80}
+              curvature={0}
               pathColor="#00000015"
               gradientStartColor="#91c96b"
               gradientStopColor="#e8ff47"
@@ -146,7 +146,7 @@ export function HowItWorks() {
               fromRef={hubRef}
               toRef={output3Ref}
               duration={3}
-              curvature={80}
+              curvature={0}
               pathColor="#00000015"
               gradientStartColor="#91c96b"
               gradientStopColor="#e8ff47"
