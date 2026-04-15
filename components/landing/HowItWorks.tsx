@@ -49,105 +49,111 @@ export function HowItWorks() {
           </FadeUp>
         </div>
 
-        {/* The Animated Network Flow */}
-        <div 
-          ref={containerRef} 
-          className="relative flex w-full max-w-[900px] mx-auto items-stretch justify-between min-h-[400px] mb-24 p-10"
-        >
+        {/* The Animated Network Flow Container */}
+        <div className="relative w-full max-w-[950px] mx-auto mb-24 rounded-[4rem] border border-border/50 bg-bg-surface/40 backdrop-blur-[2px] overflow-hidden">
+          {/* Subtle background texture/glow */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(145,201,107,0.08)_0%,transparent_70%)] pointer-events-none" />
           
-          {/* Column 1: Input (Step 1) */}
-          <div className="flex flex-col justify-center gap-12 z-10 w-[120px]">
-            <div ref={inputRef} className="relative group cursor-help mx-auto">
-               <div className="h-16 w-16 rounded-full bg-bg-surface border border-border flex items-center justify-center text-accent shadow-sm group-hover:border-accent/40 transition-all duration-500">
-                  <User className="h-7 w-7" aria-hidden="true" />
-               </div>
-               <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 font-mono text-[10px] text-text-muted uppercase tracking-widest whitespace-nowrap">Commits</span>
+          <div 
+            ref={containerRef} 
+            className="relative flex w-full items-stretch justify-between min-h-[450px] p-12 sm:p-16"
+          >
+            {/* Column 1: Input (Step 1) */}
+            <div className="flex flex-col justify-center gap-12 z-10 w-[120px]">
+              <div ref={inputRef} className="relative group cursor-help mx-auto">
+                 <div className="h-20 w-20 rounded-full bg-white border border-border flex items-center justify-center text-accent shadow-[0_8px_30px_rgb(0,0,0,0.04)] group-hover:border-accent/40 transition-all duration-500">
+                    <User className="h-8 w-8" aria-hidden="true" />
+                 </div>
+                 <span className="absolute -bottom-10 left-1/2 -translate-x-1/2 font-mono text-[10px] text-text-muted uppercase tracking-widest whitespace-nowrap">Commits</span>
+              </div>
             </div>
+
+            {/* Column 2: The Hub (Step 2 - AI) */}
+            <div className="flex flex-col justify-center z-10 w-[180px]">
+              <div ref={hubRef} className="relative group cursor-help mx-auto">
+                 <div className="h-28 w-28 rounded-full bg-white border border-accent/20 flex items-center justify-center text-accent shadow-[0_20px_50px_rgba(145,201,107,0.15)] group-hover:border-accent/40 transition-all duration-500 relative">
+                    {/* Inner pulse ring */}
+                    <div className="absolute inset-0 rounded-full animate-ping bg-accent/5 opacity-20" />
+                    <Sparkles className="h-12 w-12" aria-hidden="true" />
+                 </div>
+                 <span className="absolute -bottom-12 left-1/2 -translate-x-1/2 font-mono text-[11px] text-text-primary font-bold uppercase tracking-[0.3em] whitespace-nowrap">AI ENGINE</span>
+              </div>
+            </div>
+
+            {/* Column 3: Outputs (Step 3) */}
+            <div className="flex flex-col justify-between items-center z-10 w-[120px] py-4">
+              <div ref={output1Ref} className="relative group cursor-help">
+                 <div className="h-16 w-16 rounded-full bg-white border border-border flex items-center justify-center text-text-secondary shadow-[0_8px_30px_rgb(0,0,0,0.04)] group-hover:border-accent/40 transition-all duration-500">
+                    <FileText className="h-7 w-7" aria-hidden="true" />
+                 </div>
+                 <span className="absolute -right-28 top-1/2 -translate-y-1/2 font-mono text-[10px] text-text-muted uppercase tracking-widest hidden lg:block">Changelog</span>
+              </div>
+
+              <div ref={output2Ref} className="relative group cursor-help">
+                 <div className="h-16 w-16 rounded-full bg-white border border-border flex items-center justify-center text-text-secondary shadow-[0_8px_30px_rgb(0,0,0,0.04)] group-hover:border-accent/40 transition-all duration-500">
+                    <Send className="h-7 w-7" aria-hidden="true" />
+                 </div>
+                 <span className="absolute -right-28 top-1/2 -translate-y-1/2 font-mono text-[10px] text-text-muted uppercase tracking-widest hidden lg:block">Release</span>
+              </div>
+
+              <div ref={output3Ref} className="relative group cursor-help">
+                 <div className="h-16 w-16 rounded-full bg-white border border-border flex items-center justify-center text-text-secondary shadow-[0_8px_30px_rgb(0,0,0,0.04)] group-hover:border-accent/40 transition-all duration-500">
+                    <Share2 className="h-7 w-7" aria-hidden="true" />
+                 </div>
+                 <span className="absolute -right-28 top-1/2 -translate-y-1/2 font-mono text-[10px] text-text-muted uppercase tracking-widest hidden lg:block">Social</span>
+              </div>
+            </div>
+
+            {/* Animated Beams */}
+            <AnimatedBeam
+              containerRef={containerRef}
+              fromRef={inputRef}
+              toRef={hubRef}
+              duration={3}
+              curvature={0}
+              pathColor="#00000015"
+              gradientStartColor="#91c96b"
+              gradientStopColor="#e8ff47"
+              pathWidth={3}
+            />
+
+            <AnimatedBeam
+              containerRef={containerRef}
+              fromRef={hubRef}
+              toRef={output1Ref}
+              duration={3}
+              curvature={-80}
+              pathColor="#00000015"
+              gradientStartColor="#91c96b"
+              gradientStopColor="#e8ff47"
+              pathWidth={3}
+              delay={0.5}
+            />
+            <AnimatedBeam
+              containerRef={containerRef}
+              fromRef={hubRef}
+              toRef={output2Ref}
+              duration={3}
+              curvature={0}
+              pathColor="#00000015"
+              gradientStartColor="#91c96b"
+              gradientStopColor="#e8ff47"
+              pathWidth={3}
+              delay={0.6}
+            />
+            <AnimatedBeam
+              containerRef={containerRef}
+              fromRef={hubRef}
+              toRef={output3Ref}
+              duration={3}
+              curvature={80}
+              pathColor="#00000015"
+              gradientStartColor="#91c96b"
+              gradientStopColor="#e8ff47"
+              pathWidth={3}
+              delay={0.7}
+            />
           </div>
-
-          {/* Column 2: The Hub (Step 2 - AI) */}
-          <div className="flex flex-col justify-center z-10 w-[160px]">
-            <div ref={hubRef} className="relative group cursor-help mx-auto">
-               <div className="h-24 w-24 rounded-full bg-bg-surface border border-accent/20 flex items-center justify-center text-accent shadow-[0_0_40px_rgba(145,201,107,0.1)] group-hover:border-accent/40 transition-all duration-500 bg-gradient-to-br from-accent/5 to-transparent">
-                  <Sparkles className="h-10 w-10 animate-pulse" aria-hidden="true" />
-               </div>
-               <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 font-mono text-[10px] text-text-primary font-bold uppercase tracking-widest whitespace-nowrap">AI ENGINE</span>
-            </div>
-          </div>
-
-          {/* Column 3: Outputs (Step 3) */}
-          <div className="flex flex-col justify-between items-center gap-8 z-10 w-[120px] py-4">
-            <div ref={output1Ref} className="relative group cursor-help">
-               <div className="h-14 w-14 rounded-full bg-bg-surface border border-border flex items-center justify-center text-text-secondary shadow-sm group-hover:border-accent/40 transition-all duration-500">
-                  <FileText className="h-6 w-6" aria-hidden="true" />
-               </div>
-               <span className="absolute -right-24 top-1/2 -translate-y-1/2 font-mono text-[9px] text-text-muted uppercase tracking-widest hidden lg:block">Changelog</span>
-            </div>
-
-            <div ref={output2Ref} className="relative group cursor-help">
-               <div className="h-14 w-14 rounded-full bg-bg-surface border border-border flex items-center justify-center text-text-secondary shadow-sm group-hover:border-accent/40 transition-all duration-500">
-                  <Send className="h-6 w-6" aria-hidden="true" />
-               </div>
-               <span className="absolute -right-24 top-1/2 -translate-y-1/2 font-mono text-[9px] text-text-muted uppercase tracking-widest hidden lg:block">Release</span>
-            </div>
-
-            <div ref={output3Ref} className="relative group cursor-help">
-               <div className="h-14 w-14 rounded-full bg-bg-surface border border-border flex items-center justify-center text-text-secondary shadow-sm group-hover:border-accent/40 transition-all duration-500">
-                  <Share2 className="h-6 w-6" aria-hidden="true" />
-               </div>
-               <span className="absolute -right-24 top-1/2 -translate-y-1/2 font-mono text-[9px] text-text-muted uppercase tracking-widest hidden lg:block">Social</span>
-            </div>
-          </div>
-
-          {/* Animated Beams */}
-          <AnimatedBeam
-            containerRef={containerRef}
-            fromRef={inputRef}
-            toRef={hubRef}
-            duration={3}
-            curvature={0} // Straight line for input
-            pathColor="#0000000a"
-            gradientStartColor="#91c96b"
-            gradientStopColor="#91c96b"
-            pathWidth={2}
-          />
-
-          <AnimatedBeam
-            containerRef={containerRef}
-            fromRef={hubRef}
-            toRef={output1Ref}
-            duration={3}
-            curvature={-70}
-            pathColor="#0000000a"
-            gradientStartColor="#91c96b"
-            gradientStopColor="#91c96b"
-            pathWidth={2}
-            delay={0.5}
-          />
-          <AnimatedBeam
-            containerRef={containerRef}
-            fromRef={hubRef}
-            toRef={output2Ref}
-            duration={3}
-            curvature={0} // Middle beam is straight
-            pathColor="#0000000a"
-            gradientStartColor="#91c96b"
-            gradientStopColor="#91c96b"
-            pathWidth={2}
-            delay={0.6}
-          />
-          <AnimatedBeam
-            containerRef={containerRef}
-            fromRef={hubRef}
-            toRef={output3Ref}
-            duration={3}
-            curvature={70}
-            pathColor="#0000000a"
-            gradientStartColor="#91c96b"
-            gradientStopColor="#91c96b"
-            pathWidth={2}
-            delay={0.7}
-          />
         </div>
 
         {/* Tier 2: Step Descriptions (Text only) */}
