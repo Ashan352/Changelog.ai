@@ -15,9 +15,49 @@ import type { GenerationOutput as GenerationResult } from '@/lib/openrouter'
 
 type Tab = 'changelog' | 'release' | 'tweet' | 'raw'
 
-export function OutputPanel({ data, isLoading, hasStarted, rawResult }: { data: GenerationResult | null; isLoading: boolean; hasStarted: boolean; rawResult?: string }) {
+export function OutputPanel({ 
+  data, 
+  isLoading, 
+  hasStarted, 
+  rawResult, 
+  generationId, 
+  initialIsPublic 
+}: { 
+  data: GenerationResult | null; 
+  isLoading: boolean; 
+  hasStarted: boolean; 
+  rawResult?: string;
+  generationId?: string | null;
+  initialIsPublic?: boolean;
+}) {
   const [activeTab, setActiveTab] = useState<Tab>('changelog')
   const [copied, setCopied] = useState(false)
+  const [isPublic, setIsPublic] = useState(initialIsPublic || false)
+  const [isSyncing, setIsSyncing] = useState(false)
+
+  // Sync with initialIsPublic if it changes (e.g. on new generation)
+  React.useEffect(() => {
+    if (initialIsPublic !== undefined) setIsPublic(initialIsPublic)
+  }, [initialIsPublic])
+
+  const togglePublic = async () => {
+    if (!generationId) return
+    setIsSyncing(true)
+    try {
+      const res = await fetch('/api/history', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: generationId, isPublic: !isPublic })
+      })
+      if (res.ok) {
+        setIsPublic(!isPublic)
+      }
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setIsSyncing(false)
+    }
+  }
 
   const getContent = (): string => {
     if (activeTab === 'raw') return rawResult || ''
@@ -217,7 +257,7 @@ export function OutputPanel({ data, isLoading, hasStarted, rawResult }: { data: 
 
       {/* Footer Actions */}
       <div className="p-4 md:p-6 border-t border-border flex flex-col sm:flex-row items-center justify-between bg-bg-elevated/30 gap-4">
-        <div className="flex items-center gap-3 w-full sm:w-auto">
+        <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
           <button
             onClick={handleCopy}
             disabled={!getContent()}
@@ -246,6 +286,21 @@ export function OutputPanel({ data, isLoading, hasStarted, rawResult }: { data: 
               Export .md
             </button>
           )}
+
+          {generationId && (
+            <button
+              onClick={togglePublic}
+              disabled={isSyncing}
+              className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 h-11 rounded-full border transition-all active:scale-[0.98] font-mono text-xs ${
+                isPublic 
+                  ? 'bg-accent/10 border-accent/30 text-accent font-bold' 
+                  : 'bg-bg border-border text-text-muted hover:text-text-primary'
+              }`}
+            >
+              {isSyncing ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Sparkles className={`h-3.5 w-3.5 ${isPublic ? 'fill-accent/20' : ''}`} />}
+              <span>{isPublic ? 'Posted on Blog' : 'Post to Ship Log'}</span>
+            </button>
+          )}
         </div>
         
         <div className="hidden sm:flex flex-col items-end gap-1">
@@ -254,13 +309,55 @@ export function OutputPanel({ data, isLoading, hasStarted, rawResult }: { data: 
               {isLoading ? "Generating..." : "Finalized"}
             </span>
           </div>
-          {data?.version_detected && (
-            <div className="text-[12px] font-mono text-accent">
-               Target Version: {data.version_detected}
-            </div>
+          {isPublic && generationId && (
+            <Link 
+              href={`/blog/${generationId}`}
+              className="text-[11px] font-mono text-accent hover:underline flex items-center gap-1"
+            >
+              View public post <ArrowRight className="h-3 w-3" />
+            </Link>
           )}
         </div>
       </div>
     </div>
+  )
+}
+
+function Loader2(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+    </svg>
+  )
+}
+
+function ArrowRight(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M5 12h14" />
+      <path d="m12 5 7 7-7 7" />
+    </svg>
   )
 }

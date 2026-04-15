@@ -15,6 +15,7 @@ export function GeneratorApp({ plan }: { plan: string }) {
   const [upgradeReason, setUpgradeReason] = useState<'usage' | 'text'>('usage')
   const [hasStarted, setHasStarted] = useState(false)
   const [hasCompleted, setHasCompleted] = useState(false);
+  const [generationId, setGenerationId] = useState<string | null>(null);
   const [lastParams, setLastParams] = useState({ repoName: '', version: '', commitsCount: 0, isPublic: false });
 
   const initialValues = useMemo(() => {
@@ -68,6 +69,8 @@ export function GeneratorApp({ plan }: { plan: string }) {
         });
         
         if (res.ok) {
+          const data = await res.json();
+          if (data.id) setGenerationId(data.id);
           // Trigger a silent refresh to update Sidebar usage stats
           router.refresh();
         }
@@ -109,6 +112,7 @@ export function GeneratorApp({ plan }: { plan: string }) {
     setError(null)
     setHasStarted(true)
     setHasCompleted(false)
+    setGenerationId(null)
     const targetCommits = commits || "Generate for current version";
     complete(targetCommits, { body: { commits: targetCommits, version, repoName, projectName: repoName } })
   }
@@ -116,6 +120,7 @@ export function GeneratorApp({ plan }: { plan: string }) {
   const handleReset = () => {
     setHasCompleted(false)
     setHasStarted(false)
+    setGenerationId(null)
     setCompletion("")
   }
 
@@ -154,13 +159,14 @@ export function GeneratorApp({ plan }: { plan: string }) {
         )}
       </div>
 
-      {/* Output Panel */}
       <div className="flex-1 min-w-0 h-[500px] md:h-auto">
         <OutputPanel 
           data={data} 
           isLoading={isLoading} 
           hasStarted={hasStarted} 
           rawResult={completion} 
+          generationId={generationId}
+          initialIsPublic={lastParams.isPublic}
         />
       </div>
 

@@ -28,7 +28,7 @@ export async function POST(req: Request) {
     const body = validation.data;
 
     // Update generation count and save history
-    await prisma.$transaction([
+    const [_, generation] = await prisma.$transaction([
       prisma.user.update({
         where: { id: session.user.id },
         data: { generations: { increment: 1 } },
@@ -59,10 +59,43 @@ export async function POST(req: Request) {
     // @ts-ignore
     revalidateTag(`history-${session.user.id}`);
 
-    return new Response(JSON.stringify({ success: true }), { status: 200 });
+    return new Response(JSON.stringify({ success: true, id: generation.id }), { status: 200 });
 
   } catch (error: any) {
     console.error("History Save Error:", error.message || error);
     return new Response(JSON.stringify({ error: "Failed to save history" }), { status: 500 });
+  }
+}
+
+export async function PATCH(req: Request) {
+  try {
+    const session = await auth();
+    if (!session?.user?.id) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+    }
+
+    const { id, isPublic } = await req.json();
+    
+    if (!id) {
+      return new Response(JSON.stringify({ error: "Missing ID" }), { status: 400 });
+    }
+
+    const generation = await prisma.generation.update({
+      where: { 
+        id,
+        userId: session.user.id // Security: ensure you own it
+      },
+      data: { isPublic }
+    });
+
+    revalidatePath('/blog');
+    revalidatePath(`/dashboard/history`);
+    revalidatePath(`/blog/${id}`);
+
+    return new Response(JSON.stringify({ success: true, isPublic: generation.isPublic }), { status: 200 });
+
+  } catch (error: any) {
+    console.error("History Update Error:", error.message || error);
+    return new Response(JSON.stringify({ error: "Failed to update privacy" }), { status: 500 });
   }
 }
