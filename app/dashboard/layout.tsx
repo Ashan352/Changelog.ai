@@ -5,6 +5,8 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/dashboard/AppSidebar"
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs"
 
+export const dynamic = "force-dynamic"
+
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   let session = null
   try {
