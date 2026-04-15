@@ -53,34 +53,39 @@ export function HowItWorks() {
         <div className="space-y-4 md:space-y-12">
           
           {/* Tier 1: Icons */}
-          <div className="hidden md:grid grid-cols-3 gap-12 relative w-full mb-12">
-            
-            {/* Animated Connector Arrows spanning from icon to icon */}
-            <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 z-0 pointer-events-none w-full">
-              {/* Arrow 1 to 2 */}
-              <div 
-                className="absolute top-1/2 -translate-y-1/2"
-                style={{ left: '48px', width: 'calc(33.33% - 48px)' }}
-              >
-                 <FloatingArrow className="w-full h-24" />
-              </div>
-              
-              {/* Arrow 2 to 3 */}
-              <div 
-                className="absolute top-1/2 -translate-y-1/2"
-                style={{ left: 'calc(33.33% + 48px)', width: 'calc(33.33% - 48px)' }}
-              >
-                 <FloatingArrow className="w-full h-24" />
-              </div>
-            </div>
-
-            {steps.map((step: any, i: any) => (
-              <div key={`icon-${i}`} className="flex justify-start relative z-10 w-full">
-                <div className="relative h-12 w-12 rounded-xl bg-bg-surface border border-border flex items-center justify-center text-accent shadow-[0_4px_12px_rgba(0,0,0,0.05)] bg-bg">
-                  <step.icon className="h-5 w-5" aria-hidden="true" />
+          <div className="hidden md:flex items-center w-full mb-12 relative">
+            <div className="grid grid-cols-[auto_1fr_auto_1fr_auto] items-center w-full gap-0">
+              {/* Step 1 */}
+              <div className="relative z-10">
+                <div className="h-12 w-12 rounded-xl bg-bg-surface border border-border flex items-center justify-center text-accent shadow-[0_4px_12px_rgba(0,0,0,0.05)] bg-bg">
+                  <Terminal className="h-5 w-5" aria-hidden="true" />
                 </div>
               </div>
-            ))}
+
+              {/* Arrow 1 */}
+              <div className="h-12 flex items-center px-0">
+                <FloatingArrow className="w-full h-24" />
+              </div>
+
+              {/* Step 2 */}
+              <div className="relative z-10">
+                <div className="h-12 w-12 rounded-xl bg-bg-surface border border-border flex items-center justify-center text-accent shadow-[0_4px_12px_rgba(0,0,0,0.05)] bg-bg">
+                  <Cpu className="h-5 w-5" aria-hidden="true" />
+                </div>
+              </div>
+
+              {/* Arrow 2 */}
+              <div className="h-12 flex items-center px-0">
+                <FloatingArrow className="w-full h-24" />
+              </div>
+
+              {/* Step 3 */}
+              <div className="relative z-10">
+                <div className="h-12 w-12 rounded-xl bg-bg-surface border border-border flex items-center justify-center text-accent shadow-[0_4px_12px_rgba(0,0,0,0.05)] bg-bg">
+                  <Layers className="h-5 w-5" aria-hidden="true" />
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Tier 2: Headers (Badge, Title, Desc) */}
