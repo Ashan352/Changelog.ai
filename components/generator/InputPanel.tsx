@@ -12,6 +12,7 @@ interface InputPanelProps {
     version: string;
     repoName: string;
   };
+  hasCompleted?: boolean;
 }
 
 // 12 particles at evenly-spaced angles with slight random spread
@@ -25,7 +26,7 @@ const PARTICLES = Array.from({ length: 12 }, (_, i) => {
   }
 })
 
-export function InputPanel({ onGenerate, isLoading, plan = 'free', initialValues }: InputPanelProps & { plan?: string }) {
+export function InputPanel({ onGenerate, isLoading, plan = 'free', initialValues, hasCompleted }: InputPanelProps & { plan?: string }) {
   const [commits, setCommits] = useState(initialValues?.commits || '')
   const [version, setVersion] = useState(initialValues?.version || '')
   const [repoName, setRepoName] = useState(initialValues?.repoName || '')
@@ -178,7 +179,7 @@ export function InputPanel({ onGenerate, isLoading, plan = 'free', initialValues
             <>
               <div className="flex items-center gap-3">
                 <Zap className="h-5 w-5 shrink-0" />
-                <span className="text-base tracking-tight">Generate changelog</span>
+                <span className="text-base tracking-tight">{hasCompleted ? "Generate a new one" : "Generate changelog"}</span>
               </div>
               <div className="hidden sm:flex items-center gap-1.5 opacity-70 group-hover:opacity-100 transition-opacity">
                 <Kbd className="bg-text-primary/10 border-text-primary/20 text-text-primary text-[11px] min-w-[22px] h-6 flex items-center justify-center font-bold">⌘</Kbd>

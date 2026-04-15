@@ -14,6 +14,7 @@ export function GeneratorApp({ plan }: { plan: string }) {
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
   const [upgradeReason, setUpgradeReason] = useState<'usage' | 'text'>('usage')
   const [hasStarted, setHasStarted] = useState(false)
+  const [hasCompleted, setHasCompleted] = useState(false);
   const [lastParams, setLastParams] = useState({ repoName: '', version: '', commitsCount: 0 });
 
   const initialValues = useMemo(() => {
@@ -49,6 +50,8 @@ export function GeneratorApp({ plan }: { plan: string }) {
     api: '/api/generate',
     streamProtocol: 'text',
     onFinish: async (prompt, completionText) => {
+      setHasCompleted(true)
+      setHasStarted(false)
       // Once stream finishes, save to history in a separate Serverless call
       const parsed = parseTaggedResponse(completionText);
       try {
@@ -104,6 +107,7 @@ export function GeneratorApp({ plan }: { plan: string }) {
 
     setError(null)
     setHasStarted(true)
+    setHasCompleted(false)
     const targetCommits = commits || "Generate for current version";
     complete(targetCommits, { body: { commits: targetCommits, version, repoName, projectName: repoName } })
   }
@@ -123,6 +127,7 @@ export function GeneratorApp({ plan }: { plan: string }) {
           isLoading={isLoading} 
           plan={plan} 
           initialValues={initialValues}
+          hasCompleted={hasCompleted}
         />
         
         {error && (
