@@ -13,19 +13,19 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: "Process", href: "#how-it-works" },
-  { label: "Demo", href: "#demo" },
+  { label: "Process", href: "/#how-it-works" },
+  { label: "Demo", href: "/#demo" },
   { 
     label: "Resources", 
     href: "#", 
     items: [
       { label: "Blog", href: "/blog", icon: LayoutGrid, description: "Public feed of changelogs." },
       { label: "Docs", href: "/docs", icon: Terminal, description: "Integration guides and API reference." },
-      { label: "FAQ", href: "#faq", icon: BookOpen, description: "Common questions answered." },
+      { label: "FAQ", href: "/#faq", icon: BookOpen, description: "Common questions answered." },
       { label: "Privacy", href: "/privacy", icon: Shield, description: "How we handle your data." },
     ]
   },
-  { label: "Pricing", href: "#pricing" },
+  { label: "Pricing", href: "/#pricing" },
 ]
 
 export function Navbar({ session }: { session: any }) {

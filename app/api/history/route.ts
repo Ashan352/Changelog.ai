@@ -53,6 +53,7 @@ export async function POST(req: Request) {
 
     revalidatePath('/dashboard');
     revalidatePath('/dashboard/usage');
+    revalidatePath('/blog');
     // @ts-ignore
     revalidateTag('history');
     // @ts-ignore

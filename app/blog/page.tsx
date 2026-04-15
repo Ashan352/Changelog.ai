@@ -1,14 +1,19 @@
 import { prisma } from "@/lib/prisma"
 import Link from "next/link"
 import { formatDistanceToNow } from "date-fns"
-import { GitCommit, User, ArrowRight, LayoutGrid } from "lucide-react"
+import { GitCommit, User, ArrowRight, LayoutGrid, Sparkles, ChevronRight } from "lucide-react"
+import { Navbar } from "@/components/landing/Navbar"
+import { auth } from "@/lib/auth"
+import { motionContent } from "./motion-content"
+import { BlogGrid } from "./BlogGrid"
 
 export const dynamic = 'force-dynamic'
 
 export default async function BlogIndexPage() {
+  const session = await auth()
   const generations = await prisma.generation.findMany({
     where: { isPublic: true },
-    take: 20,
+    take: 30,
     orderBy: { createdAt: 'desc' },
     include: {
       user: {
@@ -18,83 +23,55 @@ export default async function BlogIndexPage() {
   })
 
   return (
-    <div className="min-h-screen bg-bg selection:bg-accent/30 flex flex-col">
-      <header className="border-b border-border bg-bg-surface/50 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-[1200px] mx-auto w-full px-4 sm:px-6 h-16 flex items-center justify-between">
-            <Link href="/" className="font-serif italic text-2xl tracking-tighter text-text-primary hover:text-accent transition-colors flex items-center gap-2">
-              <span className="text-xl">⎇</span> Changelog.ai
-            </Link>
-            <div className="flex items-center gap-4">
-               <Link href="/dashboard" className="text-sm font-mono text-text-muted hover:text-text-primary transition-colors">
-                 Dashboard
-               </Link>
-            </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-bg selection:bg-accent/30 flex flex-col relative overflow-hidden">
+      {/* Texture Overlay */}
+      <div className="fixed inset-0 pointer-events-none opacity-[0.03] z-[100] mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+      
+      <Navbar session={session} />
 
-      <main className="flex-1 w-full max-w-[1200px] mx-auto px-4 sm:px-6 py-12">
-        <div className="mb-12 cursor-default">
-           <div className="flex items-center gap-2 text-accent font-mono text-xs uppercase tracking-[0.2em] mb-4">
-              <LayoutGrid className="h-4 w-4" />
-              Public Changelogs
+      <main className="flex-1 w-full max-w-[1400px] mx-auto px-6 pt-32 pb-24 relative z-10">
+        <header className="mb-24 flex flex-col items-center text-center">
+           <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-accent/5 border border-accent/10 mb-8">
+              <Sparkles className="h-3.5 w-3.5 text-accent" />
+              <span className="text-[10px] font-mono text-accent uppercase tracking-[0.2em] font-bold">The Public Ship Log</span>
            </div>
-           <h1 className="text-4xl md:text-5xl font-serif italic text-text-primary mb-4">The Ship Log</h1>
-           <p className="text-text-secondary font-mono max-w-xl leading-relaxed">
-             A real-time feed of what developers are building and shipping across the Changelog.ai network.
+           
+           <h1 className="text-6xl md:text-8xl font-serif italic text-text-primary mb-8 tracking-tighter leading-[0.9]">
+             Latest Ships
+           </h1>
+           
+           <p className="text-text-secondary font-mono text-sm max-w-xl leading-relaxed uppercase tracking-wider opacity-60">
+             A raw, authentic stream of developer progress from around the world.
            </p>
-        </div>
+        </header>
 
         {generations.length === 0 ? (
-           <div className="text-center py-20 border border-dashed border-border rounded-2xl bg-bg-surface/30">
-              <p className="font-mono text-text-muted">No changelogs have been shipped yet.</p>
+           <div className="text-center py-32 border border-dashed border-border rounded-[2.5rem] bg-bg-surface/30 backdrop-blur-sm">
+              <p className="font-mono text-text-muted uppercase tracking-widest text-xs">The log is currently quiet...</p>
            </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {generations.map((gen: any) => (
-              <Link 
-                href={`/blog/${gen.id}`} 
-                key={gen.id}
-                className="group flex flex-col p-6 rounded-2xl bg-bg-surface border border-border hover:border-accent/30 hover:shadow-[0_8px_30px_rgba(155,177,94,0.1)] transition-all duration-300"
-              >
-                 <div className="flex items-center gap-3 mb-6">
-                   <div className="h-8 w-8 rounded-full bg-accent/10 border border-accent/20 overflow-hidden shrink-0">
-                     {gen.user?.image ? (
-                        <img src={gen.user.image} alt={gen.user.name || 'User'} className="w-full h-full object-cover" />
-                     ) : (
-                        <div className="w-full h-full flex items-center justify-center text-accent"><User className="h-4 w-4" /></div>
-                     )}
-                   </div>
-                   <div className="min-w-0 flex-1">
-                      <p className="text-sm font-mono font-bold text-text-primary truncate">{gen.repoName || 'Unnamed Project'}</p>
-                      <p className="text-[10px] uppercase font-mono tracking-widest text-text-muted truncate">
-                         By {gen.user?.name?.split(' ')[0] || 'A Developer'} • {formatDistanceToNow(new Date(gen.createdAt))} ago
-                      </p>
-                   </div>
-                 </div>
-
-                 <div className="mb-6 flex-1">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-accent-dim text-accent border border-accent/20 font-mono text-[10px] uppercase tracking-widest font-bold mb-3">
-                       v{gen.version}
-                    </span>
-                    <p className="text-text-secondary text-sm line-clamp-3 leading-relaxed">
-                       {gen.content.replace(/#.*?\n/g, '').replace(/[\*\_]/g, '').slice(0, 150)}...
-                    </p>
-                 </div>
-
-                 <div className="flex items-center justify-between border-t border-border pt-4 mt-auto">
-                    <div className="flex items-center gap-1.5 text-text-muted font-mono text-xs">
-                       <GitCommit className="h-3.5 w-3.5" />
-                       {gen.commits || '?'} commits
-                    </div>
-                    <div className="flex items-center gap-1 text-accent font-mono text-xs font-bold opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all">
-                       Read Log <ArrowRight className="h-3 w-3" />
-                    </div>
-                 </div>
-              </Link>
-            ))}
-          </div>
+          <BlogGrid generations={generations} />
         )}
       </main>
+
+      {/* Footer CTA */}
+      <footer className="w-full max-w-[1400px] mx-auto px-6 pb-24">
+         <div className="p-12 md:p-20 rounded-[3rem] bg-bg-surface border border-border/50 relative overflow-hidden flex flex-col items-center text-center">
+            <div className="absolute inset-0 bg-gradient-to-t from-accent/[0.03] to-transparent pointer-events-none" />
+            <Sparkles className="h-8 w-8 text-accent mb-8" />
+            <h2 className="text-4xl md:text-6xl font-serif italic text-text-primary mb-6">Want your project here?</h2>
+            <p className="text-text-secondary font-mono text-sm max-w-md mb-10 leading-relaxed uppercase tracking-widest opacity-60">
+              Transform your commits into luxury release notes and join the ship log.
+            </p>
+            <Link 
+              href="/dashboard"
+              className="group flex items-center gap-3 px-10 h-14 rounded-full bg-accent text-bg font-mono font-bold text-xs uppercase tracking-[0.2em] transform transition-all hover:scale-[1.05] hover:shadow-[0_20px_40px_rgba(155,177,94,0.3)]"
+            >
+               Start Shipping <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+         </div>
+      </footer>
     </div>
   )
 }
+
