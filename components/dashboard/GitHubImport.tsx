@@ -36,7 +36,7 @@ interface Commit {
   }
 }
 
-export function GitHubImport({ accessToken, plan }: { accessToken?: string | null, plan: string }) {
+export function GitHubImport({ accessToken, provider, plan }: { accessToken?: string | null, provider?: string | null, plan: string }) {
   const router = useRouter()
   const [step, setStep] = useState<'repo' | 'branch' | 'commits'>('repo')
   const [loading, setLoading] = useState(false)
@@ -52,15 +52,17 @@ export function GitHubImport({ accessToken, plan }: { accessToken?: string | nul
   const [commits, setCommits] = useState<Commit[]>([])
   const [selectedCommits, setSelectedCommits] = useState<string[]>([])
 
+  const isGitHubProvider = provider === 'github'
+
   useEffect(() => {
-    if (accessToken) {
+    if (accessToken && isGitHubProvider) {
       fetchRepos()
     }
-  }, [accessToken])
+  }, [accessToken, isGitHubProvider])
 
   const fetchRepos = async () => {
-    if (!accessToken) {
-      setError("No GitHub access token found. Please try logging in again.")
+    if (!accessToken || !isGitHubProvider) {
+      setError("No GitHub access token found. Please sign in with GitHub.")
       return
     }
     setLoading(true)
@@ -162,7 +164,7 @@ export function GitHubImport({ accessToken, plan }: { accessToken?: string | nul
     r.full_name.toLowerCase().includes(search.toLowerCase())
   )
 
-  if (!accessToken) {
+  if (!accessToken || !isGitHubProvider) {
     return (
        <div className="flex flex-col items-center justify-center py-20 px-4 text-center">
           <div className="size-16 rounded-full bg-accent/10 flex items-center justify-center mb-6">
@@ -170,7 +172,9 @@ export function GitHubImport({ accessToken, plan }: { accessToken?: string | nul
           </div>
           <h2 className="text-2xl font-serif italic text-text-primary mb-2">Connect GitHub</h2>
           <p className="text-text-muted font-mono text-sm max-w-md mb-8">
-             We need permission to access your repositories to fetch commit history.
+             {provider === 'google' 
+               ? "You're logged in with Google. To fetch your repositories, please connect your GitHub account." 
+               : "We need permission to access your repositories to fetch commit history."}
           </p>
           <button 
             onClick={() => signIn('github')}
