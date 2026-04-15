@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     description: "Developers ship code constantly — writing changelogs is a recurring, annoying task everyone procrastinates. Automate it instantly with Changelog AI.",
     siteName: "Changelog AI",
     images: [{
-      url: "/og-image.png",
+      url: "https://changelog-ai.vercel.app/og-image.png",
       width: 1200,
       height: 630,
       alt: "Changelog AI Preview - Automated Release Notes",
@@ -66,7 +66,15 @@ export const metadata: Metadata = {
     title: "Changelog AI | Stop writing changelogs",
     description: "Generate polished changelogs and release notes instantly from your commits.",
     creator: "@changelog_ai",
-    images: ["/og-image.png"],
+    images: ["https://changelog-ai.vercel.app/og-image.png"],
+  },
+  verification: {
+    google: "google-site-verification-placeholder",
+    yandex: "yandex-verification-placeholder",
+    yahoo: "yahoo-verification-placeholder",
+    other: {
+      "msvalidate.01": "bing-verification-placeholder",
+    },
   },
   icons: {
     icon: "/logo.svg",
