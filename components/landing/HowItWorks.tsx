@@ -40,7 +40,7 @@ export function HowItWorks() {
   ]
 
   return (
-    <section ref={containerRef} id="process" className="relative py-24 sm:py-32 px-4 sm:px-6 overflow-hidden">
+    <section id="process" className="relative py-24 sm:py-32 px-4 sm:px-6 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col items-center text-center mb-24">
           <FadeUp>
@@ -50,11 +50,14 @@ export function HowItWorks() {
         </div>
 
         {/* The Animated Network Flow */}
-        <div className="relative flex w-full max-w-[800px] mx-auto items-center justify-between h-[300px] mb-24">
+        <div 
+          ref={containerRef} 
+          className="relative flex w-full max-w-[900px] mx-auto items-stretch justify-between min-h-[400px] mb-24 p-10"
+        >
           
           {/* Column 1: Input (Step 1) */}
-          <div className="flex flex-col items-center gap-12 z-10">
-            <div ref={inputRef} className="relative group cursor-help">
+          <div className="flex flex-col justify-center gap-12 z-10 w-[120px]">
+            <div ref={inputRef} className="relative group cursor-help mx-auto">
                <div className="h-16 w-16 rounded-full bg-bg-surface border border-border flex items-center justify-center text-accent shadow-sm group-hover:border-accent/40 transition-all duration-500">
                   <User className="h-7 w-7" aria-hidden="true" />
                </div>
@@ -63,8 +66,8 @@ export function HowItWorks() {
           </div>
 
           {/* Column 2: The Hub (Step 2 - AI) */}
-          <div className="flex flex-col items-center z-10">
-            <div ref={hubRef} className="relative group cursor-help">
+          <div className="flex flex-col justify-center z-10 w-[160px]">
+            <div ref={hubRef} className="relative group cursor-help mx-auto">
                <div className="h-24 w-24 rounded-full bg-bg-surface border border-accent/20 flex items-center justify-center text-accent shadow-[0_0_40px_rgba(145,201,107,0.1)] group-hover:border-accent/40 transition-all duration-500 bg-gradient-to-br from-accent/5 to-transparent">
                   <Sparkles className="h-10 w-10 animate-pulse" aria-hidden="true" />
                </div>
@@ -73,7 +76,7 @@ export function HowItWorks() {
           </div>
 
           {/* Column 3: Outputs (Step 3) */}
-          <div className="flex flex-col items-center gap-6 z-10">
+          <div className="flex flex-col justify-between items-center gap-8 z-10 w-[120px] py-4">
             <div ref={output1Ref} className="relative group cursor-help">
                <div className="h-14 w-14 rounded-full bg-bg-surface border border-border flex items-center justify-center text-text-secondary shadow-sm group-hover:border-accent/40 transition-all duration-500">
                   <FileText className="h-6 w-6" aria-hidden="true" />
@@ -103,10 +106,10 @@ export function HowItWorks() {
             toRef={hubRef}
             duration={3}
             curvature={0} // Straight line for input
-            pathColor="#00000005"
+            pathColor="#0000000a"
             gradientStartColor="#91c96b"
-            gradientStopColor="#e8ff47"
-            pathWidth={3}
+            gradientStopColor="#91c96b"
+            pathWidth={2}
           />
 
           <AnimatedBeam
@@ -114,10 +117,10 @@ export function HowItWorks() {
             fromRef={hubRef}
             toRef={output1Ref}
             duration={3}
-            curvature={-40}
-            pathColor="#00000005"
+            curvature={-70}
+            pathColor="#0000000a"
             gradientStartColor="#91c96b"
-            gradientStopColor="#e8ff47"
+            gradientStopColor="#91c96b"
             pathWidth={2}
             delay={0.5}
           />
@@ -126,10 +129,10 @@ export function HowItWorks() {
             fromRef={hubRef}
             toRef={output2Ref}
             duration={3}
-            curvature={0}
-            pathColor="#00000005"
+            curvature={0} // Middle beam is straight
+            pathColor="#0000000a"
             gradientStartColor="#91c96b"
-            gradientStopColor="#e8ff47"
+            gradientStopColor="#91c96b"
             pathWidth={2}
             delay={0.6}
           />
@@ -138,10 +141,10 @@ export function HowItWorks() {
             fromRef={hubRef}
             toRef={output3Ref}
             duration={3}
-            curvature={40}
-            pathColor="#00000005"
+            curvature={70}
+            pathColor="#0000000a"
             gradientStartColor="#91c96b"
-            gradientStopColor="#e8ff47"
+            gradientStopColor="#91c96b"
             pathWidth={2}
             delay={0.7}
           />
@@ -152,10 +155,10 @@ export function HowItWorks() {
           {stepsData.map((step: any, i: any) => (
             <div key={`info-${i}`} className="group">
               <FadeUp delay={i * 0.1}>
-                <div className="space-y-4">
+                <div className="space-y-4 text-left md:text-center px-4">
                   <span className="font-mono text-[10px] text-accent font-bold uppercase tracking-[0.2em] leading-none px-3 py-1 bg-accent/10 border border-accent/20 rounded-full inline-block">Step {step.id}</span>
                   <h3 className="text-xl sm:text-2xl font-serif italic text-text-primary leading-tight">{step.title}</h3>
-                  <p className="font-mono text-[12px] text-text-muted leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity">{step.desc}</p>
+                  <p className="font-mono text-[12px] text-text-muted leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity mx-auto">{step.desc}</p>
                 </div>
               </FadeUp>
             </div>
