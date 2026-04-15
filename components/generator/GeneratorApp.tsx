@@ -10,6 +10,7 @@ export function GeneratorApp() {
   const [error, setError] = useState<string | null>(null)
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
   const [hasStarted, setHasStarted] = useState(false)
+  const [lastParams, setLastParams] = useState({ repoName: '', version: '', commitsCount: 0 });
 
   const {
     complete,
@@ -19,6 +20,24 @@ export function GeneratorApp() {
   } = useCompletion({
     api: '/api/generate',
     streamProtocol: 'text',
+    onFinish: async (prompt, completionText) => {
+      // Once stream finishes, save to history in a separate Serverless call
+      const parsed = parseTaggedResponse(completionText);
+      try {
+        await fetch('/api/history', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            repoName: lastParams.repoName || "Unnamed Project",
+            version: parsed.version_detected || lastParams.version || "Latest",
+            content: parsed.changelog,
+            commitsCount: lastParams.commitsCount,
+          }),
+        });
+      } catch (err) {
+        console.error("Failed to log history:", err);
+      }
+    },
     onError: (err) => {
       console.error(err)
       if (err.message.includes("Free limit reached")) {
@@ -34,6 +53,9 @@ export function GeneratorApp() {
       setError("Input too short. Please provide more commit history (min 10 characters).")
       return
     }
+
+    const count = commits.split('\n').filter(l => l.trim()).length;
+    setLastParams({ repoName: repoName || '', version: version || '', commitsCount: count });
 
     setError(null)
     setHasStarted(true)
