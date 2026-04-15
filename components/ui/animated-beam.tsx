@@ -78,21 +78,39 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
         const svgHeight = containerRect.height
         setSvgDimensions({ width: svgWidth, height: svgHeight })
 
-        // For hub-and-spoke we want nice bezier curves
-        // Start from right center of from element
-        const startX = rectA.right - containerRect.left + startXOffset
-        const startY = rectA.top - containerRect.top + rectA.height / 2 + startYOffset
-        
-        // End at left center of to element
-        const endX = rectB.left - containerRect.left + endXOffset
-        const endY = rectB.top - containerRect.top + rectB.height / 2 + endYOffset
+        // Responsive anchor logic: If stacked vertically (mobile), use top/bottom edges
+        // If spread horizontally (desktop), use left/right edges
+        const isVertical = Math.abs(rectA.left - rectB.left) < 50
 
-        // Bezier control points to make a smooth horizontal S-curve
-        const controlX1 = startX + Math.abs(endX - startX) * 0.5
-        const controlY1 = startY - curvature
-        
-        const controlX2 = endX - Math.abs(endX - startX) * 0.5
-        const controlY2 = endY - curvature
+        let startX, startY, endX, endY, controlX1, controlY1, controlX2, controlY2
+
+        if (isVertical) {
+          // Vertical Flow (Mobile)
+          startX = rectA.left - containerRect.left + rectA.width / 2 + startXOffset
+          startY = rectA.bottom - containerRect.top + startYOffset
+          
+          endX = rectB.left - containerRect.left + rectB.width / 2 + endXOffset
+          endY = rectB.top - containerRect.top + endYOffset
+
+          controlX1 = startX
+          controlY1 = startY + Math.abs(endY - startY) * 0.5 - curvature
+          
+          controlX2 = endX
+          controlY2 = endY - Math.abs(endY - startY) * 0.5 - curvature
+        } else {
+          // Horizontal Flow (Desktop)
+          startX = rectA.right - containerRect.left + startXOffset
+          startY = rectA.top - containerRect.top + rectA.height / 2 + startYOffset
+          
+          endX = rectB.left - containerRect.left + endXOffset
+          endY = rectB.top - containerRect.top + rectB.height / 2 + endYOffset
+
+          controlX1 = startX + Math.abs(endX - startX) * 0.5
+          controlY1 = startY - curvature
+          
+          controlX2 = endX - Math.abs(endX - startX) * 0.5
+          controlY2 = endY - curvature
+        }
 
         const d = `M ${startX},${startY} C ${controlX1},${controlY1} ${controlX2},${controlY2} ${endX},${endY}`
         setPathD(d)
