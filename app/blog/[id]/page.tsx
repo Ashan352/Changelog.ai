@@ -10,9 +10,10 @@ import { auth } from "@/lib/auth"
 
 export const dynamic = 'force-dynamic'
 
-export async function generateMetadata({ params }: { params: { id: string } }, parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }, parent: ResolvingMetadata): Promise<Metadata> {
+  const { id } = await params;
   const generation = await prisma.generation.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: {
       user: { select: { name: true } }
     }
@@ -37,11 +38,12 @@ const GitHubIcon = ({ className }: { className?: string }) => (
   </svg>
 )
 
-export default async function BlogPostPage({ params }: { params: { id: string } }) {
+export default async function BlogPostPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const session = await auth()
   const generation = await prisma.generation.findFirst({
     where: { 
-      id: params.id,
+      id,
       OR: [
         { isPublic: true },
         { userId: session?.user?.id || 'unauthenticated' }
