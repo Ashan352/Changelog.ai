@@ -50,16 +50,16 @@ export function HowItWorks() {
         </div>
 
         {/* The Animated Network Flow Container */}
-        <div className="relative w-full max-w-[950px] mx-auto mb-24 rounded-[3rem] sm:rounded-[4rem] border border-border/50 bg-bg-surface/40 backdrop-blur-[2px] overflow-hidden">
-          {/* Subtle background texture/glow */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(145,201,107,0.08)_0%,transparent_70%)] pointer-events-none" />
+        <div className="relative w-full max-w-[1100px] mx-auto mb-24 rounded-[3rem] sm:rounded-[4rem] border border-border/50 bg-bg-surface/40 backdrop-blur-[2px]">
+          {/* Subtle background texture/glow - absolute and rounded to stay within parent */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(145,201,107,0.08)_0%,transparent_70%)] pointer-events-none rounded-[3rem] sm:rounded-[4rem]" />
           
           <div 
             ref={containerRef} 
             className="relative flex flex-col lg:flex-row w-full items-center lg:items-stretch justify-between min-h-[550px] lg:min-h-[450px] p-8 sm:p-12 lg:p-16 gap-16 lg:gap-0 transition-all duration-300 ease-in-out"
           >
             {/* Column 1: Input (Step 1) */}
-            <div className="flex flex-col justify-center z-10 w-full lg:w-[120px]">
+            <div className="flex flex-col justify-center z-10 w-full lg:w-[150px]">
               <div ref={inputRef} className="relative group cursor-help mx-auto">
                  <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-white border border-border flex items-center justify-center text-accent shadow-[0_8px_30px_rgb(0,0,0,0.04)] group-hover:border-accent/40 transition-all duration-500">
                     <User className="h-7 w-7 sm:h-8 sm:w-8" aria-hidden="true" />
@@ -69,7 +69,7 @@ export function HowItWorks() {
             </div>
 
             {/* Column 2: The Hub (Step 2 - AI) */}
-            <div className="flex flex-col justify-center z-10 w-full lg:w-[180px]">
+            <div className="flex flex-col justify-center z-10 w-full lg:w-[220px]">
               <div ref={hubRef} className="relative group cursor-help mx-auto">
                  <div className="h-24 w-24 sm:h-28 sm:w-28 rounded-full bg-white border border-accent/20 flex items-center justify-center text-accent shadow-[0_20px_50px_rgba(145,201,107,0.15)] group-hover:border-accent/40 transition-all duration-500 relative">
                     {/* Inner pulse ring */}
@@ -81,26 +81,26 @@ export function HowItWorks() {
             </div>
 
             {/* Column 3: Outputs (Step 3) */}
-            <div className="flex flex-row lg:flex-col justify-center lg:justify-between items-center gap-8 sm:gap-12 lg:gap-8 z-10 w-full lg:w-[120px] lg:py-4">
+            <div className="flex flex-row lg:flex-col justify-center lg:justify-between items-center gap-8 sm:gap-12 lg:gap-8 z-10 w-full lg:w-[150px] lg:py-6">
               <div ref={output1Ref} className="relative group cursor-help">
                  <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-white border border-border flex items-center justify-center text-text-secondary shadow-[0_8px_30px_rgb(0,0,0,0.04)] group-hover:border-accent/40 transition-all duration-500">
                     <FileText className="h-6 w-6 sm:h-7 sm:w-7" aria-hidden="true" />
                  </div>
-                 <span className="absolute -bottom-8 lg:bottom-auto lg:-right-28 lg:top-1/2 lg:-translate-y-1/2 left-1/2 lg:left-auto -translate-x-1/2 lg:translate-x-0 font-mono text-[9px] sm:text-[10px] text-text-muted uppercase tracking-widest">Changelog</span>
+                 <span className="absolute -bottom-8 lg:bottom-auto lg:-right-24 lg:top-1/2 lg:-translate-y-1/2 left-1/2 lg:left-auto -translate-x-1/2 lg:translate-x-0 font-mono text-[9px] sm:text-[10px] text-text-muted uppercase tracking-widest whitespace-nowrap">Changelog</span>
               </div>
 
               <div ref={output2Ref} className="relative group cursor-help">
                  <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-white border border-border flex items-center justify-center text-text-secondary shadow-[0_8px_30px_rgb(0,0,0,0.04)] group-hover:border-accent/40 transition-all duration-500">
                     <Send className="h-6 w-6 sm:h-7 sm:w-7" aria-hidden="true" />
                  </div>
-                 <span className="absolute -bottom-8 lg:bottom-auto lg:-right-28 lg:top-1/2 lg:-translate-y-1/2 left-1/2 lg:left-auto -translate-x-1/2 lg:translate-x-0 font-mono text-[9px] sm:text-[10px] text-text-muted uppercase tracking-widest">Release</span>
+                 <span className="absolute -bottom-8 lg:bottom-auto lg:-right-24 lg:top-1/2 lg:-translate-y-1/2 left-1/2 lg:left-auto -translate-x-1/2 lg:translate-x-0 font-mono text-[9px] sm:text-[10px] text-text-muted uppercase tracking-widest whitespace-nowrap">Release</span>
               </div>
 
               <div ref={output3Ref} className="relative group cursor-help">
                  <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-white border border-border flex items-center justify-center text-text-secondary shadow-[0_8px_30px_rgb(0,0,0,0.04)] group-hover:border-accent/40 transition-all duration-500">
                     <Share2 className="h-6 w-6 sm:h-7 sm:w-7" aria-hidden="true" />
                  </div>
-                 <span className="absolute -bottom-8 lg:bottom-auto lg:-right-28 lg:top-1/2 lg:-translate-y-1/2 left-1/2 lg:left-auto -translate-x-1/2 lg:translate-x-0 font-mono text-[9px] sm:text-[10px] text-text-muted uppercase tracking-widest">Social</span>
+                 <span className="absolute -bottom-8 lg:bottom-auto lg:-right-24 lg:top-1/2 lg:-translate-y-1/2 left-1/2 lg:left-auto -translate-x-1/2 lg:translate-x-0 font-mono text-[9px] sm:text-[10px] text-text-muted uppercase tracking-widest whitespace-nowrap">Social</span>
               </div>
             </div>
 
