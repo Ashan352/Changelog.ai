@@ -7,6 +7,11 @@ import { Textarea } from '@/components/ui/textarea'
 interface InputPanelProps {
   onGenerate: (commits: string, version: string, repoName?: string) => void;
   isLoading: boolean;
+  initialValues?: {
+    commits: string;
+    version: string;
+    repoName: string;
+  };
 }
 
 // 12 particles at evenly-spaced angles with slight random spread
@@ -20,10 +25,19 @@ const PARTICLES = Array.from({ length: 12 }, (_, i) => {
   }
 })
 
-export function InputPanel({ onGenerate, isLoading, plan = 'free' }: InputPanelProps & { plan?: string }) {
-  const [commits, setCommits] = useState('')
-  const [version, setVersion] = useState('')
-  const [repoName, setRepoName] = useState('')
+export function InputPanel({ onGenerate, isLoading, plan = 'free', initialValues }: InputPanelProps & { plan?: string }) {
+  const [commits, setCommits] = useState(initialValues?.commits || '')
+  const [version, setVersion] = useState(initialValues?.version || '')
+  const [repoName, setRepoName] = useState(initialValues?.repoName || '')
+  
+  useEffect(() => {
+    if (initialValues) {
+      if (initialValues.commits) setCommits(initialValues.commits)
+      if (initialValues.version) setVersion(initialValues.version)
+      if (initialValues.repoName) setRepoName(initialValues.repoName)
+    }
+  }, [initialValues])
+
   const [springing, setSpringing] = useState(false)
   const [showParticles, setShowParticles] = useState(false)
   const btnRef = useRef<HTMLButtonElement>(null)

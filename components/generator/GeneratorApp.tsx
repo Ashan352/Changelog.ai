@@ -1,19 +1,44 @@
 'use client'
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useCompletion } from '@ai-sdk/react'
 import { InputPanel } from './InputPanel'
 import { OutputPanel } from './OutputPanel'
 import { UpgradeModal } from '@/components/ui/UpgradeModal'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { parseTaggedResponse } from '@/lib/openrouter'
 
 export function GeneratorApp({ plan }: { plan: string }) {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [error, setError] = useState<string | null>(null)
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
   const [upgradeReason, setUpgradeReason] = useState<'usage' | 'text'>('usage')
   const [hasStarted, setHasStarted] = useState(false)
   const [lastParams, setLastParams] = useState({ repoName: '', version: '', commitsCount: 0 });
+
+  const initialValues = useMemo(() => {
+    const import_commits = searchParams.get('import_commits')
+    const import_repo = searchParams.get('import_repo')
+    const import_version = searchParams.get('import_version')
+    if (import_commits || import_repo) {
+       return {
+         commits: import_commits || '',
+         repoName: import_repo || '',
+         version: import_version || 'Latest'
+       }
+    }
+    return undefined
+  }, [searchParams])
+
+  useEffect(() => {
+    if (initialValues) {
+      // Small delay to ensure state is captured before URL is cleaned
+      const timer = setTimeout(() => {
+        router.replace('/dashboard', { scroll: false })
+      }, 500)
+      return () => clearTimeout(timer)
+    }
+  }, [initialValues, router])
 
   const {
     complete,
@@ -93,7 +118,12 @@ export function GeneratorApp({ plan }: { plan: string }) {
     <div className="max-w-[1400px] mx-auto h-full flex flex-col md:flex-row gap-6">
       {/* Input Panel */}
       <div className="w-full md:w-[400px] lg:w-[450px] shrink-0 flex flex-col gap-4">
-        <InputPanel onGenerate={handleGenerate} isLoading={isLoading} plan={plan} />
+        <InputPanel 
+          onGenerate={handleGenerate} 
+          isLoading={isLoading} 
+          plan={plan} 
+          initialValues={initialValues}
+        />
         
         {error && (
           <div className="p-3 rounded-lg bg-danger/10 border border-danger/20 text-danger text-xs font-mono">

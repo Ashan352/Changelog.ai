@@ -11,6 +11,8 @@ declare module "next-auth" {
       id: string
       plan: string
       generations: number
+      accessToken?: string | null
+      provider?: string | null
       stripeCustomerId?: string | null
       stripeSubscriptionId?: string | null
     } & import("next-auth").DefaultSession["user"]
@@ -19,6 +21,8 @@ declare module "next-auth" {
   interface User {
     plan: string
     generations: number
+    accessToken?: string | null
+    provider?: string | null
     stripeCustomerId?: string | null
     stripeSubscriptionId?: string | null
     password?: string | null
