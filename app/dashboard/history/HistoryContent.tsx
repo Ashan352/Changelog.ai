@@ -64,39 +64,41 @@ export function HistoryContent({ history }: { history: Generation[] }) {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row gap-0 h-[calc(100vh-12rem)] border border-border rounded-2xl bg-bg-surface overflow-hidden shadow-2xl">
+    <div className="flex flex-col lg:flex-row gap-0 min-h-[600px] lg:h-[calc(100vh-12rem)] border border-border rounded-2xl bg-bg-surface overflow-hidden shadow-2xl">
       {/* Navigation - File Tree Sidebar */}
-      <div className="w-full lg:w-80 border-b lg:border-b-0 lg:border-r border-border bg-bg-elevated/30 flex flex-col">
+      <div className="w-full lg:w-80 border-b lg:border-b-0 lg:border-r border-border bg-bg-elevated/30 flex flex-col h-72 lg:h-auto">
         <div className="p-4 border-b border-border/50 bg-bg-surface/50">
           <h3 className="text-[10px] font-mono text-text-muted uppercase tracking-[0.2em] px-2 mb-1">Project Explorer</h3>
           <p className="text-[10px] font-mono text-text-muted/60 px-2 italic">Select a generation to view</p>
         </div>
         <ScrollArea className="flex-1 p-2">
-          <Tree
-            elements={projectTree}
-            initialSelectedId={selectedId || undefined}
-            className="p-1"
-          >
-            {projectTree.map((project) => (
-               <Folder key={project.id} element={project.name} value={project.id}>
-                  {project.children?.map((file) => (
-                    <File 
-                      key={file.id} 
-                      value={file.id} 
-                      onClick={() => setSelectedId(file.id)}
-                      className={selectedId === file.id ? 'text-accent font-bold' : ''}
-                    >
-                       <span className="text-xs">{file.name}</span>
-                    </File>
-                  ))}
-               </Folder>
-            ))}
-          </Tree>
+          <div className="pb-10"> {/* Extra bottom space for mobile scroll */}
+            <Tree
+              elements={projectTree}
+              initialSelectedId={selectedId || undefined}
+              className="p-1"
+            >
+              {projectTree.map((project) => (
+                <Folder key={project.id} element={project.name} value={project.id}>
+                    {project.children?.map((file) => (
+                      <File 
+                        key={file.id} 
+                        value={file.id} 
+                        onClick={() => setSelectedId(file.id)}
+                        className={selectedId === file.id ? 'text-accent font-bold' : ''}
+                      >
+                        <span className="text-xs">{file.name}</span>
+                      </File>
+                    ))}
+                </Folder>
+              ))}
+            </Tree>
+          </div>
         </ScrollArea>
       </div>
 
       {/* Preview Area */}
-      <div className="flex-1 flex flex-col min-w-0 bg-bg">
+      <div className="flex-1 flex flex-col min-w-0 bg-bg min-h-[400px]">
         <AnimatePresence mode="wait">
           {selectedItem ? (
             <motion.div 
@@ -149,7 +151,7 @@ export function HistoryContent({ history }: { history: Generation[] }) {
 
               {/* Content */}
               <ScrollArea className="flex-1 p-8">
-                <div className="max-w-3xl mx-auto">
+                <div className="max-w-3xl mx-auto pb-24">
                    <div className="font-mono text-[11px] text-text-muted uppercase tracking-[0.3em] mb-8 border-b border-border pb-2 inline-block">
                      Document Content
                    </div>

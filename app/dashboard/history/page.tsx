@@ -48,7 +48,7 @@ function HistoryLoading() {
 
 export default function HistoryPage() {
   return (
-    <div className="max-w-7xl mx-auto space-y-8 h-full flex flex-col">
+    <div className="max-w-7xl mx-auto space-y-8">
       <div className="shrink-0">
         <h1 className="text-3xl font-serif italic text-text-primary">Generation History</h1>
         <p className="font-mono text-xs text-text-muted mt-1 uppercase tracking-widest">
