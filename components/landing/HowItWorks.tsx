@@ -86,17 +86,21 @@ export function HowItWorks() {
                 </div>
               )}
 
-              <div className="mb-8 flex flex-col items-center md:items-start shrink-0">
-                <div className="relative z-20 h-12 w-12 rounded-xl bg-bg-surface border border-border flex items-center justify-center text-accent shadow-[0_8px_24px_rgba(155,177,94,0.15)] group-hover:shadow-[0_12px_32px_rgba(155,177,94,0.25)] group-hover:-translate-y-1 transition-all duration-300">
-                   <step.icon className="h-5 w-5" aria-hidden="true" />
-                </div>
-              </div>
-              
               <FadeUp delay={i * 0.1}>
-                <div className="space-y-4 text-center md:text-left relative z-10 bg-bg/60 backdrop-blur-sm md:bg-transparent rounded-2xl py-2 px-1">
-                  <span className="font-mono text-[10px] text-accent font-bold uppercase tracking-widest leading-none px-2 py-1 bg-accent/5 border border-accent/10 rounded-md inline-block">Step {step.id}</span>
-                  <h3 className="text-xl font-serif italic text-text-primary">{step.title}</h3>
-                  <p className="font-mono text-xs text-text-muted leading-relaxed max-w-[280px] mx-auto md:mx-0">{step.desc}</p>
+                {/* Header Row: Icon, Step, Title */}
+                <div className="flex flex-col md:flex-row md:items-center gap-4 mb-4">
+                  <div className="h-10 w-10 rounded-xl bg-bg-surface border border-border flex items-center justify-center text-accent shadow-sm shrink-0">
+                    <step.icon className="h-4 w-4" aria-hidden="true" />
+                  </div>
+                  
+                  <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
+                    <span className="font-mono text-[9px] text-accent font-bold uppercase tracking-widest leading-none px-2 py-1 bg-accent/5 border border-accent/10 rounded-md shrink-0 w-fit">Step {step.id}</span>
+                    <h3 className="text-lg md:text-xl font-serif italic text-text-primary whitespace-nowrap">{step.title}</h3>
+                  </div>
+                </div>
+
+                <div className="space-y-4 text-left relative z-10 rounded-2xl md:bg-transparent">
+                  <p className="font-mono text-[11px] text-text-muted leading-relaxed max-w-[320px]">{step.desc}</p>
                 </div>
 
                 <div className="mt-6 sm:mt-8 p-4 sm:p-6 rounded-xl bg-bg-surface border border-border group-hover:border-border-hover transition-colors shadow-sm relative z-10 overflow-hidden">
