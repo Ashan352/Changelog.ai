@@ -65,11 +65,11 @@ export default async function SecurityPage() {
       </div>
 
       <main className="pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
-        <div className="text-center mb-24">
+        <div className="flex flex-col items-center text-center mb-24 w-full">
           <h1 className="text-5xl md:text-7xl font-serif italic text-text-primary mb-4 tracking-tight">
             Security & Trust
           </h1>
-          <p className="font-mono text-sm text-text-muted uppercase tracking-[0.2em]">
+          <p className="font-mono text-sm text-text-muted uppercase tracking-[0.2em] text-center w-full">
             How we protect your code and data
           </p>
         </div>

@@ -56,11 +56,11 @@ export default async function TermsPage() {
       </div>
 
       <main className="pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
-        <div className="text-center mb-24">
+        <div className="flex flex-col items-center text-center mb-24 w-full">
           <h1 className="text-5xl md:text-7xl font-serif italic text-text-primary mb-4 tracking-tight">
             Terms of Service
           </h1>
-          <p className="font-mono text-sm text-text-muted uppercase tracking-[0.2em]">
+          <p className="font-mono text-sm text-text-muted uppercase tracking-[0.2em] text-center w-full">
             Last Updated October 14th, 2024
           </p>
         </div>
