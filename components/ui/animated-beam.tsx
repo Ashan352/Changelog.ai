@@ -78,19 +78,23 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
         const svgHeight = containerRect.height
         setSvgDimensions({ width: svgWidth, height: svgHeight })
 
-        const startX =
-          rectA.left - containerRect.left + rectA.width / 2 + startXOffset
-        const startY =
-          rectA.top - containerRect.top + rectA.height / 2 + startYOffset
-        const endX =
-          rectB.left - containerRect.left + rectB.width / 2 + endXOffset
-        const endY =
-          rectB.top - containerRect.top + rectB.height / 2 + endYOffset
+        // For hub-and-spoke we want nice bezier curves
+        // Start from right center of from element
+        const startX = rectA.right - containerRect.left + startXOffset
+        const startY = rectA.top - containerRect.top + rectA.height / 2 + startYOffset
+        
+        // End at left center of to element
+        const endX = rectB.left - containerRect.left + endXOffset
+        const endY = rectB.top - containerRect.top + rectB.height / 2 + endYOffset
 
-        const controlY = startY - curvature
-        const d = `M ${startX},${startY} Q ${
-          (startX + endX) / 2
-        },${controlY} ${endX},${endY}`
+        // Bezier control points to make a smooth horizontal S-curve
+        const controlX1 = startX + Math.abs(endX - startX) * 0.5
+        const controlY1 = startY - curvature
+        
+        const controlX2 = endX - Math.abs(endX - startX) * 0.5
+        const controlY2 = endY - curvature
+
+        const d = `M ${startX},${startY} C ${controlX1},${controlY1} ${controlX2},${controlY2} ${endX},${endY}`
         setPathD(d)
       }
     }
