@@ -1,12 +1,12 @@
 'use client'
 
-import { motion } from "framer-motion"
+import { motion, Variants } from "framer-motion"
 import Link from "next/link"
 import { GitCommit, User, ChevronRight } from "lucide-react"
 import { formatDistanceToNow } from "date-fns"
 
 export function BlogGrid({ generations }: { generations: any[] }) {
-  const container = {
+  const container: Variants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
@@ -17,9 +17,16 @@ export function BlogGrid({ generations }: { generations: any[] }) {
     }
   }
 
-  const item = {
+  const item: Variants = {
     hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+    show: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { 
+        duration: 0.8, 
+        ease: [0.16, 1, 0.3, 1] 
+      } 
+    }
   }
 
   return (
