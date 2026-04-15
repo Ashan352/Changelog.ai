@@ -51,21 +51,7 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
   const id = useId()
   const [pathD, setPathD] = useState("")
   const [svgDimensions, setSvgDimensions] = useState({ width: 0, height: 0 })
-
-  // Calculate the gradient coordinates based on the reverse prop
-  const gradientCoordinates = reverse
-    ? {
-        x1: ["90%", "-10%"],
-        x2: ["100%", "0%"],
-        y1: ["0%", "0%"],
-        y2: ["0%", "0%"],
-      }
-    : {
-        x1: ["10%", "110%"],
-        x2: ["0%", "100%"],
-        y1: ["0%", "0%"],
-        y2: ["0%", "0%"],
-      }
+  const [coords, setCoords] = useState({ startX: 0, startY: 0, endX: 0, endY: 0 })
 
   useEffect(() => {
     const updatePath = () => {
@@ -79,33 +65,35 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
         setSvgDimensions({ width: svgWidth, height: svgHeight })
 
         // Simplify anchor points to center to avoid artifacts
-        const startX = rectA.left - containerRect.left + rectA.width / 2 + startXOffset
-        const startY = rectA.top - containerRect.top + rectA.height / 2 + startYOffset
+        const sX = rectA.left - containerRect.left + rectA.width / 2 + startXOffset
+        const sY = rectA.top - containerRect.top + rectA.height / 2 + startYOffset
         
-        const endX = rectB.left - containerRect.left + rectB.width / 2 + endXOffset
-        const endY = rectB.top - containerRect.top + rectB.height / 2 + endYOffset
+        const eX = rectB.left - containerRect.left + rectB.width / 2 + endXOffset
+        const eY = rectB.top - containerRect.top + rectB.height / 2 + endYOffset
+
+        setCoords({ startX: sX, startY: sY, endX: eX, endY: eY })
 
         let d = ""
         if (curvature === 0) {
           // Pure straight line to avoid any bezier logic artifacts
-          d = `M ${startX},${startY} L ${endX},${endY}`
+          d = `M ${sX},${sY} L ${eX},${eY}`
         } else {
           // Bezier logic for curved paths
           const isVertical = Math.abs(rectA.left - rectB.left) < 50
           let controlX1, controlY1, controlX2, controlY2
 
           if (isVertical) {
-            controlX1 = startX
-            controlY1 = startY + (endY - startY) * 0.5 - curvature
-            controlX2 = endX
-            controlY2 = endY - (endY - startY) * 0.5 - curvature
+            controlX1 = sX
+            controlY1 = sY + (eY - sY) * 0.5 - curvature
+            controlX2 = eX
+            controlY2 = eY - (eY - sY) * 0.5 - curvature
           } else {
-            controlX1 = startX + (endX - startX) * 0.5
-            controlY1 = startY - curvature
-            controlX2 = endX - (endX - startX) * 0.5
-            controlY2 = endY - curvature
+            controlX1 = sX + (eX - sX) * 0.5
+            controlY1 = sY - curvature
+            controlX2 = eX - (eX - sX) * 0.5
+            controlY2 = eY - curvature
           }
-          d = `M ${startX},${startY} C ${controlX1},${controlY1} ${controlX2},${controlY2} ${endX},${endY}`
+          d = `M ${sX},${sY} C ${controlX1},${controlY1} ${controlX2},${controlY2} ${eX},${eY}`
         }
 
         setPathD(d)
@@ -172,16 +160,16 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
             id={id}
             gradientUnits={"userSpaceOnUse"}
             initial={{
-              x1: startX,
-              x2: startX,
-              y1: startY,
-              y2: startY,
+              x1: coords.startX,
+              x2: coords.startX,
+              y1: coords.startY,
+              y2: coords.startY,
             }}
             animate={{
-              x1: [startX, endX],
-              x2: [startX - (endX - startX) * 0.1, endX],
-              y1: [startY, endY],
-              y2: [startY - (endY - startY) * 0.1, endY],
+              x1: [coords.startX, coords.endX],
+              x2: [coords.startX - (coords.endX - coords.startX) * 0.1, coords.endX],
+              y1: [coords.startY, coords.endY],
+              y2: [coords.startY - (coords.endY - coords.startY) * 0.1, coords.endY],
             }}
             transition={{
               delay,
