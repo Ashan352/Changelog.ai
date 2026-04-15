@@ -4,7 +4,6 @@ import { formatDistanceToNow } from "date-fns"
 import { GitCommit, User, ArrowRight, LayoutGrid, Sparkles, ChevronRight } from "lucide-react"
 import { Navbar } from "@/components/landing/Navbar"
 import { auth } from "@/lib/auth"
-import { motionContent } from "./motion-content"
 import { BlogGrid } from "./BlogGrid"
 
 export const dynamic = 'force-dynamic'
