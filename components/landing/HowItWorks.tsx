@@ -48,70 +48,63 @@ export function HowItWorks() {
           </FadeUp>
         </div>
 
-        <ol className="relative grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 list-none p-0" aria-label="Steps to automate your changelogs">
-          {steps.map((step: any, i: any) => (
-            <li key={i} className="relative group">
-              {/* MOBILE ANIMATED ARROWS */}
-              {i < steps.length - 1 && (
-                <div className="absolute top-12 left-0 w-full h-[calc(100%-1rem)] md:hidden z-0 pointer-events-none" aria-hidden="true">
-                  <svg 
-                    className="w-full h-full overflow-visible text-border"
-                    viewBox="0 0 100 100"
-                    preserveAspectRatio="none"
-                  >
-                    <motion.path 
-                      d={i % 2 === 0 
-                        ? "M 50 0 C 80 30, 80 70, 50 100" 
-                        : "M 50 0 C 20 30, 20 70, 50 100"} 
-                      vectorEffect="non-scaling-stroke"
-                      stroke="currentColor" 
-                      strokeWidth="2" 
-                      strokeDasharray="6 6"
-                      strokeLinecap="round"
-                      fill="none"
-                    />
-                    <motion.path 
-                      d={i % 2 === 0 
-                        ? "M 50 0 C 80 30, 80 70, 50 100" 
-                        : "M 50 0 C 20 30, 20 70, 50 100"} 
-                      vectorEffect="non-scaling-stroke"
-                      stroke="#9bb15e" 
-                      strokeWidth="2" 
-                      strokeDasharray="6 6"
-                      strokeLinecap="round"
-                      fill="none"
-                      style={{ pathLength: scrollYProgress }}
-                    />
-                  </svg>
+        {/* Tiered Layout: Rows instead of Columns */}
+        <div className="space-y-4 md:space-y-12">
+          
+          {/* Tier 1: Icons */}
+          <div className="hidden md:grid grid-cols-3 gap-12">
+            {steps.map((step: any, i: any) => (
+              <div key={`icon-${i}`} className="flex justify-start">
+                <div className="relative z-20 h-12 w-12 rounded-xl bg-bg-surface border border-border flex items-center justify-center text-accent shadow-sm">
+                  <step.icon className="h-5 w-5" aria-hidden="true" />
                 </div>
-              )}
+              </div>
+            ))}
+          </div>
 
-              <FadeUp delay={i * 0.1}>
-                {/* Header Row: Icon, Step, Title */}
-                <div className="flex flex-col md:flex-row md:items-center gap-4 mb-4">
-                  <div className="h-10 w-10 rounded-xl bg-bg-surface border border-border flex items-center justify-center text-accent shadow-sm shrink-0">
+          {/* Tier 2: Headers (Badge, Title, Desc) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+            {steps.map((step: any, i: any) => (
+              <div key={`header-${i}`} className="relative">
+                {/* Mobile Icon (shows only on mobile) */}
+                <div className="md:hidden mb-4">
+                  <div className="h-10 w-10 rounded-xl bg-bg-surface border border-border flex items-center justify-center text-accent">
                     <step.icon className="h-4 w-4" aria-hidden="true" />
                   </div>
-                  
-                  <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
-                    <span className="font-mono text-[9px] text-accent font-bold uppercase tracking-widest leading-none px-2 py-1 bg-accent/5 border border-accent/10 rounded-md shrink-0 w-fit">Step {step.id}</span>
-                    <h3 className="text-lg md:text-xl font-serif italic text-text-primary whitespace-nowrap">{step.title}</h3>
+                </div>
+
+                <FadeUp delay={i * 0.1}>
+                  <div className="space-y-4 text-left">
+                    <span className="font-mono text-[9px] text-accent font-bold uppercase tracking-widest leading-none px-2 py-1 bg-accent/5 border border-accent/10 rounded-md inline-block">Step {step.id}</span>
+                    <h3 className="text-xl font-serif italic text-text-primary h-auto md:h-8">{step.title}</h3>
+                    <p className="font-mono text-[11px] text-text-muted leading-relaxed min-h-[40px]">{step.desc}</p>
+                  </div>
+                </FadeUp>
+
+                {/* Mobile Preview (shows only on mobile) */}
+                <div className="md:hidden mt-6 p-4 rounded-xl bg-bg-surface border border-border">
+                  <div className="font-mono text-[11px] text-text-muted whitespace-pre-wrap leading-loose">
+                    {step.content}
                   </div>
                 </div>
+              </div>
+            ))}
+          </div>
 
-                <div className="space-y-4 text-left relative z-10 rounded-2xl md:bg-transparent">
-                  <p className="font-mono text-[11px] text-text-muted leading-relaxed max-w-[320px]">{step.desc}</p>
-                </div>
-
-                <div className="mt-6 sm:mt-8 p-4 sm:p-6 rounded-xl bg-bg-surface border border-border group-hover:border-border-hover transition-colors shadow-sm relative z-10 overflow-hidden">
+          {/* Tier 3: Code Previews (Desktop Only) */}
+          <div className="hidden md:grid grid-cols-3 gap-12">
+            {steps.map((step: any, i: any) => (
+              <FadeUp key={`preview-${i}`} delay={i * 0.15}>
+                <div className="p-6 rounded-xl bg-bg-surface border border-border hover:border-border-hover transition-colors shadow-sm min-h-[140px]">
                   <div className="font-mono text-[11px] text-text-muted whitespace-pre-wrap leading-loose">
                     {step.content}
                   </div>
                 </div>
               </FadeUp>
-            </li>
-          ))}
-        </ol>
+            ))}
+          </div>
+
+        </div>
       </div>
     </section>
   )
