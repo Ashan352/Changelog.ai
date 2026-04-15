@@ -39,8 +39,14 @@ const GitHubIcon = ({ className }: { className?: string }) => (
 
 export default async function BlogPostPage({ params }: { params: { id: string } }) {
   const session = await auth()
-  const generation = await prisma.generation.findUnique({
-    where: { id: params.id },
+  const generation = await prisma.generation.findFirst({
+    where: { 
+      id: params.id,
+      OR: [
+        { isPublic: true },
+        { userId: session?.user?.id || 'unauthenticated' }
+      ]
+    },
     include: {
       user: {
         select: { name: true, image: true }
