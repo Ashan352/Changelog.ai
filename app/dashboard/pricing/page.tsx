@@ -2,14 +2,21 @@ import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Check, X, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { prisma } from "@/lib/prisma";
 import { CheckoutButton } from "@/components/ui/CheckoutButton";
 import { CancelSubscriptionDialog } from "@/components/dashboard/CancelSubscriptionDialog";
 
 export default async function PricingDetailsPage() {
   const session = await auth();
-  if (!session?.user) redirect("/login");
+  if (!session?.user?.id) redirect("/login");
 
-  const plan = session.user.plan || "free";
+  // Fetch fresh data from DB to avoid stale JWT issues
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: { plan: true }
+  });
+
+  const plan = user?.plan || "free";
 
   const features: { name: string; free: string | boolean; pro: string | boolean; enterprise: string | boolean }[] = [
     { name: "Generations per month", free: "5", pro: "Unlimited", enterprise: "Unlimited" },

@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { prisma } from "@/lib/prisma";
+import { updatePlan } from "@/lib/usage";
 
 export async function POST(req: Request) {
   const body = await req.text();
@@ -46,6 +47,12 @@ export async function POST(req: Request) {
         stripeSubscriptionId: session.subscription as string,
       },
     });
+    
+    // Sync to Redis for Edge API access
+    const email = session.customer_details?.email || session.customer_email;
+    if (email) {
+      await updatePlan(email, "pro");
+    }
   }
 
   if (event.type === "customer.subscription.deleted") {
@@ -56,6 +63,11 @@ export async function POST(req: Request) {
       where: { stripeCustomerId: customerId },
       data: { plan: "free", stripeSubscriptionId: null },
     });
+    
+    // Sync to Redis for Edge API access
+    if (subscription.customer_email) {
+      await updatePlan(subscription.customer_email, "free");
+    }
 
     console.log(`Subscription deleted and plan downgraded for customer: ${customerId}`);
   }

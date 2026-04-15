@@ -29,9 +29,13 @@ export async function POST(req: Request) {
     const email = session.user.email;
 
     // Check Redis for permanent usage (prevents delete/recreate abuse)
-    const { getUsage } = await import("@/lib/usage");
+    const { getUsage, getUserPlan } = await import("@/lib/usage");
     const redisGenerations = email ? await getUsage(email) : 0;
     const totalGenerations = Math.max(generations, redisGenerations);
+    
+    // Check Redis for fresh plan status (bypasses stale JWT)
+    const redisPlan = email ? await getUserPlan(email) : null;
+    const currentPlan = redisPlan || plan;
 
     // Rate Limiting (Upstash works on Edge)
     const limitResult = await checkRateLimit(userId);
@@ -43,7 +47,7 @@ export async function POST(req: Request) {
     }
 
     // Check plan limits from session OR Redis
-    if (plan === "free" && totalGenerations >= 5) {
+    if (currentPlan === "free" && totalGenerations >= 5) {
       return new Response(JSON.stringify({ error: "Free limit reached" }), { status: 403 });
     }
 
@@ -59,7 +63,7 @@ export async function POST(req: Request) {
 
     const { commits, version, repoName, projectName } = validation.data;
     const sanitizedCommits = sanitizeInput(commits);
-    const isPro = plan === "pro";
+    const isPro = currentPlan === "pro";
 
     // Enforce 100 word limit on Free Plan
     if (!isPro) {

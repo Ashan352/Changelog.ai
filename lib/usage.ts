@@ -24,3 +24,15 @@ export async function getUsage(email: string): Promise<number> {
   const val = await redis.get(key);
   return typeof val === 'number' ? val : parseInt(val as string || "0");
 }
+
+export async function updatePlan(email: string, plan: "free" | "pro") {
+  if (!redis) return;
+  const key = `user_plan:${email.toLowerCase()}`;
+  await redis.set(key, plan);
+}
+
+export async function getUserPlan(email: string): Promise<string | null> {
+  if (!redis) return null;
+  const key = `user_plan:${email.toLowerCase()}`;
+  return await redis.get(key);
+}

@@ -1,13 +1,20 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { CreditCard, Zap, Check } from "lucide-react";
+import { prisma } from "@/lib/prisma";
 import { CancelSubscriptionDialog } from "@/components/dashboard/CancelSubscriptionDialog";
 
 export default async function BillingPage() {
   const session = await auth();
-  if (!session?.user) redirect("/login");
+  if (!session?.user?.id) redirect("/login");
 
-  const plan = session.user.plan || "free";
+  // Fetch fresh data from DB to avoid stale JWT issues
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: { plan: true }
+  });
+
+  const plan = user?.plan || "free";
 
   return (
     <div className="max-w-3xl mx-auto space-y-8">
