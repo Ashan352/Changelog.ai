@@ -48,14 +48,18 @@ export function InputPanel({ onGenerate, isLoading, plan = 'free', initialValues
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
-        if (!isLoading && commits.trim()) {
-          triggerAndGenerate()
+        if (!isLoading) {
+          if (hasCompleted) {
+            handleClick();
+          } else if (commits.trim()) {
+            triggerAndGenerate();
+          }
         }
       }
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [commits, version, repoName, isLoading])
+  }, [commits, version, repoName, isLoading, hasCompleted])
 
   const charCount = commits.length
   const maxChars = plan === 'pro' ? 50000 : 500
@@ -156,16 +160,19 @@ export function InputPanel({ onGenerate, isLoading, plan = 'free', initialValues
         </div>
       </div>
 
-      <div className="flex items-center gap-3 pt-2 pb-1 px-1">
-         <input 
-            type="checkbox" 
-            id="public-toggle" 
-            checked={isPublic} 
-            onChange={(e) => setIsPublic(e.target.checked)} 
-            className="w-4 h-4 rounded border-border bg-bg-surface text-accent focus:ring-accent/50 focus:ring-offset-bg transition-all cursor-pointer"
-         />
-         <label htmlFor="public-toggle" className="font-mono text-xs text-text-secondary cursor-pointer hover:text-text-primary transition-colors select-none">
-            Publish this to the public Ship Log feed
+      <div className="flex items-center gap-3 py-1 px-1">
+         <div className="relative flex items-center">
+            <input 
+               type="checkbox" 
+               id="public-toggle" 
+               checked={isPublic} 
+               onChange={(e) => setIsPublic(e.target.checked)} 
+               className="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-border bg-bg-surface transition-all checked:bg-accent checked:border-accent hover:border-accent/40 focus:ring-2 focus:ring-accent/20"
+            />
+            <Check className="absolute left-1 top-1 h-3 w-3 text-text-primary opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" />
+         </div>
+         <label htmlFor="public-toggle" className="font-mono text-[11px] text-text-secondary cursor-pointer hover:text-text-primary transition-colors select-none">
+            Publish to the public Ship Log feed
          </label>
       </div>
 

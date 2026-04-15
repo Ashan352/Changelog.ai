@@ -73,7 +73,8 @@ Full Changelog: https://github.com/user/repo/compare/v1.1.0...v1.2.0
 </release>
 
 <tweet>
-One punchy tweet under 280 chars with the real highlights.
+A punchy tweet under 280 chars highlighting the key ships.
+Include context-aware viral hashtags as requested in Tweet Constraints.
 </tweet>
 
 <version>
@@ -91,7 +92,8 @@ true or false
 WRITING STYLE:
 - Senior developer tone: concise, accurate, specific.
 - Imperative tense: "Add login" not "Added login".
-- No marketing language. No filler. Only facts from the commits.`;
+- No marketing language. No filler. Only facts from the commits.
+- For hashtags: use context-aware ones (e.g., #auth #rust #react) and strictly respect the 280-char limit for the ENTIRE tweet including hashtags.`;
 
 export async function generateStreamingContent(
   commits: string,
