@@ -78,41 +78,36 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
         const svgHeight = containerRect.height
         setSvgDimensions({ width: svgWidth, height: svgHeight })
 
-        // Responsive anchor logic: If stacked vertically (mobile), use top/bottom edges
-        // If spread horizontally (desktop), use left/right edges
-        const isVertical = Math.abs(rectA.left - rectB.left) < 50
+        // Simplify anchor points to center to avoid artifacts
+        const startX = rectA.left - containerRect.left + rectA.width / 2 + startXOffset
+        const startY = rectA.top - containerRect.top + rectA.height / 2 + startYOffset
+        
+        const endX = rectB.left - containerRect.left + rectB.width / 2 + endXOffset
+        const endY = rectB.top - containerRect.top + rectB.height / 2 + endYOffset
 
-        let startX, startY, endX, endY, controlX1, controlY1, controlX2, controlY2
-
-        if (isVertical) {
-          // Vertical Flow (Mobile)
-          startX = rectA.left - containerRect.left + rectA.width / 2 + startXOffset
-          startY = rectA.bottom - containerRect.top + startYOffset
-          
-          endX = rectB.left - containerRect.left + rectB.width / 2 + endXOffset
-          endY = rectB.top - containerRect.top + endYOffset
-
-          controlX1 = startX
-          controlY1 = startY + Math.abs(endY - startY) * 0.5 - curvature
-          
-          controlX2 = endX
-          controlY2 = endY - Math.abs(endY - startY) * 0.5 - curvature
+        let d = ""
+        if (curvature === 0) {
+          // Pure straight line to avoid any bezier logic artifacts
+          d = `M ${startX},${startY} L ${endX},${endY}`
         } else {
-          // Horizontal Flow (Desktop)
-          startX = rectA.right - containerRect.left + startXOffset
-          startY = rectA.top - containerRect.top + rectA.height / 2 + startYOffset
-          
-          endX = rectB.left - containerRect.left + endXOffset
-          endY = rectB.top - containerRect.top + rectB.height / 2 + endYOffset
+          // Bezier logic for curved paths
+          const isVertical = Math.abs(rectA.left - rectB.left) < 50
+          let controlX1, controlY1, controlX2, controlY2
 
-          controlX1 = startX + Math.abs(endX - startX) * 0.5
-          controlY1 = startY - curvature
-          
-          controlX2 = endX - Math.abs(endX - startX) * 0.5
-          controlY2 = endY - curvature
+          if (isVertical) {
+            controlX1 = startX
+            controlY1 = startY + (endY - startY) * 0.5 - curvature
+            controlX2 = endX
+            controlY2 = endY - (endY - startY) * 0.5 - curvature
+          } else {
+            controlX1 = startX + (endX - startX) * 0.5
+            controlY1 = startY - curvature
+            controlX2 = endX - (endX - startX) * 0.5
+            controlY2 = endY - curvature
+          }
+          d = `M ${startX},${startY} C ${controlX1},${controlY1} ${controlX2},${controlY2} ${endX},${endY}`
         }
 
-        const d = `M ${startX},${startY} C ${controlX1},${controlY1} ${controlX2},${controlY2} ${endX},${endY}`
         setPathD(d)
       }
     }
@@ -172,30 +167,30 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
         strokeLinecap="round"
       />
       <defs>
-        <motion.linearGradient
-          className="transform-gpu"
-          id={id}
-          gradientUnits={"userSpaceOnUse"}
-          initial={{
-            x1: "0%",
-            x2: "0%",
-            y1: "0%",
-            y2: "0%",
-          }}
-          animate={{
-            x1: gradientCoordinates.x1,
-            x2: gradientCoordinates.x2,
-            y1: gradientCoordinates.y1,
-            y2: gradientCoordinates.y2,
-          }}
-          transition={{
-            delay,
-            duration,
-            ease: [0.16, 1, 0.3, 1], // https://easings.net/#easeOutExpo
-            repeat,
-            repeatDelay,
-          }}
-        >
+          <motion.linearGradient
+            className="transform-gpu"
+            id={id}
+            gradientUnits={"userSpaceOnUse"}
+            initial={{
+              x1: startX,
+              x2: startX,
+              y1: startY,
+              y2: startY,
+            }}
+            animate={{
+              x1: [startX, endX],
+              x2: [startX - (endX - startX) * 0.1, endX],
+              y1: [startY, endY],
+              y2: [startY - (endY - startY) * 0.1, endY],
+            }}
+            transition={{
+              delay,
+              duration,
+              ease: [0.16, 1, 0.3, 1], // https://easings.net/#easeOutExpo
+              repeat,
+              repeatDelay,
+            }}
+          >
           <stop stopColor={gradientStartColor} stopOpacity="0"></stop>
           <stop stopColor={gradientStartColor}></stop>
           <stop offset="32.5%" stopColor={gradientStopColor}></stop>
