@@ -134,7 +134,7 @@ export function InputPanel({ onGenerate, isLoading, plan = 'free', initialValues
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="space-y-2">
             <label className="font-mono text-sm text-text-secondary">Version</label>
             <input

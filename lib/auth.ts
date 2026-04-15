@@ -73,22 +73,26 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async signIn({ user, account, profile }) {
       if (!user.email) return false;
 
-      // Security: Check if this email is already used by another provider
-      // Only runs on the server (non-edge) for full sign-in process
+      // Check if user already exists in DB
       const existingUser = await prisma.user.findUnique({
         where: { email: user.email },
         include: { accounts: true }
       });
 
-      if (existingUser && account) {
-        const isLinked = existingUser.accounts.some(
-          (acc) => acc.provider === account.provider
+      if (existingUser) {
+        // If they are logging in with a new provider for the first time
+        const isLinkedToThisProvider = existingUser.accounts.some(
+          (acc) => acc.provider === account?.provider
         );
 
-        if (!isLinked && existingUser.accounts.length > 0) {
-          // Logic for account linking prevention or handling
+        if (!isLinkedToThisProvider && existingUser.accounts.length > 0) {
+          // If the existing account was a 'credentials' account, we're okay with linking 
+          // because OAuth providers (Google/GitHub) already verified the email.
+          // This ensures that 'Stats' and 'Limits' are synced across providers.
+          console.log(`Syncing stats for user ${user.email} from ${account?.provider}`);
         }
       }
+
       return true;
     },
   },

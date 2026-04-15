@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import { Terminal, Cpu, Layers } from 'lucide-react'
 import { FadeUp } from '@/components/motion/FadeUp'
+import { FloatingArrow } from '@/components/ui/FloatingArrows'
 
 export function HowItWorks() {
   const containerRef = useRef(null)
@@ -55,45 +56,15 @@ export function HowItWorks() {
           <div className="hidden md:grid grid-cols-3 gap-12 relative w-full mb-12">
             
             {/* Animated Connector Arrows spanning from icon to icon */}
-            <div className="absolute top-1/2 left-[24px] right-0 -translate-y-1/2 flex z-0 pointer-events-none w-full">
+            <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 flex z-0 pointer-events-none w-full">
               {/* Arrow 1 to 2 */}
-              <div className="w-[33%] ml-6 mr-6 flex items-center flex-1 pr-12">
-                 <motion.div 
-                   initial={{ scaleX: 0, opacity: 0 }}
-                   whileInView={{ scaleX: 1, opacity: 1 }}
-                   viewport={{ once: true, margin: "-100px" }}
-                   transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
-                   className="w-full h-px bg-border flex items-center justify-end origin-left relative"
-                 >
-                   <div className="w-0 h-0 border-y-[4px] border-y-transparent border-l-[6px] border-l-border/80 absolute right-0 translate-x-full" />
-                   <motion.div 
-                     className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/50 to-accent/80 h-px origin-left"
-                     initial={{ scaleX: 0 }}
-                     whileInView={{ scaleX: 1 }}
-                     viewport={{ once: true, margin: "-100px" }}
-                     transition={{ delay: 0.6, duration: 0.8, ease: "easeInOut" }}
-                   />
-                 </motion.div>
+              <div className="w-[33%] ml-12 mr-2 flex items-center flex-1">
+                 <FloatingArrow className="w-full h-12" />
               </div>
               
               {/* Arrow 2 to 3 */}
-              <div className="w-[33%] ml-6 flex items-center flex-1 pr-12">
-                 <motion.div 
-                   initial={{ scaleX: 0, opacity: 0 }}
-                   whileInView={{ scaleX: 1, opacity: 1 }}
-                   viewport={{ once: true, margin: "-100px" }}
-                   transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
-                   className="w-full h-px bg-border flex items-center justify-end origin-left relative"
-                 >
-                   <div className="w-0 h-0 border-y-[4px] border-y-transparent border-l-[6px] border-l-border/80 absolute right-0 translate-x-full" />
-                   <motion.div 
-                     className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/50 to-accent/80 h-px origin-left"
-                     initial={{ scaleX: 0 }}
-                     whileInView={{ scaleX: 1 }}
-                     viewport={{ once: true, margin: "-100px" }}
-                     transition={{ delay: 0.8, duration: 0.8, ease: "easeInOut" }}
-                   />
-                 </motion.div>
+              <div className="w-[33%] ml-12 mr-2 flex items-center flex-1">
+                 <FloatingArrow className="w-full h-12" />
               </div>
             </div>
 
