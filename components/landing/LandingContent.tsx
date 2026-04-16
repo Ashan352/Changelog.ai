@@ -45,6 +45,7 @@ export function LandingContent({ session }: { session: any }) {
             { label: 'Process', link: '#how-it-works' },
             { label: 'Demo', link: '#demo' },
             { label: 'Impact', link: '#stats' },
+            { label: 'Docs', link: '/docs' },
             { label: 'Pricing', link: '#pricing' },
             { label: 'FAQ', link: '#faq' },
             ...(session ? [
@@ -55,8 +56,7 @@ export function LandingContent({ session }: { session: any }) {
             ])
           ]}
           socialItems={[
-            { label: 'Twitter', link: 'https://twitter.com' },
-            { label: 'GitHub', link: 'https://github.com' },
+            { label: 'GitHub', link: 'https://github.com/itxashancode' },
           ]}
         />
       </div>
