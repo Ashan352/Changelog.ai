@@ -12,16 +12,20 @@ function getPrismaClient(): PrismaClient {
   if (!_prisma) {
     const connectionString = process.env.DATABASE_URL;
     if (!connectionString) {
-      console.warn("DATABASE_URL is missing. Prisma will likely fail when used.");
+      throw new Error("DATABASE_URL is missing. Please check your .env file.");
     }
     
     // Configure pool with SSL for production environments (Vercel/Neon)
+    // Also enable SSL if the connection string explicitly requests it (common for remote DBs in dev)
+    const hasSslMode = connectionString.includes("sslmode=");
     const pool = new Pool({ 
       connectionString,
-      ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
+      ssl: (process.env.NODE_ENV === "production" || hasSslMode) 
+        ? { rejectUnauthorized: false } 
+        : false,
       max: 10,
-      idleTimeoutMillis: 30000,
-      connectionTimeoutMillis: 2000,
+      idleTimeoutMillis: 60000,
+      connectionTimeoutMillis: 15000,
     });
 
     const adapter = new PrismaPg(pool);
