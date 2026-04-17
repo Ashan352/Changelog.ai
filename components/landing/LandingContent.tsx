@@ -141,9 +141,9 @@ export function LandingContent({ session }: { session: any }) {
             <div className="pt-24 border-t border-border/50">
               <h3 className="text-2xl font-serif italic text-text-primary mb-8 text-center">Why use AI for your changelogs?</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 text-sm">
-                <div className="p-8 rounded-2xl bg-bg-surface/40 border border-border">
+                <div className="p-8 rounded-2xl bg-bg-surface/40 border border-border flex flex-col items-center text-center">
                   <h4 className="font-bold mb-4 uppercase tracking-widest text-text-secondary">Manual Writing (The Old Way)</h4>
-                  <ul className="space-y-3 list-disc pl-4 text-text-muted">
+                  <ul className="space-y-3 list-none p-0 text-text-muted">
                     <li>Takes 15-30 minutes per update</li>
                     <li>Hard to remember all changes</li>
                     <li>Often full of typos and errors</li>
@@ -151,9 +151,9 @@ export function LandingContent({ session }: { session: any }) {
                     <li>Feels like a chore coworkers hate</li>
                   </ul>
                 </div>
-                <div className="p-8 rounded-2xl bg-accent/5 border border-accent/20">
+                <div className="p-8 rounded-2xl bg-accent/5 border border-accent/20 flex flex-col items-center text-center">
                   <h4 className="font-bold mb-4 uppercase tracking-widest text-accent">Changelog AI (The New Way)</h4>
-                  <ul className="space-y-3 list-disc pl-4 text-text-secondary">
+                  <ul className="space-y-3 list-none p-0 text-text-secondary">
                     <li>Takes less than 10 seconds</li>
                     <li>Reads every commit correctly</li>
                     <li>Perfect grammar and style</li>
@@ -164,8 +164,8 @@ export function LandingContent({ session }: { session: any }) {
               </div>
             </div>
             
-            <div className="pt-12 text-center">
-              <p className="text-text-muted italic font-mono text-xs">
+            <div className="pt-12 text-center flex flex-col items-center">
+              <p className="text-text-muted italic font-mono text-xs max-w-2xl mx-auto">
                 Changelog AI is the standard tool for modern teams. 
                 Focus on the logic. We handle the story. 
                 Start your free trial today and ship better code.
