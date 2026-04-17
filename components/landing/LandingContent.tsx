@@ -29,6 +29,8 @@ const Footer = dynamic(() => import("@/components/landing/Footer").then(m => m.F
 const LogoLoop = dynamic(() => import("@/components/ui/LogoLoop").then(m => m.LogoLoop), { ssr: false })
 const StaggeredMenu = dynamic(() => import("@/components/ui/StaggeredMenu").then(m => m.StaggeredMenu), { ssr: false })
 
+import { Shield, Clock, BarChart3, Sparkles } from 'lucide-react'
+
 export function LandingContent({ session }: { session: any }) {
   return (
     <div className="bg-bg min-h-screen selection:bg-accent/30">
@@ -102,33 +104,45 @@ export function LandingContent({ session }: { session: any }) {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 pt-8">
-              <div className="space-y-4">
-                <h3 className="text-xl font-bold text-text-primary font-mono uppercase tracking-wider">Help Users Trust You</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8">
+              <div className="flex flex-col items-center text-center p-8 rounded-[2rem] bg-bg-surface/30 border border-border/50 hover:bg-bg-surface/50 hover:border-accent/20 transition-all duration-300">
+                <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-6">
+                  <Shield className="h-6 w-6 text-accent" />
+                </div>
+                <h3 className="text-xl font-bold text-text-primary font-mono uppercase tracking-wider mb-4">Help Users Trust You</h3>
                 <p className="text-text-muted leading-relaxed font-mono text-sm">
                   Users want to see you work. New updates show your site is active. 
                   When you ship a feature, say it. Our tool makes this easy. 
                   Clear notes build trust. This helps you get more users.
                 </p>
               </div>
-              <div className="space-y-4">
-                <h3 className="text-xl font-bold text-text-primary font-mono uppercase tracking-wider">Save Your Team Time</h3>
+              <div className="flex flex-col items-center text-center p-8 rounded-[2rem] bg-bg-surface/30 border border-border/50 hover:border-accent/20 transition-all duration-300">
+                <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-6">
+                  <Clock className="h-6 w-6 text-accent" />
+                </div>
+                <h3 className="text-xl font-bold text-text-primary font-mono uppercase tracking-wider mb-4">Save Your Team Time</h3>
                 <p className="text-text-muted leading-relaxed font-mono text-sm">
                   Teams should code more. Writing notes is a distraction. 
                   The AI does the hard work. It formats notes for Twitter. 
                   It works for GitHub too. This saves you hours every month.
                 </p>
               </div>
-              <div className="space-y-4">
-                <h3 className="text-xl font-bold text-text-primary font-mono uppercase tracking-wider">Grow Your Site</h3>
+              <div className="flex flex-col items-center text-center p-8 rounded-[2rem] bg-bg-surface/30 border border-border/50 hover:bg-bg-surface/50 hover:border-accent/20 transition-all duration-300">
+                <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-6">
+                  <BarChart3 className="h-6 w-6 text-accent" />
+                </div>
+                <h3 className="text-xl font-bold text-text-primary font-mono uppercase tracking-wider mb-4">Grow Your Site</h3>
                 <p className="text-text-muted leading-relaxed font-mono text-sm">
                   Good content helps search sites. Easy notes help AI models too. 
                   This leads to more people finding you. Growth becomes easier. 
                   Better reach means a bigger business for you.
                 </p>
               </div>
-              <div className="space-y-4">
-                <h3 className="text-xl font-bold text-text-primary font-mono uppercase tracking-wider">Stay Professional</h3>
+              <div className="flex flex-col items-center text-center p-8 rounded-[2rem] bg-bg-surface/30 border border-border/50 hover:bg-bg-surface/50 hover:border-accent/20 transition-all duration-300">
+                <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-6">
+                  <Sparkles className="h-6 w-6 text-accent" />
+                </div>
+                <h3 className="text-xl font-bold text-text-primary font-mono uppercase tracking-wider mb-4">Stay Professional</h3>
                 <p className="text-text-muted leading-relaxed font-mono text-sm">
                   Quality matters for your brand. Every update should look good. 
                   Our generator keeps your style the same. No more typos. 
