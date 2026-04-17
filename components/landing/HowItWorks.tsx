@@ -153,6 +153,7 @@ export function HowItWorks() {
           </ol>
         </div>
       </div>
+     </div>
     </section>
   )
 }
