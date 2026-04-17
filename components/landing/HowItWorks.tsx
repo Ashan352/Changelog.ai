@@ -152,7 +152,6 @@ export function HowItWorks() {
             </li>
           </ol>
         </div>
-        </div>
       </div>
     </section>
   )

@@ -90,6 +90,90 @@ export function LandingContent({ session }: { session: any }) {
         <GallerySection />
 
         <div id="stats"><Stats /></div>
+        
+        <section className="py-24 px-4 sm:px-6 bg-bg-surface/10 border-t border-border">
+          <div className="max-w-4xl mx-auto space-y-12">
+            <div className="text-center">
+              <h2 className="text-3xl sm:text-5xl font-serif italic text-text-primary mb-6">Build fast. Update faster.</h2>
+              <p className="font-mono text-sm sm:text-lg text-text-secondary leading-relaxed">
+                Writing updates takes time. Developers want to build. 
+                Our AI reads your code history. It writes notes that people like. 
+                No hard words. Just clear and simple updates for all users.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 pt-8">
+              <div className="space-y-4">
+                <h3 className="text-xl font-bold text-text-primary font-mono uppercase tracking-wider">Help Users Trust You</h3>
+                <p className="text-text-muted leading-relaxed font-mono text-sm">
+                  Users want to see you work. New updates show your site is active. 
+                  When you ship a feature, say it. Our tool makes this easy. 
+                  Clear notes build trust. This helps you get more users.
+                </p>
+              </div>
+              <div className="space-y-4">
+                <h3 className="text-xl font-bold text-text-primary font-mono uppercase tracking-wider">Save Your Team Time</h3>
+                <p className="text-text-muted leading-relaxed font-mono text-sm">
+                  Teams should code more. Writing notes is a distraction. 
+                  The AI does the hard work. It formats notes for Twitter. 
+                  It works for GitHub too. This saves you hours every month.
+                </p>
+              </div>
+              <div className="space-y-4">
+                <h3 className="text-xl font-bold text-text-primary font-mono uppercase tracking-wider">Grow Your Site</h3>
+                <p className="text-text-muted leading-relaxed font-mono text-sm">
+                  Good content helps search sites. Easy notes help AI models too. 
+                  This leads to more people finding you. Growth becomes easier. 
+                  Better reach means a bigger business for you.
+                </p>
+              </div>
+              <div className="space-y-4">
+                <h3 className="text-xl font-bold text-text-primary font-mono uppercase tracking-wider">Stay Professional</h3>
+                <p className="text-text-muted leading-relaxed font-mono text-sm">
+                  Quality matters for your brand. Every update should look good. 
+                  Our generator keeps your style the same. No more typos. 
+                  No more messy lists. Just perfect notes every time.
+                </p>
+              </div>
+            </div>
+
+            {/* Comparison Section for Word Count */}
+            <div className="pt-24 border-t border-border/50">
+              <h3 className="text-2xl font-serif italic text-text-primary mb-8 text-center">Why use AI for your changelogs?</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 text-sm">
+                <div className="p-8 rounded-2xl bg-bg-surface/40 border border-border">
+                  <h4 className="font-bold mb-4 uppercase tracking-widest text-text-secondary">Manual Writing (The Old Way)</h4>
+                  <ul className="space-y-3 list-disc pl-4 text-text-muted">
+                    <li>Takes 15-30 minutes per update</li>
+                    <li>Hard to remember all changes</li>
+                    <li>Often full of typos and errors</li>
+                    <li>Different styles every time</li>
+                    <li>Feels like a chore coworkers hate</li>
+                  </ul>
+                </div>
+                <div className="p-8 rounded-2xl bg-accent/5 border border-accent/20">
+                  <h4 className="font-bold mb-4 uppercase tracking-widest text-accent">Changelog AI (The New Way)</h4>
+                  <ul className="space-y-3 list-disc pl-4 text-text-secondary">
+                    <li>Takes less than 10 seconds</li>
+                    <li>Reads every commit correctly</li>
+                    <li>Perfect grammar and style</li>
+                    <li>Follows your brand theme</li>
+                    <li>Fun and simple to use</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            
+            <div className="pt-12 text-center">
+              <p className="text-text-muted italic font-mono text-xs">
+                Changelog AI is the standard tool for modern teams. 
+                Focus on the logic. We handle the story. 
+                Start your free trial today and ship better code.
+              </p>
+            </div>
+          </div>
+        </section>
+
         <div id="pricing"><Pricing /></div>
         <div id="faq"><FAQ /></div>
       </main>

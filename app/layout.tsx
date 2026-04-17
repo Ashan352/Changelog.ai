@@ -18,10 +18,10 @@ const robotoMono = Roboto_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXTAUTH_URL || "https://changelog-ai.vercel.app"),
   title: {
-    default: "Changelog AI Generator | Stop writing changelogs. Automate release notes.",
+    default: "Changelog AI Generator | Automated Release Notes",
     template: "%s | Changelog AI Generator",
   },
-  description: "The ultimate changelog AI generator. Paste your Git commits and generate polished changelogs, GitHub releases, and Twitter posts in seconds. Built for solo developers and fast-moving teams.",
+  description: "The ultimate changelog AI generator. Generate polished changelogs, GitHub releases, and Twitter posts instantly from your Git commits. Built for fast teams.",
   keywords: [
     "changelog AI generator", "changelog generator", "AI release notes", "git commit to changelog", "developer tools", 
     "github release generator", "automated changelog", "release notes generator", "AI developer tools",
@@ -51,8 +51,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://changelog-ai.vercel.app",
-    title: "Changelog AI Generator - Zero-effort release notes",
-    description: "Developers ship code constantly — writing changelogs is a recurring, annoying task everyone procrastinates. Automate it instantly with our changelog AI generator.",
+    title: "Changelog AI Generator - Automated Release Notes",
+    description: "Stop manually writing changelogs. Transform your Git history into polished release notes instantly with our AI-powered generator.",
     siteName: "Changelog AI Generator",
     images: [{
       url: "https://changelog-ai.vercel.app/og-image.png",
@@ -63,8 +63,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Changelog AI Generator | Stop writing changelogs",
-    description: "Generate polished changelogs and release notes instantly from your commits with our superfast changelog AI generator.",
+    title: "Changelog AI Generator | Automated Release Notes",
+    description: "Transform your Git commits into professional release notes instantly with our AI generator.",
     creator: "@changelog_ai",
     images: ["https://changelog-ai.vercel.app/og-image.png"],
   },
@@ -91,6 +91,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import Script from 'next/script'
 
 export default function RootLayout({
   children,
@@ -110,7 +111,8 @@ export default function RootLayout({
         >
           <GoogleAnalytics />
           {/* Global Structured Data / Schema.org Markup */}
-          <script
+          <Script
+            id="structured-data"
             type="application/ld+json"
             dangerouslySetInnerHTML={{
               __html: JSON.stringify({
@@ -121,7 +123,7 @@ export default function RootLayout({
                     "@id": "https://change-log-ai.vercel.app/#website",
                     "url": "https://change-log-ai.vercel.app/",
                     "name": "Changelog AI Generator",
-                    "description": "The ultimate changelog AI generator. Paste your Git commits and generate polished changelogs.",
+                    "description": "Generate polished changelogs and release notes instantly from Git commits.",
                     "publisher": {
                       "@type": "Organization",
                       "name": "Changelog AI",
@@ -142,7 +144,7 @@ export default function RootLayout({
                       "price": "0",
                       "priceCurrency": "USD"
                     },
-                    "description": "An AI-powered tool that automatically generates structured release notes and changelogs directly from Git commit history."
+                    "description": "Automatically generate structured release notes and changelogs directly from Git commit history."
                   }
                 ]
               })
