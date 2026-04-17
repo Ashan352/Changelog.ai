@@ -18,12 +18,12 @@ const robotoMono = Roboto_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXTAUTH_URL || "https://changelog-ai.vercel.app"),
   title: {
-    default: "Changelog AI | Stop writing changelogs. Automate release notes.",
-    template: "%s | Changelog AI",
+    default: "Changelog AI Generator | Stop writing changelogs. Automate release notes.",
+    template: "%s | Changelog AI Generator",
   },
-  description: "Paste your Git commits and generate polished changelogs, GitHub releases, and Twitter posts in seconds. Built for solo developers and fast-moving teams.",
+  description: "The ultimate changelog AI generator. Paste your Git commits and generate polished changelogs, GitHub releases, and Twitter posts in seconds. Built for solo developers and fast-moving teams.",
   keywords: [
-    "changelog generator", "AI release notes", "git commit to changelog", "developer tools", 
+    "changelog AI generator", "changelog generator", "AI release notes", "git commit to changelog", "developer tools", 
     "github release generator", "automated changelog", "release notes generator", "AI developer tools",
     "software updates formatting", "project management AI", "changelog automation"
   ],
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://changelog-ai.vercel.app",
+    canonical: "https://change-log-ai.vercel.app/",
     languages: {
       "en-US": "https://changelog-ai.vercel.app",
     },
@@ -51,9 +51,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://changelog-ai.vercel.app",
-    title: "Changelog AI - Zero-effort release notes",
-    description: "Developers ship code constantly — writing changelogs is a recurring, annoying task everyone procrastinates. Automate it instantly with Changelog AI.",
-    siteName: "Changelog AI",
+    title: "Changelog AI Generator - Zero-effort release notes",
+    description: "Developers ship code constantly — writing changelogs is a recurring, annoying task everyone procrastinates. Automate it instantly with our changelog AI generator.",
+    siteName: "Changelog AI Generator",
     images: [{
       url: "https://changelog-ai.vercel.app/og-image.png",
       width: 1200,
@@ -63,8 +63,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Changelog AI | Stop writing changelogs",
-    description: "Generate polished changelogs and release notes instantly from your commits.",
+    title: "Changelog AI Generator | Stop writing changelogs",
+    description: "Generate polished changelogs and release notes instantly from your commits with our superfast changelog AI generator.",
     creator: "@changelog_ai",
     images: ["https://changelog-ai.vercel.app/og-image.png"],
   },
@@ -109,6 +109,45 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <GoogleAnalytics />
+          {/* Global Structured Data / Schema.org Markup */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@graph": [
+                  {
+                    "@type": "WebSite",
+                    "@id": "https://change-log-ai.vercel.app/#website",
+                    "url": "https://change-log-ai.vercel.app/",
+                    "name": "Changelog AI Generator",
+                    "description": "The ultimate changelog AI generator. Paste your Git commits and generate polished changelogs.",
+                    "publisher": {
+                      "@type": "Organization",
+                      "name": "Changelog AI",
+                      "logo": {
+                        "@type": "ImageObject",
+                        "url": "https://change-log-ai.vercel.app/logo.png"
+                      }
+                    }
+                  },
+                  {
+                    "@type": "SoftwareApplication",
+                    "@id": "https://change-log-ai.vercel.app/#software",
+                    "name": "Changelog AI Generator",
+                    "applicationCategory": "DeveloperApplication",
+                    "operatingSystem": "Any",
+                    "offers": {
+                      "@type": "Offer",
+                      "price": "0",
+                      "priceCurrency": "USD"
+                    },
+                    "description": "An AI-powered tool that automatically generates structured release notes and changelogs directly from Git commit history."
+                  }
+                ]
+              })
+            }}
+          />
           <SmoothScroll>
             <TooltipProvider>
               <Spotlight />

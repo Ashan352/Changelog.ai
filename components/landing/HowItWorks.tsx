@@ -132,7 +132,26 @@ export function HowItWorks() {
               pathWidth={3}
               delay={0.7}
             />
-          </div>
+        </div>
+        
+        {/* Text Content for How It Works - SEO Optimized */}
+        <div className="mt-20 text-left max-w-5xl mx-auto">
+          <h2 className="sr-only">How the AI Changelog Generator Works</h2>
+          <ol className="grid grid-cols-1 md:grid-cols-3 gap-8 list-none p-0">
+            <li className="flex flex-col items-center text-center p-8 bg-bg-surface/30 rounded-2xl border border-border/50 hover:border-accent/30 transition-colors">
+              <strong className="font-mono text-sm sm:text-base text-text-primary mb-3">Paste your Git commits</strong>
+              <span className="font-mono text-xs sm:text-sm text-text-muted leading-relaxed">Copy your commit log directly from your terminal or GitHub.</span>
+            </li>
+            <li className="flex flex-col items-center text-center p-8 bg-bg-surface/30 rounded-2xl border border-border/50 hover:border-accent/30 transition-colors">
+              <strong className="font-mono text-sm sm:text-base text-text-primary mb-3">Choose your output format</strong>
+              <span className="font-mono text-xs sm:text-sm text-text-muted leading-relaxed">Select changelog, GitHub release, or social post.</span>
+            </li>
+            <li className="flex flex-col items-center text-center p-8 bg-bg-surface/30 rounded-2xl border border-border/50 hover:border-accent/30 transition-colors">
+              <strong className="font-mono text-sm sm:text-base text-text-primary mb-3">Generate & publish</strong>
+              <span className="font-mono text-xs sm:text-sm text-text-muted leading-relaxed">Get polished, professional release notes in under 10 seconds.</span>
+            </li>
+          </ol>
+        </div>
         </div>
       </div>
     </section>

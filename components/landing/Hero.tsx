@@ -80,14 +80,14 @@ export function Hero({ isLoggedIn }: { isLoggedIn?: boolean }) {
         </motion.div>
 
         {/* Headline */}
-        <h1 className="flex flex-col items-center mb-8 gap-2">
+        <div className="flex flex-col items-center mb-8 gap-2">
             <style>{`
                .blur-text-container span { font-size: clamp(2rem, 8vw, 6rem); line-height: 1.1; font-family: var(--font-serif); font-style: italic; color: var(--color-text-primary); }
             `}</style>
-            <div className="blur-text-container text-center">
-               <BlurText text="Stop fighting your git history" delay={0.1} />
-            </div>
-        </h1>
+            <h1 className="blur-text-container text-center m-0 p-0 font-normal">
+               <BlurText text="The AI Changelog Generator for Developers" delay={0.1} />
+            </h1>
+        </div>
 
         {/* Subtext */}
         <motion.div
@@ -97,7 +97,7 @@ export function Hero({ isLoggedIn }: { isLoggedIn?: boolean }) {
           style={{ willChange: 'opacity', contain: 'content' }}
           className="max-w-[95%] sm:max-w-[700px] font-mono text-sm sm:text-base md:text-lg text-text-secondary mb-10 sm:mb-12 leading-relaxed text-center px-2"
         >
-          Just paste your commits. We&apos;ll handle the <ShinyText text="polished changelog" />, the GitHub release, and even the tweet thread—all in about 4 seconds. You focus on the code.
+          Changelog AI transforms your raw Git commits into <ShinyText text="polished changelogs" />, GitHub release notes, and Twitter announcements in seconds. No more manual writing — just paste your commits and ship.
         </motion.div>
 
         {/* CTA Row */}

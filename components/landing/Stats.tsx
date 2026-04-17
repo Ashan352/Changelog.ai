@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { GitCommit, Clock, Users, Zap } from 'lucide-react'
+import { GitCommit, Clock, Users, Zap, Layers } from 'lucide-react'
 import { CountUp } from '@/components/motion/CountUp'
 import { FadeUp } from '@/components/motion/FadeUp'
 import { TiltedCard } from '@/components/motion/TiltedCard'
@@ -54,6 +54,31 @@ export function Stats() {
             </TiltedCard>
           </FadeUp>
         ))}
+      </div>
+
+      {/* SEO Optimized Features Section */}
+      <div className="max-w-4xl mx-auto mt-24 text-center">
+        <FadeUp>
+          <h2 className="text-2xl sm:text-3xl font-serif italic text-text-primary mb-8">Why Teams Choose Changelog AI</h2>
+          <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left font-mono text-sm sm:text-base text-text-muted mt-8">
+            <li className="flex items-start gap-4 bg-bg-elevated/20 p-6 rounded-2xl border border-border/50 hover:border-accent/30 transition-colors">
+              <Clock className="h-6 w-6 text-accent shrink-0 mt-0.5" />
+              <span>Save 30+ minutes per release cycle on manual changelog writing</span>
+            </li>
+            <li className="flex items-start gap-4 bg-bg-elevated/20 p-6 rounded-2xl border border-border/50 hover:border-accent/30 transition-colors">
+              <GitCommit className="h-6 w-6 text-accent shrink-0 mt-0.5" />
+              <span>Supports GitHub, GitLab, and Bitbucket commit formats</span>
+            </li>
+            <li className="flex items-start gap-4 bg-bg-elevated/20 p-6 rounded-2xl border border-border/50 hover:border-accent/30 transition-colors">
+              <Layers className="h-6 w-6 text-accent shrink-0 mt-0.5" />
+              <span>Generates developer-friendly semantic versioning notes automatically</span>
+            </li>
+            <li className="flex items-start gap-4 bg-bg-elevated/20 p-6 rounded-2xl border border-border/50 hover:border-accent/30 transition-colors">
+              <Users className="h-6 w-6 text-accent shrink-0 mt-0.5" />
+              <span>Built for solo developers and teams shipping multiple releases per week</span>
+            </li>
+          </ul>
+        </FadeUp>
       </div>
     </section>
   )

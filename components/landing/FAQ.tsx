@@ -68,6 +68,35 @@ export function FAQ() {
           </FadeUp>
         ))}
       </div>
+
+      {/* SEO Optimized FAQ Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What is a changelog AI generator?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "A changelog AI generator automatically converts Git commit messages into structured, human-readable release notes using artificial intelligence."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How do I automate my release notes?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Paste your Git commit history into Changelog AI, select your desired output format, and receive polished release notes instantly."
+                }
+              }
+            ]
+          })
+        }}
+      />
     </section>
   )
 }
