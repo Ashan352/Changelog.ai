@@ -95,12 +95,10 @@ export function LandingContent({ session }: { session: any }) {
         
         <section className="py-24 px-4 sm:px-6 bg-bg-surface/10 border-t border-border">
           <div className="max-w-4xl mx-auto space-y-12">
-            <div className="text-center">
+            <div className="flex flex-col items-center text-center">
               <h2 className="text-3xl sm:text-5xl font-serif italic text-text-primary mb-6">Build fast. Update faster.</h2>
-              <p className="font-mono text-sm sm:text-lg text-text-secondary leading-relaxed">
-                Writing updates takes time. Developers want to build. 
-                Our AI reads your code history. It writes notes that people like. 
-                No hard words. Just clear and simple updates for all users.
+              <p className="font-mono text-sm sm:text-lg text-text-secondary leading-relaxed max-w-2xl">
+                Writing updates takes time. Developers want to build. Our AI reads your code history. It writes notes that people like. No hard words. Just clear and simple updates for all users.
               </p>
             </div>
 
